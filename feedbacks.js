@@ -1,32 +1,17 @@
-const { combineRgb } = require('@companion-module/base')
+import { combineRgb } from '@companion-module/base'
 
-module.exports = async function (self) {
+export const UpdateFeedbacks = async function (self) {
 	self.setFeedbackDefinitions({
-		ChannelState: {
-			name: 'Example Feedback',
+		on_air: {
+			name: 'On Air',
 			type: 'boolean',
-			label: 'Channel State',
+			description: 'Whether or not Proclaim is On Air',
 			defaultStyle: {
 				bgcolor: combineRgb(255, 0, 0),
 				color: combineRgb(0, 0, 0),
 			},
-			options: [
-				{
-					id: 'num',
-					type: 'number',
-					label: 'Test',
-					default: 5,
-					min: 0,
-					max: 10,
-				},
-			],
-			callback: (feedback) => {
-				console.log('Hello world!', feedback.options.num)
-				if (feedback.options.num > 5) {
-					return true
-				} else {
-					return false
-				}
+			callback: () => {
+				return self.on_air
 			},
 		},
 	})
