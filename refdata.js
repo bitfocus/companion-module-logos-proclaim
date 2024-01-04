@@ -1,15 +1,18 @@
 // Reference data used in setting up actions and presets
-export const songParts = [
-	{ id: 0, label: 'Verse', path: 'verse' },
-	{ id: 1, label: 'Chorus', path: 'chorus' },
-	{ id: 2, label: 'Bridge', path: 'bridge' },
-	{ id: 3, label: 'Prechorus', displayLabel: 'Pre\nchorus', path: 'prechorus' },
-	{ id: 4, label: 'Interlude', displayLabel: 'Inter-lude', path: 'interlude' },
-	{ id: 5, label: 'Tag', path: 'tag' },
-	{ id: 6, label: 'Ending', path: 'ending' },
+
+// Song parts - used in the go_to_song_part action and in constructing its presets
+export const SONG_PARTS = [
+	{ id: 0, label: 'Verse' },
+	{ id: 1, label: 'Chorus' },
+	{ id: 2, label: 'Bridge' },
+	{ id: 3, label: 'Prechorus', displayLabel: 'Pre\nchorus' },
+	{ id: 4, label: 'Interlude', displayLabel: 'Inter-lude' },
+	{ id: 5, label: 'Tag' },
+	{ id: 6, label: 'Ending' },
 ]
 
-export const simpleActions = [
+// Simple actions each of which has an action and matching preset, corresponding to a single Proclaim app command
+export const SIMPLE_ACTIONS = [
 	// On/Off Air
 	{ id: 'go_on_air', name: 'Go On Air', category: 'On Air', text: 'Go On Air', appCommand: 'GoOnAir' },
 	{ id: 'go_off_air', name: 'Go Off Air', category: 'On Air', text: 'Go Off Air', appCommand: 'GoOffAir' },

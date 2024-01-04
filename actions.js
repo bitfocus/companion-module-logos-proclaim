@@ -1,4 +1,4 @@
-import { songParts, simpleActions } from './refdata.js'
+import { SONG_PARTS, SIMPLE_ACTIONS } from './refdata.js'
 
 export const UpdateActions = function (self) {
 	let actions = {
@@ -55,7 +55,7 @@ export const UpdateActions = function (self) {
 					id: 'song_part',
 					label: 'Song Part',
 					default: 0,
-					choices: songParts,
+					choices: SONG_PARTS,
 				},
 				{
 					id: 'item_index',
@@ -67,17 +67,17 @@ export const UpdateActions = function (self) {
 				},
 			],
 			callback: async (event) => {
-				const part = songParts[event.options.song_part].label
+				const part = SONG_PARTS[event.options.song_part].label
 				self.proclaimAPI.sendAppCommand(`ShowSongLyrics${part}ByIndex`, event.options.item_index)
 			},
 		},
 	}
 
-	// Add simple actions
-	for (var action in simpleActions) {
-		let id = simpleActions[action].id
-		let name = simpleActions[action].name
-		let appCommand = simpleActions[action].appCommand
+	// Add simple actions, using the list from refdata.js
+	for (var action in SIMPLE_ACTIONS) {
+		let id = SIMPLE_ACTIONS[action].id
+		let name = SIMPLE_ACTIONS[action].name
+		let appCommand = SIMPLE_ACTIONS[action].appCommand
 		actions[id] = {
 			name: name,
 			callback: async () => {

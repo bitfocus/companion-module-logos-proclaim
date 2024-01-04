@@ -1,4 +1,4 @@
-import { songParts, simpleActions } from './refdata.js'
+import { SONG_PARTS, SIMPLE_ACTIONS } from './refdata.js'
 import { combineRgb } from '@companion-module/base'
 
 export const UpdatePresets = async function (self) {
@@ -40,12 +40,13 @@ export const UpdatePresets = async function (self) {
 		},
 	}
 
-	for (var preset in simpleActions) {
-		let id = simpleActions[preset].id
-		let name = simpleActions[preset].name
-		let category = simpleActions[preset].category
-		let text = simpleActions[preset].text
-		let size = simpleActions[preset].size
+	// Add simple action presets, using the list from refdata.js
+	for (var preset in SIMPLE_ACTIONS) {
+		let id = SIMPLE_ACTIONS[preset].id
+		let name = SIMPLE_ACTIONS[preset].name
+		let category = SIMPLE_ACTIONS[preset].category
+		let text = SIMPLE_ACTIONS[preset].text
+		let size = SIMPLE_ACTIONS[preset].size
 		presets[id] = {
 			type: 'button',
 			category: category,
@@ -69,19 +70,21 @@ export const UpdatePresets = async function (self) {
 	}
 
 	// Song Parts
-	for (var part in songParts) {
-		if (songParts[part].label == 'Verse') {
+	for (var part in SONG_PARTS) {
+		let partId = SONG_PARTS[part].id
+		let label = SONG_PARTS[part].label
+		let displayLabel = SONG_PARTS[part].displayLabel ? SONG_PARTS[part].displayLabel : SONG_PARTS[part].label
+
+		if (label == 'Verse') {
 			for (var v = 1; v < 10; v++) {
-				const id = `song_part_${songParts[part].path}_${v}`
-				presets[id] = {
+				const presetId = `song_part_${label.toLowerCase()}_${v}`
+				presets[presetId] = {
 					type: 'button',
 					category: 'Song Parts',
-					name: `${songParts[part].label} ${v}`,
+					name: `${label} ${v}`,
 					style: {
 						...style,
-						text: songParts[part].displayLabel
-							? `${songParts[part].displayLabel}\\n${v}`
-							: `${songParts[part].label}\\n${v}`,
+						text: `${displayLabel}\\n${v}`,
 					},
 					steps: [
 						{
@@ -89,7 +92,7 @@ export const UpdatePresets = async function (self) {
 								{
 									actionId: 'go_to_song_part',
 									options: {
-										song_part: songParts[part].id,
+										song_part: partId,
 										item_index: v,
 									},
 								},
@@ -100,14 +103,14 @@ export const UpdatePresets = async function (self) {
 				}
 			}
 		} else {
-			const id = `song_part_${songParts[part].path}`
-			presets[id] = {
+			const presetId = `song_part_${label.toLowerCase()}`
+			presets[presetId] = {
 				type: 'button',
 				category: 'Song Parts',
-				name: songParts[part].label,
+				name: label,
 				style: {
 					...style,
-					text: songParts[part].displayLabel ? songParts[part].displayLabel : songParts[part].label,
+					text: displayLabel,
 				},
 				steps: [
 					{
@@ -115,7 +118,7 @@ export const UpdatePresets = async function (self) {
 							{
 								actionId: 'go_to_song_part',
 								options: {
-									song_part: songParts[part].id,
+									song_part: partId,
 									item_index: 1,
 								},
 							},
