@@ -6,9 +6,9 @@ export const UpdateActions = function (self) {
 			name: 'Toggle On Air',
 			callback: async () => {
 				if (self.proclaimAPI.on_air) {
-					self.proclaimAPI.sendAppCommand('GoOffAir')
+					await self.proclaimAPI.sendAppCommand('GoOffAir')
 				} else {
-					self.proclaimAPI.sendAppCommand('GoOnAir')
+					await self.proclaimAPI.sendAppCommand('GoOnAir')
 				}
 			},
 		},
@@ -26,7 +26,7 @@ export const UpdateActions = function (self) {
 				},
 			],
 			callback: async (event) => {
-				self.proclaimAPI.sendAppCommand('GoToServiceItem', event.options.num)
+				await self.proclaimAPI.sendAppCommand('GoToServiceItem', event.options.num)
 			},
 		},
 
@@ -43,7 +43,7 @@ export const UpdateActions = function (self) {
 				},
 			],
 			callback: async (event) => {
-				self.proclaimAPI.sendAppCommand('GoToSlide', event.options.num)
+				await self.proclaimAPI.sendAppCommand('GoToSlide', event.options.num)
 			},
 		},
 
@@ -68,7 +68,7 @@ export const UpdateActions = function (self) {
 			],
 			callback: async (event) => {
 				const part = SONG_PARTS[event.options.song_part].label
-				self.proclaimAPI.sendAppCommand(`ShowSongLyrics${part}ByIndex`, event.options.item_index)
+				await self.proclaimAPI.sendAppCommand(`ShowSongLyrics${part}ByIndex`, event.options.item_index)
 			},
 		},
 	}
@@ -81,7 +81,7 @@ export const UpdateActions = function (self) {
 		actions[id] = {
 			name: name,
 			callback: async () => {
-				self.proclaimAPI.sendAppCommand(appCommand)
+				await self.proclaimAPI.sendAppCommand(appCommand)
 			},
 		}
 	}
