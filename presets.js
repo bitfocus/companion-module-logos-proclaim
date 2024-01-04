@@ -42,18 +42,18 @@ export const UpdatePresets = async function (self) {
 
 	// Add simple action presets, using the list from refdata.js
 	for (var preset in SIMPLE_ACTIONS) {
-		let id = SIMPLE_ACTIONS[preset].id
+		let id = SIMPLE_ACTIONS[preset].name.split(' ').join('_').toLowerCase()
 		let name = SIMPLE_ACTIONS[preset].name
 		let category = SIMPLE_ACTIONS[preset].category
-		let text = SIMPLE_ACTIONS[preset].text
-		let size = SIMPLE_ACTIONS[preset].size
+		let text = SIMPLE_ACTIONS[preset].text ? SIMPLE_ACTIONS[preset].text : SIMPLE_ACTIONS[preset].name
+		let size = SIMPLE_ACTIONS[preset].size ? SIMPLE_ACTIONS[preset].size : 18
 		presets[id] = {
 			type: 'button',
 			category: category,
 			name: name,
 			style: {
 				...style,
-				size: size ? size : 18,
+				size: size,
 				text: text,
 			},
 			steps: [

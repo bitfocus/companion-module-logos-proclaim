@@ -75,9 +75,9 @@ export const UpdateActions = function (self) {
 
 	// Add simple actions, using the list from refdata.js
 	for (var action in SIMPLE_ACTIONS) {
-		let id = SIMPLE_ACTIONS[action].id
+		let id = SIMPLE_ACTIONS[action].name.split(' ').join('_').toLowerCase()
 		let name = SIMPLE_ACTIONS[action].name
-		let appCommand = SIMPLE_ACTIONS[action].appCommand
+		let appCommand = SIMPLE_ACTIONS[action].appCommand ? SIMPLE_ACTIONS[action].appCommand : name.split(' ').join('')
 		actions[id] = {
 			name: name,
 			callback: async () => {
