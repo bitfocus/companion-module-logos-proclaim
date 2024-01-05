@@ -99,8 +99,17 @@ export const SIMPLE_ACTIONS = [
 		category: 'Media',
 		text: 'Video\nRestart',
 	},
-	// { name: 'Video Rewind', category: 'Media', text: 'Video\nRewind' },
-	// { name: 'Video Fast Forward', category: 'Media', text: 'Video\nFast\nForward' },
+	{
+		name: 'Video Rewind',
+		category: 'Media',
+		text: 'Video\nRewind',
+	},
+	{
+		name: 'Video Fast Forward',
+		category: 'Media',
+		text: 'Video\nFast\nForward',
+		size: 14,
+	},
 
 	// Quick Screens
 	{
