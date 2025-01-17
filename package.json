@@ -1,6 +1,6 @@
 {
 	"name": "logos-proclaim",
-	"version": "1.1.1",
+	"version": "1.1.0",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
@@ -14,15 +14,11 @@
 		"url": "git+https://github.com/bitfocus/companion-module-logos-proclaim.git"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.11.3",
+		"@companion-module/base": "~1.7.0",
 		"got": "^12.6.0"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.1.1",
-		"@eslint/js": "^9.18.0",
-		"eslint": "^9.18.0",
-		"prettier": "^3.4.2"
+		"@companion-module/tools": "^1.4.2"
 	},
-	"prettier": "@companion-module/tools/.prettierrc.json",
-	"packageManager": "yarn@4.5.3"
+	"prettier": "@companion-module/tools/.prettierrc.json"
 }
