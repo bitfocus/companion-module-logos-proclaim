@@ -60,7 +60,7 @@ export class ProclaimAPI {
 		}
 
 		if (this.proclaim_auth_required && !this.proclaim_auth_successful) {
-			this.instance.updateStatus(InstanceStatus.ConnectionFailure, 'Proclaim authentication unsuccessful')
+			this.instance.updateStatus(InstanceStatus.AuthenticationFailure, 'Proclaim authentication unsuccessful')
 			return
 		}
 
