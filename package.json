@@ -18,7 +18,10 @@
 		"got": "^12.6.0"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.1.1"
+		"@companion-module/tools": "^2.1.1",
+		"eslint": "^9.18.0",
+		"prettier": "^3.4.2"
 	},
-	"prettier": "@companion-module/tools/.prettierrc.json"
+	"prettier": "@companion-module/tools/.prettierrc.json",
+	"packageManager": "yarn@4.5.3"
 }
