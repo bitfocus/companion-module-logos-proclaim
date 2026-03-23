@@ -1,7 +1,7 @@
 {
 	"name": "logos-proclaim",
 	"version": "1.2.0",
-	"main": "main.js",
+	"main": "src/main.js",
 	"type": "module",
 	"scripts": {
 		"format": "prettier -w .",
