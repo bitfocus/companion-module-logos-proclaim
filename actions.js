@@ -1,4 +1,4 @@
-import { SONG_PARTS, SIMPLE_ACTIONS } from './refdata.js'
+import { SONG_PARTS, SIMPLE_ACTIONS, CUSTOM_QUICK_SCREEN_COUNT } from './refdata.js'
 
 export const UpdateActions = function (self) {
 	let actions = {
@@ -69,6 +69,23 @@ export const UpdateActions = function (self) {
 			callback: async (event) => {
 				const part = SONG_PARTS[event.options.song_part].label
 				await self.proclaimAPI.sendAppCommand(`ShowSongLyrics${part}ByIndex`, event.options.item_index)
+			},
+		},
+
+		show_custom_quick_screen: {
+			name: 'Show Custom Quick Screen',
+			options: [
+				{
+					id: 'num',
+					type: 'number',
+					label: 'Custom Quick Screen Number',
+					default: 1,
+					min: 1,
+					max: CUSTOM_QUICK_SCREEN_COUNT,
+				},
+			],
+			callback: async (event) => {
+				await self.proclaimAPI.sendAppCommand('ShowCustomQuickScreen', event.options.num)
 			},
 		},
 	}

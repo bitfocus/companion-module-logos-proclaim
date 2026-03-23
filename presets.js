@@ -1,4 +1,4 @@
-import { SONG_PARTS, SIMPLE_ACTIONS } from './refdata.js'
+import { SONG_PARTS, SIMPLE_ACTIONS, CUSTOM_QUICK_SCREEN_COUNT } from './refdata.js'
 import { combineRgb } from '@companion-module/base'
 
 export const UpdatePresets = async function (self) {
@@ -61,6 +61,37 @@ export const UpdatePresets = async function (self) {
 					down: [
 						{
 							actionId: id,
+						},
+					],
+					up: [],
+				},
+			],
+		}
+	}
+
+	for (var i=1; i<=CUSTOM_QUICK_SCREEN_COUNT; i++) {
+		let id = `show_custom_quick_screen_${i}`
+		let name = `Show Custom Quick Screen ${i}`
+		let category = 'Quick Screens'
+		let text = `Custom ${i}`
+		let size = 18
+		presets[id] = {
+			type: 'button',
+			category: category,
+			name: name,
+			style: {
+				...style,
+				size: size,
+				text: text,
+			},
+			steps: [
+				{
+					down: [
+						{
+							actionId: 'show_custom_quick_screen',
+							options: {
+								num: i,
+							},
 						},
 					],
 					up: [],
