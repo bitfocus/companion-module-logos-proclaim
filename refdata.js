@@ -123,6 +123,11 @@ export const SIMPLE_ACTIONS = [
 		text: 'Logo',
 	},
 	{
+		name: 'Show Text',
+		category: 'Quick Screens',
+		text: 'Show Text',
+	},
+	{
 		name: 'Show No Text Quick Screen',
 		category: 'Quick Screens',
 		text: 'No Text',
