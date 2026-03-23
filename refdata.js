@@ -171,4 +171,9 @@ export const SIMPLE_ACTIONS = [
 		size: 14,
 		appCommand: 'ShowHeIsRisenWhiteQuickScreen', // (sic.)
 	},
+	{
+		name: 'Show Last Slide',
+		category: 'Quick Screens',
+		text: 'Last Slide'
+	}
 ]
