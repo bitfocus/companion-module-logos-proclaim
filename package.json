@@ -1,10 +1,11 @@
 {
 	"name": "logos-proclaim",
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
 		"format": "prettier -w .",
+		"package": "companion-module-build",
 		"lint:raw": "eslint --ext .ts --ext .js --ignore-pattern dist --ignore-pattern pkg",
 		"lint": "yarn lint:raw ."
 	},
@@ -12,6 +13,10 @@
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/bitfocus/companion-module-logos-proclaim.git"
+	},
+	"engines": {
+		"node": "^22.20",
+		"yarn": "^4"
 	},
 	"dependencies": {
 		"@companion-module/base": "~1.14.1",
