@@ -11,6 +11,9 @@ export const SONG_PARTS = [
 	{ id: 6, label: 'Ending' },
 ]
 
+// How many custom quick screens Proclaim supports
+export const CUSTOM_QUICK_SCREEN_COUNT = 2
+
 // Simple actions, each of which has an action and matching preset, corresponding to a single Proclaim app command
 //
 // The action and preset IDs will be the name, converted to snake_case
