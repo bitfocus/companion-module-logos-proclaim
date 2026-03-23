@@ -77,6 +77,7 @@ The commands available are:
 - Blank
 - Logo
 - No Text
+- Show Text (to use after No Text)
 - Floating Hearts
 - Floating Amens
 - Amen
@@ -84,5 +85,7 @@ The commands available are:
 - Praise the Lord!
 - He is Risen
 - He is Risen Indeed!
+- Custom quick screens 1 and 2
+- Last Slide (to use after the Blank, Logo or Custom quick screens)
 
 There are presets for all of these commands, including a useful "On Air" toggle button providing feedback.
