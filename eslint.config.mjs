@@ -3,13 +3,13 @@ import { generateEslintConfig } from '@companion-module/tools/eslint/config.mjs'
 const baseConfig = await generateEslintConfig({})
 
 const customConfig = [
-    ...baseConfig,
+	...baseConfig,
 
-    {
-        languageOptions: {
-            sourceType: "module"
-        }
-    }
+	{
+		languageOptions: {
+			sourceType: 'module',
+		},
+	},
 ]
 
 export default customConfig

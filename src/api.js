@@ -120,6 +120,7 @@ export class ProclaimAPI {
 			}
 		} catch (error) {
 			// Something went wrong obtaining on-air status - can't connect to Proclaim
+			console.log(error)
 			this.on_air_successful = false
 			this.on_air = false
 			this.on_air_session_id = ''
