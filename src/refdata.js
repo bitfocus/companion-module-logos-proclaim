@@ -177,6 +177,6 @@ export const SIMPLE_ACTIONS = [
 	{
 		name: 'Show Last Slide',
 		category: 'Quick Screens',
-		text: 'Last Slide'
-	}
+		text: 'Last Slide',
+	},
 ]

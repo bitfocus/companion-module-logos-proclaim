@@ -69,14 +69,14 @@ export const UpdatePresets = async function (self) {
 		}
 	}
 
-	for (var i=1; i<=CUSTOM_QUICK_SCREEN_COUNT; i++) {
+	for (var i = 1; i <= CUSTOM_QUICK_SCREEN_COUNT; i++) {
 		presets[`show_custom_quick_screen_${i}`] = {
 			type: 'button',
 			category: 'Quick Screens',
 			name: `Show Custom Quick Screen ${i}`,
 			style: {
 				...style,
-				text: `Custom ${i}`
+				text: `Custom ${i}`,
 			},
 			steps: [
 				{
