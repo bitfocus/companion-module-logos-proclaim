@@ -126,14 +126,14 @@ export const SIMPLE_ACTIONS = [
 		text: 'Logo',
 	},
 	{
-		name: 'Show Text',
-		category: 'Quick Screens',
-		text: 'Show Text',
-	},
-	{
 		name: 'Show No Text Quick Screen',
 		category: 'Quick Screens',
 		text: 'No Text',
+	},
+	{
+		name: 'Show Text',
+		category: 'Quick Screens',
+		text: 'Show Text',
 	},
 	{
 		name: 'Show Floating Hearts Quick Screen',
@@ -177,6 +177,6 @@ export const SIMPLE_ACTIONS = [
 	{
 		name: 'Show Last Slide',
 		category: 'Quick Screens',
-		text: 'Last Slide',
+		text: 'Last Shown',
 	},
 ]
