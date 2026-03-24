@@ -40,31 +40,31 @@ then enter the Proclaim remote control password.
 
 The commands available are:
 
-### On air status
+#### On air status
 
 - Go On Air
 - Go Off Air
 - Toggle On Air
 
-### Service sections
+#### Service sections
 
 - Start Pre Service
 - Start Warm Up
 - Start Service
 - Start Post Service
 
-### Slides
+#### Slides
 
 - Next/Previous Slide
 - Next/Previous Service Item
 - Go to Slide - by number within the current service item
 - Go to Service Item - by number within the service
 
-### Song sections
+#### Song sections
 
 - Go To Song Part - by part (Verse, Chorus, etc.) and index
 
-### Media
+#### Media
 
 - Previous Audio Item
 - Next Audio Item
@@ -72,7 +72,7 @@ The commands available are:
 - Video Pause
 - Video Restart
 
-### Quick Screens
+#### Quick Screens
 
 - Blank
 - Logo
@@ -89,3 +89,9 @@ The commands available are:
 - Last Slide (to use after the Blank, Logo or Custom quick screens)
 
 There are presets for all of these commands, including a useful "On Air" toggle button providing feedback.
+
+### Major Changes
+
+- v1.0.x - initial release
+- v1.1.x - added Video Rewind and Video Fast Forward actions and presets
+- v1.2.x - added Show Text, Custom quick screens 1 and 2, and Last Slide actions and presets
