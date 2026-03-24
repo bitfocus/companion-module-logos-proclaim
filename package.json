@@ -6,7 +6,7 @@
 	"scripts": {
 		"format": "prettier -w .",
 		"package": "companion-module-build",
-		"lint:raw": "eslint --ext .ts --ext .js --ignore-pattern dist --ignore-pattern pkg",
+		"lint:raw": "eslint",
 		"lint": "yarn lint:raw ."
 	},
 	"license": "MIT",
