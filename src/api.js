@@ -1,5 +1,4 @@
 import { InstanceStatus } from '@companion-module/base'
-import { got } from 'got'
 import { fetch } from 'undici'
 
 // Handle the interaction with Proclaim
@@ -163,38 +162,15 @@ export class ProclaimAPI {
 			url = `${url}&index=${index}`
 		}
 
-		const options = {
-			timeout: {
-				request: 1000,
-			},
-			retry: {
-				limit: 0,
-			},
-		}
-
-		if (this.proclaim_auth_required) {
-			if (!this.proclaim_auth_successful) {
-				return
-			}
-
-			options.headers = {
-				ProclaimAuthToken: this.proclaim_auth_token,
-			}
-
-			// This shouldn't be necessary... but it is, for now.
-			// Proclaim requires the ProclaimAuthToken header name to be CamelCase, though
-			// the HTTP spec says header names are case-insensitive.
-			options.hooks = {
-				beforeRequest: [
-					(options) => {
-						options.headers['ProclaimAuthToken'] = options.headers['proclaimauthtoken']
-					},
-				],
-			}
-		}
-
 		try {
-			const data = (await got(url, options).text()).replace(/^\uFEFF/, '')
+			const data = await fetch(url, {
+				headers: {
+					'Content-Type': 'application/json',
+					...(this.proclaim_auth_required && this.proclaim_auth_successful
+						? { ProclaimAuthToken: this.proclaim_auth_token }
+						: {}),
+				},
+			}).then((response) => response.text())
 			if (data !== 'success') {
 				this.instance.log('debug', `Unexpected response from Proclaim: ${data}`)
 			}
