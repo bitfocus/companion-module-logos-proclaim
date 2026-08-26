@@ -135,28 +135,17 @@ export class ProclaimAPI {
 		const url = `http://${this.ip}:52195/appCommand/authenticate`
 		var data
 		try {
-			data = await got
-				.post(url, {
-					timeout: {
-						request: 1000,
-					},
-					retry: {
-						limit: 0,
-					},
-					json: {
-						Password: this.password,
-					},
-				})
-				.text()
-			// }).json();
-			// Calling json() returns a ERR_BODY_PARSE_FAILURE, I think because Proclaim is returning
-			// content-type: text/html rather than application/json
-
-			// Maybe because we're calling text() not json(), or maybe there's some issue in the encoding of
-			// Proclaim's response, we need to strip the byte order marker before parsing. I don't like this.
-			const parsed = JSON.parse(data.replace(/^\uFEFF/, ''))
+			data = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					Password: this.password,
+				}),
+			}).then((response) => response.json())
 			this.proclaim_auth_successful = true
-			this.proclaim_auth_token = parsed.proclaimAuthToken
+			this.proclaim_auth_token = data.proclaimAuthToken
 			this.setModuleStatus()
 		} catch (error) {
 			this.instance.log('warn', `Authentication error in getAuthToken(): ${error.message}`)
