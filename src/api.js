@@ -87,14 +87,12 @@ export class ProclaimAPI {
 		const on_air_previously_successful = this.on_air_successful
 
 		try {
-			const response = await fetch(url, {
+			const data = await fetch(url, {
 				method: 'GET',
 				headers: {
 					Accept: 'text/plain',
 				},
-			})
-			const data = await response.text()
-
+			}).then((response) => response.text())
 			this.on_air_successful = true
 
 			// If we got a session ID back, we're on air! If we got blank, we're off air
