@@ -20,7 +20,8 @@
 	},
 	"dependencies": {
 		"@companion-module/base": "~1.14.1",
-		"got": "^14.6.6"
+		"got": "^14.6.6",
+		"undici": "^8.10.0"
 	},
 	"devDependencies": {
 		"@companion-module/tools": "^2.7.1",

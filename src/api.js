@@ -1,5 +1,6 @@
 import { InstanceStatus } from '@companion-module/base'
 import { got } from 'got'
+import { fetch } from 'undici'
 
 // Handle the interaction with Proclaim
 export class ProclaimAPI {
@@ -64,7 +65,7 @@ export class ProclaimAPI {
 			return
 		}
 
-		this.instance.updateStatus(InstanceStatus.Ok)
+		this.instance.updateStatus(InstanceStatus.Ok, 'Connected to Proclaim')
 	}
 
 	// Set up the regular polling of on-air status
@@ -86,14 +87,13 @@ export class ProclaimAPI {
 		const on_air_previously_successful = this.on_air_successful
 
 		try {
-			const data = await got(url, {
-				timeout: {
-					request: 1000,
+			const response = await fetch(url, {
+				method: 'GET',
+				headers: {
+					Accept: 'text/plain',
 				},
-				retry: {
-					limit: 0,
-				},
-			}).text()
+			})
+			const data = await response.text()
 
 			this.on_air_successful = true
 
