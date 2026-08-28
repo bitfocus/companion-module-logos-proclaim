@@ -1,9 +1,12 @@
+import { CompanionActionDefinitions } from '@companion-module/base'
+import type { ModuleInstance } from './main.js'
 import { SONG_PARTS, SIMPLE_ACTIONS, CUSTOM_QUICK_SCREEN_COUNT } from './refdata.js'
 
-export const UpdateActions = function (self) {
-	let actions = {
+export const UpdateActions = function (self: ModuleInstance): void {
+	const actions: CompanionActionDefinitions = {
 		on_air_toggle: {
 			name: 'Toggle On Air',
+			options: [],
 			callback: async () => {
 				if (self.proclaimAPI.on_air) {
 					await self.proclaimAPI.sendAppCommand('GoOffAir')
@@ -26,7 +29,7 @@ export const UpdateActions = function (self) {
 				},
 			],
 			callback: async (event) => {
-				await self.proclaimAPI.sendAppCommand('GoToServiceItem', event.options.num)
+				await self.proclaimAPI.sendAppCommand('GoToServiceItem', event.options.num as number)
 			},
 		},
 
@@ -43,7 +46,7 @@ export const UpdateActions = function (self) {
 				},
 			],
 			callback: async (event) => {
-				await self.proclaimAPI.sendAppCommand('GoToSlide', event.options.num)
+				await self.proclaimAPI.sendAppCommand('GoToSlide', event.options.num as number)
 			},
 		},
 
@@ -67,8 +70,8 @@ export const UpdateActions = function (self) {
 				},
 			],
 			callback: async (event) => {
-				const part = SONG_PARTS[event.options.song_part].label
-				await self.proclaimAPI.sendAppCommand(`ShowSongLyrics${part}ByIndex`, event.options.item_index)
+				const part = SONG_PARTS[event.options.song_part as number].label
+				await self.proclaimAPI.sendAppCommand(`ShowSongLyrics${part}ByIndex`, event.options.item_index as number)
 			},
 		},
 
@@ -85,21 +88,22 @@ export const UpdateActions = function (self) {
 				},
 			],
 			callback: async (event) => {
-				await self.proclaimAPI.sendAppCommand('ShowCustomQuickScreen', event.options.num)
+				await self.proclaimAPI.sendAppCommand('ShowCustomQuickScreen', event.options.num as number)
 			},
 		},
 	}
 
 	// Add simple actions, using the list from refdata.js
-	for (var action in SIMPLE_ACTIONS) {
-		let id = SIMPLE_ACTIONS[action].name.split(' ').join('_').toLowerCase()
-		let name = SIMPLE_ACTIONS[action].name
-		let appCommand = SIMPLE_ACTIONS[action].appCommand ? SIMPLE_ACTIONS[action].appCommand : name.split(' ').join('')
+	for (const action of SIMPLE_ACTIONS) {
+		const id = action.name.split(' ').join('_').toLowerCase()
+		const name = action.name
+		const appCommand = action.appCommand || name.split(' ').join('')
 		actions[id] = {
 			name: name,
 			callback: async () => {
 				await self.proclaimAPI.sendAppCommand(appCommand)
 			},
+			options: [],
 		}
 	}
 
