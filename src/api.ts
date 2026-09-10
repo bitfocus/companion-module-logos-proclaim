@@ -200,24 +200,32 @@ export class ProclaimAPI {
 		}
 
 		try {
-			const data = await fetch(url, {
+			const response = await fetch(url, {
 				headers: {
 					'Content-Type': 'application/json',
 					...(this.#proclaim_auth_required && this.#proclaim_auth_successful
 						? { ProclaimAuthToken: this.#proclaim_auth_token }
 						: {}),
 				},
-			}).then(async (response) => response.text())
+			})
+
+			if (!response.ok) {
+				if (response.status === 401 || response.status === 403) {
+					this.#instance.log('warn', `Proclaim authentication failed: ${response.status} ${response.statusText}`)
+					this.#proclaim_auth_successful = false
+					this.#proclaim_auth_token = ''
+					this.setModuleStatus()
+				} else {
+					this.#instance.log('warn', `Proclaim command failed: ${response.status} ${response.statusText}`)
+				}
+				return
+			}
+			const data = await response.text()
 			if (data !== 'success') {
 				this.#instance.log('debug', `Unexpected response from Proclaim: ${data}`)
 			}
 		} catch (error: any) {
-			this.#instance.log('warn', `Command failed in sendAppCommand(): ${error.message}`)
-			if ((error.response?.statusCode == 401 || error.response?.statusCode == 403) && this.#proclaim_auth_required) {
-				this.#proclaim_auth_successful = false
-				this.#proclaim_auth_token = ''
-				this.setModuleStatus()
-			}
+			this.#instance.log('warn', `Proclaim command failed: ${error.message}`)
 		}
 	}
 }
