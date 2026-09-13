@@ -72,12 +72,6 @@ export class ProclaimAPI {
 			clearInterval(this.#pollInterval)
 		}
 		await this.init_onair_poll()
-
-		// Does Proclaim require authentication?
-		if (this.authRequired) {
-			// Ask for an auth token
-			await this.getAuthToken()
-		}
 	}
 
 	private configIsValid(): boolean {
