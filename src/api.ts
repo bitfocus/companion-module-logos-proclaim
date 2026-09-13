@@ -47,6 +47,13 @@ export class ProclaimAPI {
 			})
 			this.#instance.checkFeedbacks('on_air')
 		})
+
+		this.#status.on('sessionId:changed', (sessionId) => {
+			this.#instance.log('debug', `Proclaim sessionId status changed: ${sessionId}`)
+			this.#instance.setVariableValues({
+				session_id: sessionId,
+			})
+		})
 	}
 
 	get status(): ProclaimStatus {
