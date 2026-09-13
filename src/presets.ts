@@ -11,6 +11,29 @@ export const UpdatePresets = function (self: ModuleInstance): void {
 
 	// On/Off Air Toggle with feedback
 	const presets: CompanionPresetDefinitions = {
+		reconnect: {
+			type: 'button',
+			category: 'Connection',
+			name: 'Reconnect',
+			style: {
+				...style,
+				text: 'Reconnect',
+				size: 14,
+			},
+			steps: [
+				{
+					down: [
+						{
+							actionId: 'reconnect',
+							options: {},
+						},
+					],
+					up: [],
+				},
+			],
+			feedbacks: [],
+		},
+
 		on_air: {
 			type: 'button',
 			category: 'On Air',

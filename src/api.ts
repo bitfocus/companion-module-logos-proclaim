@@ -152,6 +152,12 @@ export class ProclaimAPI {
 		}
 	}
 
+	async reconnect(): Promise<void> {
+		if (this.authRequired) {
+			await this.getAuthToken()
+		}
+	}
+
 	// Get an authentication token from Proclaim
 	private async getAuthToken(): Promise<void> {
 		const url = `http://${this.#ip}:52195/appCommand/authenticate`

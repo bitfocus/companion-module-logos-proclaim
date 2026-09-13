@@ -4,6 +4,14 @@ import { SONG_PARTS, SIMPLE_ACTIONS, CUSTOM_QUICK_SCREEN_COUNT } from './refdata
 
 export const UpdateActions = function (self: ModuleInstance): void {
 	const actions: CompanionActionDefinitions = {
+		reconnect: {
+			name: 'Reconnect',
+			options: [],
+			callback: async () => {
+				await self.proclaimAPI.reconnect()
+			},
+		},
+
 		on_air_toggle: {
 			name: 'Toggle On Air',
 			options: [],
