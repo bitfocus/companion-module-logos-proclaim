@@ -20,7 +20,7 @@ export const CUSTOM_QUICK_SCREEN_COUNT: number = 2
 // The preset text will be the name, unless overridden below
 // The preset text size will be 18, unless overridden below
 // The Proclaim API App Command will be the name converted to CamelCase, unless overridden below
-export const SIMPLE_ACTIONS: { name: string; category: string; text?: string; size?: number; appCommand?: string }[] = [
+export const SIMPLE_ACTIONS = [
 	// On/Off Air
 	{
 		name: 'Go On Air',
@@ -179,4 +179,4 @@ export const SIMPLE_ACTIONS: { name: string; category: string; text?: string; si
 		category: 'Quick Screens',
 		text: 'Last Shown',
 	},
-]
+] as const satisfies readonly { name: string; category: string; text?: string; size?: number; appCommand?: string }[]

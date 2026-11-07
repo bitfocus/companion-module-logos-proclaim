@@ -1,13 +1,23 @@
-import { InstanceBase, runEntrypoint, InstanceStatus, SomeCompanionConfigField } from '@companion-module/base'
+import { InstanceBase, InstanceStatus, type SomeCompanionConfigField } from '@companion-module/base'
 import { GetConfigFields, type ModuleConfig, type ModuleSecrets } from './config.js'
 import { UpgradeScripts } from './upgrades.js'
-import { UpdateActions } from './actions.js'
-import { UpdateFeedbacks } from './feedbacks.js'
-import { UpdateVariableDefinitions } from './variables.js'
-import { UpdatePresets } from './presets.js'
+import { UpdateActions, type ActionsSchema } from './actions.js'
+import { UpdateFeedbacks, type FeedbacksSchema } from './feedbacks.js'
+import { UpdateVariableDefinitions, type VariablesSchema } from './variables.js'
+//import { UpdatePresets } from './presets.js'
 import { ProclaimAPI } from './api.js'
 
-export class ModuleInstance extends InstanceBase<ModuleConfig, ModuleSecrets> {
+export type ModuleSchema = {
+	config: ModuleConfig
+	secrets: ModuleSecrets
+	actions: ActionsSchema
+	feedbacks: FeedbacksSchema
+	variables: VariablesSchema
+}
+
+export { UpgradeScripts }
+
+export default class ModuleInstance extends InstanceBase<ModuleSchema> {
 	config!: ModuleConfig // Set up in init()
 	secrets!: ModuleSecrets // Set up in init()
 	proclaimAPI!: ProclaimAPI // Set up in init()
@@ -68,8 +78,6 @@ export class ModuleInstance extends InstanceBase<ModuleConfig, ModuleSecrets> {
 	}
 
 	updatePresets(): void {
-		UpdatePresets(this)
+		//UpdatePresets(this)
 	}
 }
-
-runEntrypoint(ModuleInstance, UpgradeScripts)
