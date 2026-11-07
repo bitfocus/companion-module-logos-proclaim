@@ -1,6 +1,6 @@
 import { InstanceStatus } from '@companion-module/base'
 import { fetch } from 'undici'
-import { ModuleInstance } from './main.js'
+import ModuleInstance from './main.js'
 import { ProclaimStatus } from './status.js'
 
 interface ProclaimAuthResponse {

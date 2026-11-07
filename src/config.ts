@@ -1,11 +1,11 @@
 import { Regex, type SomeCompanionConfigField } from '@companion-module/base'
 
-export interface ModuleConfig {
+export type ModuleConfig = {
 	ip: string
 	password?: string // Only when upgrading from a version that had the key in config - will be moved to secrets
 }
 
-export interface ModuleSecrets {
+export type ModuleSecrets = {
 	password: string
 }
 
@@ -29,7 +29,7 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 			width: 6,
 			regex: Regex.IP,
 			default: '127.0.0.1',
-			required: true,
+			//required: true,
 		},
 		{
 			type: 'secret-text',
@@ -37,7 +37,7 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 			label: 'Password',
 			width: 6,
 			isVisibleExpression: "$(options:ip) !== '127.0.0.1'",
-			required: true,
+			//required: true,
 		},
 	]
 }

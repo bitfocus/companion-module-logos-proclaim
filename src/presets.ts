@@ -1,6 +1,6 @@
 import { SONG_PARTS, SIMPLE_ACTIONS, CUSTOM_QUICK_SCREEN_COUNT } from './refdata.js'
-import type { ModuleInstance } from './main.js'
-import { CompanionPresetDefinitions, combineRgb } from '@companion-module/base'
+import ModuleInstance from './main.js'
+import { type CompanionPresetDefinitions, combineRgb } from '@companion-module/base'
 
 export const UpdatePresets = function (self: ModuleInstance): void {
 	const style = {
