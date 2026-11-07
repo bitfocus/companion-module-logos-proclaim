@@ -4,7 +4,7 @@ import { UpgradeScripts } from './upgrades.js'
 import { UpdateActions, type ActionsSchema } from './actions.js'
 import { UpdateFeedbacks, type FeedbacksSchema } from './feedbacks.js'
 import { UpdateVariableDefinitions, type VariablesSchema } from './variables.js'
-//import { UpdatePresets } from './presets.js'
+import { UpdatePresets } from './presets.js'
 import { ProclaimAPI } from './api.js'
 
 export type ModuleSchema = {
@@ -78,6 +78,6 @@ export default class ModuleInstance extends InstanceBase<ModuleSchema> {
 	}
 
 	updatePresets(): void {
-		//UpdatePresets(this)
+		UpdatePresets(this)
 	}
 }
