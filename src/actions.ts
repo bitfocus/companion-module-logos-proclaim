@@ -1,5 +1,5 @@
 import { type CompanionActionDefinitions } from '@companion-module/base'
-import ModuleInstance from './main.js'
+import type ModuleInstance from './main.js'
 import { SONG_PARTS, SIMPLE_ACTIONS, CUSTOM_QUICK_SCREEN_COUNT } from './refdata.js'
 
 type SimpleActionId<Name extends string> = Name extends `${infer Word} ${infer Rest}`

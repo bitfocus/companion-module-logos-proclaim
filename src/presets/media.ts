@@ -1,5 +1,5 @@
-import { DEFAULT_PRESET_STYLE } from './index.js'
-import type { PresetsBuilderContext } from './context.js'
+import { DEFAULT_PRESET_STYLE } from '../refdata.js'
+import type { PresetsBuilderContext } from './index.js'
 
 export function createMediaPresets(context: PresetsBuilderContext): void {
 	context.definitions['previous_audio_item'] = {

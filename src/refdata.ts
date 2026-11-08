@@ -129,3 +129,10 @@ export const SIMPLE_ACTIONS = [
 		name: 'Show Last Slide',
 	},
 ] as const satisfies readonly SimpleAction[]
+
+// Default style for presets, as a starting point to provide a consistent look and feel
+export const DEFAULT_PRESET_STYLE = {
+	size: 18,
+	bgcolor: 0x000000,
+	color: 0xffffff,
+}
