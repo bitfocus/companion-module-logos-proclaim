@@ -20,12 +20,15 @@ export const VERSE_COUNT = 6
 // How many custom quick screens Proclaim supports
 export const CUSTOM_QUICK_SCREEN_COUNT: number = 2
 
-// Simple actions, each of which has an action and matching preset, corresponding to a single Proclaim app command
-//
-// The action and preset IDs will be the name, converted to snake_case
-// The preset text will be the name, unless overridden below
-// The preset text size will be 18, unless overridden below
-// The Proclaim API App Command will be the name converted to CamelCase, unless overridden below
+// Simple actions each have an action and matching preset, corresponding to a single
+// Proclaim app command without index parameter
+export type SimpleAction = {
+	name: string
+	appCommand?: string
+}
+
+// Simple actions to generate actions for. The action IDs will be the name, converted to snake_case.
+// The Proclaim API App Command will be the name converted to CamelCase, unless overridden below.
 export const SIMPLE_ACTIONS = [
 	// On/Off Air
 	{
@@ -125,4 +128,4 @@ export const SIMPLE_ACTIONS = [
 	{
 		name: 'Show Last Slide',
 	},
-] as const satisfies readonly { name: string; appCommand?: string }[]
+] as const satisfies readonly SimpleAction[]
