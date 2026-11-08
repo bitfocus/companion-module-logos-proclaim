@@ -11,6 +11,9 @@ export const SONG_PARTS: { id: number; label: string; displayLabel?: string }[] 
 	{ id: 6, label: 'Ending' },
 ]
 
+// How many verses to generate presets for
+export const VERSE_COUNT = 6
+
 // How many custom quick screens Proclaim supports
 export const CUSTOM_QUICK_SCREEN_COUNT: number = 2
 
