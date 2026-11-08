@@ -36,14 +36,6 @@ export function createOnAirPresets(context: PresetsBuilderContext): void {
 	context.sections.push({
 		id: 'on_air',
 		name: 'On Air',
-		definitions: [
-			{
-				id: 'group1',
-				name: 'On Air',
-				description: 'Take Proclaim on or off air',
-				type: 'simple',
-				presets: ['on_air'],
-			},
-		],
+		definitions: ['on_air'],
 	})
 }

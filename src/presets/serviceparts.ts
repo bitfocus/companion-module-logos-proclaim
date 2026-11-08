@@ -89,14 +89,6 @@ export function createServicePartPresets(context: PresetsBuilderContext): void {
 	context.sections.push({
 		id: 'service_parts',
 		name: 'Service Parts',
-		definitions: [
-			{
-				id: 'group2',
-				name: 'Service Parts',
-				description: 'Jump to a specific part of the service',
-				type: 'simple',
-				presets: ['start_pre_service', 'start_warm_up', 'start_service', 'start_post_service'],
-			},
-		],
+		definitions: ['start_pre_service', 'start_warm_up', 'start_service', 'start_post_service'],
 	})
 }

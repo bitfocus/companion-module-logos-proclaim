@@ -27,15 +27,6 @@ export function createConnectionPresets(context: PresetsBuilderContext): void {
 	context.sections.push({
 		id: 'connection',
 		name: 'Connection',
-		definitions: [
-			{
-				id: 'group3',
-				name: 'Connection presets',
-				description:
-					'Occasionally it may be useful to force the module to reconnect to the Proclaim API. This preset will do that.',
-				type: 'simple',
-				presets: ['reconnect'],
-			},
-		],
+		definitions: ['reconnect'],
 	})
 }

@@ -89,14 +89,6 @@ export function createSlidePresets(context: PresetsBuilderContext): void {
 	context.sections.push({
 		id: 'slides',
 		name: 'Slides',
-		definitions: [
-			{
-				id: 'group2',
-				name: 'Slides',
-				description: 'Move to the next or previous slide, or next or previous service item',
-				type: 'simple',
-				presets: ['previous_slide', 'next_slide', 'previous_service_item', 'next_service_item'],
-			},
-		],
+		definitions: ['previous_slide', 'next_slide', 'previous_service_item', 'next_service_item'],
 	})
 }
