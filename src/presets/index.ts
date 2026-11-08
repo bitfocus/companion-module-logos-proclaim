@@ -7,6 +7,7 @@ import { createServicePartPresets } from './serviceparts.js'
 import { createConnectionPresets } from './connection.js'
 import { createSlidePresets } from './slides.js'
 import { createMediaPresets } from './media.js'
+import { createQuickScreenPresets } from './quickscreens.js'
 
 export const DEFAULT_PRESET_STYLE = {
 	size: 18,
@@ -24,6 +25,7 @@ export const UpdatePresets = function (self: ModuleInstance): void {
 	createServicePartPresets(context)
 	createSlidePresets(context)
 	createMediaPresets(context)
+	createQuickScreenPresets(context)
 	createConnectionPresets(context)
 
 	// Add simple action presets, using the list from refdata.js
