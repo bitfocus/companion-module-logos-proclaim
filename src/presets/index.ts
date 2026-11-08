@@ -1,5 +1,6 @@
+import type { CompanionPresetSection, CompanionPresetDefinitions } from '@companion-module/base'
+import type { ModuleSchema } from '../main.js'
 import type ModuleInstance from '../main.js'
-import type { PresetsBuilderContext } from './context.js'
 import { createOnAirPresets } from './onair.js'
 import { createServicePartPresets } from './serviceparts.js'
 import { createConnectionPresets } from './connection.js'
@@ -9,10 +10,9 @@ import { createQuickScreenPresets } from './quickscreens.js'
 import { createSongPartPresets } from './songparts.js'
 import { createSongPresets } from './songs.js'
 
-export const DEFAULT_PRESET_STYLE = {
-	size: 18,
-	bgcolor: 0x000000,
-	color: 0xffffff,
+export interface PresetsBuilderContext {
+	readonly sections: CompanionPresetSection<ModuleSchema>[]
+	readonly definitions: CompanionPresetDefinitions<ModuleSchema>
 }
 
 export const UpdatePresets = function (self: ModuleInstance): void {

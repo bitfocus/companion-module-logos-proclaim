@@ -1,5 +1,5 @@
-import { DEFAULT_PRESET_STYLE } from './index.js'
-import type { PresetsBuilderContext } from './context.js'
+import { DEFAULT_PRESET_STYLE } from '../refdata.js'
+import type { PresetsBuilderContext } from './index.js'
 import { SONG_COUNT } from '../refdata.js'
 
 export function createSongPresets(context: PresetsBuilderContext): void {

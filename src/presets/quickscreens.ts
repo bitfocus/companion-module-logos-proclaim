@@ -1,5 +1,5 @@
-import { DEFAULT_PRESET_STYLE } from './index.js'
-import type { PresetsBuilderContext } from './context.js'
+import { DEFAULT_PRESET_STYLE } from '../refdata.js'
+import type { PresetsBuilderContext } from './index.js'
 
 export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 	context.definitions['show_blank_quick_screen'] = {
