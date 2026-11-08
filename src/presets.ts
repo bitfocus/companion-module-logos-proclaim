@@ -11,27 +11,6 @@ export const UpdatePresets = function (self: ModuleInstance): void {
 	}
 
 	const presets: CompanionPresetDefinitions<ModuleSchema> = {}
-	presets['reconnect'] = {
-		type: 'simple',
-		name: 'Reconnect',
-		style: {
-			...style,
-			text: 'Reconnect',
-			size: 'auto',
-		},
-		steps: [
-			{
-				down: [
-					{
-						actionId: 'reconnect',
-						options: {},
-					},
-				],
-				up: [],
-			},
-		],
-		feedbacks: [],
-	}
 
 	presets['on_air'] = {
 		type: 'simple',
@@ -63,31 +42,152 @@ export const UpdatePresets = function (self: ModuleInstance): void {
 		],
 	}
 
-	const structure: CompanionPresetSection[] = [
-		{
-			id: 'connection',
-			name: 'Connection',
-			definitions: [
-				{
-					id: 'group1',
-					name: 'Connection presets',
-					description:
-						'Occasionally it may be useful to force the module to reconnect to the Proclaim API. This preset will do that.',
-					type: 'simple',
-					presets: ['reconnect'],
-				},
-			],
+	presets['start_pre_service'] = {
+		type: 'simple',
+		name: 'Start Pre Service',
+		style: {
+			...style,
+			text: 'Pre Service',
 		},
+		steps: [
+			{
+				down: [
+					{
+						actionId: 'start_pre_service',
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+		feedbacks: [],
+	}
+
+	presets['start_warm_up'] = {
+		type: 'simple',
+		name: 'Start Warm Up',
+		style: {
+			...style,
+			text: 'Warm Up',
+		},
+		steps: [
+			{
+				down: [
+					{
+						actionId: 'start_warm_up',
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+		feedbacks: [],
+	}
+
+	presets['start_service'] = {
+		type: 'simple',
+		name: 'Start Service',
+		style: {
+			...style,
+			text: 'Service',
+		},
+		steps: [
+			{
+				down: [
+					{
+						actionId: 'start_service',
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+		feedbacks: [],
+	}
+
+	presets['start_post_service'] = {
+		type: 'simple',
+		name: 'Start Post Service',
+		style: {
+			...style,
+			text: 'Post Service',
+		},
+		steps: [
+			{
+				down: [
+					{
+						actionId: 'start_post_service',
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+		feedbacks: [],
+	}
+
+	presets['reconnect'] = {
+		type: 'simple',
+		name: 'Reconnect',
+		style: {
+			...style,
+			text: 'Reconnect',
+			size: 'auto',
+		},
+		steps: [
+			{
+				down: [
+					{
+						actionId: 'reconnect',
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+		feedbacks: [],
+	}
+
+	const structure: CompanionPresetSection[] = [
 		{
 			id: 'on_air',
 			name: 'On Air',
 			definitions: [
 				{
-					id: 'group2',
+					id: 'group1',
 					name: 'On Air',
 					description: 'Take Proclaim on or off air',
 					type: 'simple',
 					presets: ['on_air'],
+				},
+			],
+		},
+
+		{
+			id: 'service_parts',
+			name: 'Service Parts',
+			definitions: [
+				{
+					id: 'group2',
+					name: 'Service Parts',
+					description: 'Jump to a specific part of the service',
+					type: 'simple',
+					presets: ['start_pre_service', 'start_warm_up', 'start_service', 'start_post_service'],
+				},
+			],
+		},
+
+		{
+			id: 'connection',
+			name: 'Connection',
+			definitions: [
+				{
+					id: 'group3',
+					name: 'Connection presets',
+					description:
+						'Occasionally it may be useful to force the module to reconnect to the Proclaim API. This preset will do that.',
+					type: 'simple',
+					presets: ['reconnect'],
 				},
 			],
 		},
