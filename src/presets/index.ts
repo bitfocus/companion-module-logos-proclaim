@@ -1,6 +1,4 @@
-//import { SONG_PARTS, SIMPLE_ACTIONS, CUSTOM_QUICK_SCREEN_COUNT } from './refdata.js'
 import type ModuleInstance from '../main.js'
-import { combineRgb } from '@companion-module/base'
 import type { PresetsBuilderContext } from './context.js'
 import { createOnAirPresets } from './onair.js'
 import { createServicePartPresets } from './serviceparts.js'
@@ -13,8 +11,8 @@ import { createSongPresets } from './songs.js'
 
 export const DEFAULT_PRESET_STYLE = {
 	size: 18,
-	bgcolor: combineRgb(0, 0, 0),
-	color: combineRgb(255, 255, 255),
+	bgcolor: 0x000000,
+	color: 0xffffff,
 }
 
 export const UpdatePresets = function (self: ModuleInstance): void {

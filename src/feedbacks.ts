@@ -1,4 +1,3 @@
-import { combineRgb } from '@companion-module/base'
 import ModuleInstance from './main.js'
 
 export type FeedbacksSchema = {
@@ -15,8 +14,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			type: 'boolean',
 			description: 'Whether or not Proclaim is On Air',
 			defaultStyle: {
-				bgcolor: combineRgb(255, 0, 0),
-				color: combineRgb(0, 0, 0),
+				bgcolor: 0xff0000,
+				color: 0x000000,
 			},
 			options: [],
 			callback: () => {

@@ -1,4 +1,3 @@
-import { combineRgb } from '@companion-module/base'
 import { DEFAULT_PRESET_STYLE } from './index.js'
 import type { PresetsBuilderContext } from './context.js'
 
@@ -26,8 +25,8 @@ export function createOnAirPresets(context: PresetsBuilderContext): void {
 				feedbackId: 'on_air',
 				options: {},
 				style: {
-					bgcolor: combineRgb(255, 0, 0),
-					color: combineRgb(0, 0, 0),
+					bgcolor: 0xff0000,
+					color: 0x000000,
 				},
 			},
 		],
