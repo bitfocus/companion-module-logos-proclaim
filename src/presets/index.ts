@@ -9,6 +9,7 @@ import { createSlidePresets } from './slides.js'
 import { createMediaPresets } from './media.js'
 import { createQuickScreenPresets } from './quickscreens.js'
 import { createSongPartPresets } from './songparts.js'
+import { createSongPresets } from './songs.js'
 
 export const DEFAULT_PRESET_STYLE = {
 	size: 18,
@@ -25,6 +26,7 @@ export const UpdatePresets = function (self: ModuleInstance): void {
 	createOnAirPresets(context)
 	createServicePartPresets(context)
 	createSlidePresets(context)
+	createSongPresets(context)
 	createSongPartPresets(context)
 	createMediaPresets(context)
 	createQuickScreenPresets(context)

@@ -11,6 +11,9 @@ export const SONG_PARTS: { id: number; label: string; displayLabel?: string }[] 
 	{ id: 6, label: 'Ending' },
 ]
 
+// How many songs to generate presets for
+export const SONG_COUNT = 10
+
 // How many verses to generate presets for
 export const VERSE_COUNT = 6
 
