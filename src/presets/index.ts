@@ -5,6 +5,7 @@ import type { PresetsBuilderContext } from './context.js'
 import { createOnAirPresets } from './onair.js'
 import { createServicePartPresets } from './serviceparts.js'
 import { createConnectionPresets } from './connection.js'
+import { createSlidePresets } from './slides.js'
 
 export const DEFAULT_PRESET_STYLE = {
 	size: 18,
@@ -20,6 +21,7 @@ export const UpdatePresets = function (self: ModuleInstance): void {
 
 	createOnAirPresets(context)
 	createServicePartPresets(context)
+	createSlidePresets(context)
 	createConnectionPresets(context)
 
 	// Add simple action presets, using the list from refdata.js
