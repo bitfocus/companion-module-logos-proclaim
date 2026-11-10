@@ -1,6 +1,7 @@
 import { type CompanionActionDefinitions } from '@companion-module/base'
 import type ModuleInstance from './main.js'
 import { SONG_PARTS, SIMPLE_ACTIONS, CUSTOM_QUICK_SCREEN_COUNT } from './refdata.js'
+import { AppCommand } from '@hussra/logos-proclaim'
 
 type SimpleActionId<Name extends string> = Name extends `${infer Word} ${infer Rest}`
 	? `${Lowercase<Word>}_${SimpleActionId<Rest>}`
@@ -45,6 +46,11 @@ type BaseActionsSchema = {
 
 export type ActionsSchema = BaseActionsSchema & Record<SimpleActionIds, { options: Record<never, never> }>
 
+/**
+ * Register module actions
+ *
+ * @param self - the module instance
+ */
 export const UpdateActions = function (self: ModuleInstance): void {
 	const actions: Partial<CompanionActionDefinitions<ActionsSchema>> = {
 		reconnect: {
@@ -60,9 +66,9 @@ export const UpdateActions = function (self: ModuleInstance): void {
 			options: [],
 			callback: async () => {
 				if (self.proclaimAPI.status.onAir) {
-					await self.proclaimAPI.sendAppCommand('GoOffAir')
+					await self.proclaimAPI.sendAppCommand({ command: AppCommand.GoOffAir })
 				} else {
-					await self.proclaimAPI.sendAppCommand('GoOnAir')
+					await self.proclaimAPI.sendAppCommand({ command: AppCommand.GoOnAir })
 				}
 			},
 		},
@@ -80,7 +86,7 @@ export const UpdateActions = function (self: ModuleInstance): void {
 				},
 			],
 			callback: async (event) => {
-				await self.proclaimAPI.sendAppCommand('GoToServiceItem', event.options.num)
+				await self.proclaimAPI.sendAppCommand({ command: AppCommand.GoToServiceItem, index: event.options.num })
 			},
 		},
 
@@ -97,7 +103,7 @@ export const UpdateActions = function (self: ModuleInstance): void {
 				},
 			],
 			callback: async (event) => {
-				await self.proclaimAPI.sendAppCommand('GoToSlide', event.options.num)
+				await self.proclaimAPI.sendAppCommand({ command: AppCommand.GoToSlide, index: event.options.num })
 			},
 		},
 
@@ -114,7 +120,7 @@ export const UpdateActions = function (self: ModuleInstance): void {
 				},
 			],
 			callback: async (event) => {
-				await self.proclaimAPI.sendAppCommand('GoToSong', event.options.num)
+				await self.proclaimAPI.sendAppCommand({ command: AppCommand.GoToSong, index: event.options.num })
 			},
 		},
 
@@ -138,8 +144,10 @@ export const UpdateActions = function (self: ModuleInstance): void {
 				},
 			],
 			callback: async (event) => {
-				const part = SONG_PARTS[event.options.song_part].label
-				await self.proclaimAPI.sendAppCommand(`ShowSongLyrics${part}ByIndex`, event.options.item_index)
+				await self.proclaimAPI.sendAppCommand({
+					command: SONG_PARTS[event.options.song_part].appCommand,
+					index: event.options.item_index,
+				})
 			},
 		},
 
@@ -156,7 +164,7 @@ export const UpdateActions = function (self: ModuleInstance): void {
 				},
 			],
 			callback: async (event) => {
-				await self.proclaimAPI.sendAppCommand('ShowCustomQuickScreen', event.options.num)
+				await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowCustomQuickScreen, index: event.options.num })
 			},
 		},
 	}
@@ -165,12 +173,10 @@ export const UpdateActions = function (self: ModuleInstance): void {
 	for (const action of SIMPLE_ACTIONS) {
 		const id = action.name.split(' ').join('_').toLowerCase() as SimpleActionIds
 		const name = action.name
-		const appCommand =
-			'appCommand' in action && typeof action.appCommand === 'string' ? action.appCommand : name.split(' ').join('')
 		actions[id] = {
 			name: name,
 			callback: async () => {
-				await self.proclaimAPI.sendAppCommand(appCommand)
+				await self.proclaimAPI.sendAppCommand({ command: action.appCommand })
 			},
 			options: [],
 		}
