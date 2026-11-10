@@ -7,6 +7,11 @@ export type FeedbacksSchema = {
 	}
 }
 
+/**
+ * Register module feedbacks
+ *
+ * @param self - the module instance
+ */
 export function UpdateFeedbacks(self: ModuleInstance): void {
 	self.setFeedbackDefinitions({
 		on_air: {

@@ -15,6 +15,11 @@ export interface PresetsBuilderContext {
 	readonly definitions: CompanionPresetDefinitions<ModuleSchema>
 }
 
+/**
+ * Register module presets
+ *
+ * @param self - the module instance
+ */
 export const UpdatePresets = function (self: ModuleInstance): void {
 	const context: PresetsBuilderContext = {
 		sections: [],
