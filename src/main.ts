@@ -5,7 +5,8 @@ import { UpdateActions, type ActionsSchema } from './actions.js'
 import { UpdateFeedbacks, type FeedbacksSchema } from './feedbacks.js'
 import { UpdateVariableDefinitions, type VariablesSchema } from './variables.js'
 import { UpdatePresets } from './presets/index.js'
-import { ProclaimAPI } from './api.js'
+import { ProclaimAPI } from '@hussra/logos-proclaim'
+import { AddEventListeners } from './events.js'
 
 export type ModuleSchema = {
 	config: ModuleConfig
@@ -33,17 +34,23 @@ export default class ModuleInstance extends InstanceBase<ModuleSchema> {
 
 		this.updateStatus(InstanceStatus.Connecting)
 
-		this.updateActions() // Export actions
-		this.updateFeedbacks() // Export feedbacks
-		this.updateVariableDefinitions() // Export variable definitions
-		this.updatePresets() // Export presets
+		// Our connection to Proclaim
+		this.proclaimAPI = new ProclaimAPI()
 
-		this.proclaimAPI = new ProclaimAPI(this)
+		// Register UpdateActions, feedbacks, variables and presets
+		this.updateActions()
+		this.updateFeedbacks()
+		this.updateVariableDefinitions()
+		this.updatePresets()
 
 		// Initialise variables
 		this.setVariableValues({
 			on_air: false,
+			session_id: '',
 		})
+
+		// Listen for Proclaim events and update module status, feedbacks and variables
+		this.addEventListeners()
 
 		// Process module config
 		await this.configUpdated(config, secrets)
@@ -58,7 +65,7 @@ export default class ModuleInstance extends InstanceBase<ModuleSchema> {
 	async configUpdated(config: ModuleConfig, secrets: ModuleSecrets): Promise<void> {
 		this.config = config
 		this.secrets = secrets
-		await this.proclaimAPI.configure()
+		await this.proclaimAPI.configure(config.ip, secrets.password)
 	}
 
 	getConfigFields(): SomeCompanionConfigField[] {
@@ -79,5 +86,9 @@ export default class ModuleInstance extends InstanceBase<ModuleSchema> {
 
 	updatePresets(): void {
 		UpdatePresets(this)
+	}
+
+	addEventListeners(): void {
+		AddEventListeners(this)
 	}
 }
