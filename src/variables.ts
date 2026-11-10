@@ -5,6 +5,10 @@ export type VariablesSchema = {
 	session_id: string
 }
 
+/**
+ * Register module variables
+ * @param self - the module instance
+ */
 export const UpdateVariableDefinitions = function (self: ModuleInstance): void {
 	self.setVariableDefinitions({
 		on_air: { name: 'On Air' },

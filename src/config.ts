@@ -9,6 +9,9 @@ export type ModuleSecrets = {
 	password: string
 }
 
+/**
+ * Configuration fields for the module
+ */
 export function GetConfigFields(): SomeCompanionConfigField[] {
 	return [
 		{
