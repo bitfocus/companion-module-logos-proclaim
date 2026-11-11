@@ -1,7 +1,8 @@
 import { InstanceStatus, type LogLevel } from '@companion-module/base'
-import { LogLevel as ProclaimLogLevel, ServiceItemKind } from '@hussra/logos-proclaim'
+import { LogLevel as ProclaimLogLevel, type ProclaimStatusEvents } from '@hussra/logos-proclaim'
 import ModuleInstance from './main.js'
 import { ticksToUnixTime } from './util.js'
+import type { VariablesSchema } from './variables.js'
 
 /**
  * Add event listeners for Proclaim events, to update Companion module status,
@@ -54,9 +55,27 @@ export function AddEventListeners(self: ModuleInstance): void {
 			presentation_group_id: data ? data.groupId : '',
 			presentation_date: data ? ticksToUnixTime(data.dateGiven) : 0,
 			presentation_start_time: data ? ticksToUnixTime(data.startTime) : 0,
-			item_count: data ? data.serviceItems.length : 0,
-			song_count: data ? data.serviceItems.filter((item) => item.kind === ServiceItemKind.SongLyrics).length : 0,
 		})
+	})
+
+	mapEventToVariable(self, 'itemCount', 'item_count')
+	mapEventToVariable(self, 'songCount', 'song_count')
+}
+
+/**
+ * Map Proclaim status events directly to a Companion module variable
+ * @param self - The module instance
+ * @param eventName - The Proclaim status event name
+ * @param variableName - The module variable name
+ */
+function mapEventToVariable(
+	self: ModuleInstance,
+	eventName: keyof ProclaimStatusEvents,
+	variableName: keyof VariablesSchema,
+) {
+	self.proclaimAPI.status.on(eventName, ({ data }) => {
+		const val = { [variableName]: data } as Partial<VariablesSchema>
+		self.setVariableValues(val)
 	})
 }
 
