@@ -11,12 +11,13 @@ export type VariablesSchema = {
 	presentation_date: number
 	presentation_start_time: number
 	item_count: number
+	item_index: number
 	song_count: number
 	item_id: string
 	item_title: string
-	item_index: number
 	item_kind: ServiceItemKind | null
 	slide_count: number
+	slide_index: number
 }
 
 /**
@@ -39,7 +40,8 @@ export const UpdateVariableDefinitions = function (self: ModuleInstance): void {
 		item_title: { name: 'Service Item Title' },
 		item_index: { name: 'Service Item Index' },
 		item_kind: { name: 'Service Item Type' },
-		slide_count: { name: 'Number of SLides in Current Service Item' },
+		slide_count: { name: 'Number of Slides in Current Service Item' },
+		slide_index: { name: 'Slide Index in Current Service Item' },
 	})
 }
 
@@ -60,5 +62,6 @@ export const InitializeVariables = function (self: ModuleInstance): void {
 		item_index: 0,
 		item_kind: null,
 		slide_count: 0,
+		slide_index: 0,
 	})
 }

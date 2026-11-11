@@ -65,6 +65,7 @@ export function AddEventListeners(self: ModuleInstance): void {
 	mapEventToVariable(self, 'itemSlideCount', 'slide_count')
 	mapEventToVariable(self, 'itemIndex', 'item_index', (index) => index + 1)
 	mapEventToVariable(self, 'itemKind', 'item_kind')
+	mapEventToVariable(self, 'slideIndex', 'slide_index', (index) => index + 1)
 }
 
 /**
