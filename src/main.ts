@@ -3,7 +3,7 @@ import { GetConfigFields, type ModuleConfig, type ModuleSecrets } from './config
 import { UpgradeScripts } from './upgrades.js'
 import { UpdateActions, type ActionsSchema } from './actions.js'
 import { UpdateFeedbacks, type FeedbacksSchema } from './feedbacks.js'
-import { UpdateVariableDefinitions, type VariablesSchema } from './variables.js'
+import { InitializeVariables, UpdateVariableDefinitions, type VariablesSchema } from './variables.js'
 import { UpdatePresets } from './presets/index.js'
 import { ProclaimAPI } from '@hussra/logos-proclaim'
 import { AddEventListeners } from './events.js'
@@ -44,10 +44,7 @@ export default class ModuleInstance extends InstanceBase<ModuleSchema> {
 		this.updatePresets()
 
 		// Initialise variables
-		this.setVariableValues({
-			on_air: false,
-			session_id: '',
-		})
+		this.initializeVariables()
 
 		// Listen for Proclaim events and update module status, feedbacks and variables
 		this.addEventListeners()
@@ -82,6 +79,10 @@ export default class ModuleInstance extends InstanceBase<ModuleSchema> {
 
 	updateVariableDefinitions(): void {
 		UpdateVariableDefinitions(this)
+	}
+
+	initializeVariables(): void {
+		InitializeVariables(this)
 	}
 
 	updatePresets(): void {
