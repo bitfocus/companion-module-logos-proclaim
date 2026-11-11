@@ -30,7 +30,6 @@ export type SimpleAction = {
 }
 
 // Simple actions to generate actions for. The action IDs will be the name, converted to snake_case.
-// The Proclaim API App Command will be the name converted to CamelCase, unless overridden below.
 export const SIMPLE_ACTIONS = [
 	// On/Off Air
 	{
