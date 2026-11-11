@@ -63,7 +63,9 @@ export function AddEventListeners(self: ModuleInstance): void {
 }
 
 /**
- * Map Proclaim status events directly to a Companion module variable
+ * Map Proclaim status events directly to a Companion module variable.
+ * Handy in cases where there is a direct mapping and we don't need any other
+ * behaviour when the event fires.
  * @param self - The module instance
  * @param eventName - The Proclaim status event name
  * @param variableName - The module variable name
