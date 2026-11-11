@@ -1,6 +1,7 @@
 import { InstanceStatus, type LogLevel } from '@companion-module/base'
-import { LogLevel as ProclaimLogLevel } from '@hussra/logos-proclaim'
+import { LogLevel as ProclaimLogLevel, ServiceItemKind } from '@hussra/logos-proclaim'
 import ModuleInstance from './main.js'
+import { ticksToUnixTime } from './util.js'
 
 /**
  * Add event listeners for Proclaim events, to update Companion module status,
@@ -42,6 +43,19 @@ export function AddEventListeners(self: ModuleInstance): void {
 		self.log('debug', `Proclaim sessionId status changed: ${data}`)
 		self.setVariableValues({
 			session_id: data,
+		})
+	})
+
+	self.proclaimAPI.status.on('presentation', ({ data }) => {
+		self.setVariableValues({
+			presentation_title: data ? data.title : '',
+			presentation_id: data ? data.id : '',
+			presentation_group_name: data ? data.groupName : '',
+			presentation_group_id: data ? data.groupId : '',
+			presentation_date: data ? ticksToUnixTime(data.dateGiven) : 0,
+			presentation_start_time: data ? ticksToUnixTime(data.startTime) : 0,
+			item_count: data ? data.serviceItems.length : 0,
+			song_count: data ? data.serviceItems.filter((item) => item.kind === ServiceItemKind.SongLyrics).length : 0,
 		})
 	})
 }
