@@ -1,4 +1,5 @@
-import { InstanceStatus } from '@companion-module/base'
+import { InstanceStatus, type LogLevel } from '@companion-module/base'
+import { LogLevel as ProclaimLogLevel } from '@hussra/logos-proclaim'
 import ModuleInstance from './main.js'
 
 /**
@@ -8,6 +9,12 @@ import ModuleInstance from './main.js'
  * @param self - The module instance
  */
 export function AddEventListeners(self: ModuleInstance): void {
+	self.proclaimAPI.status.on('log', ({ data }) => {
+		const { level, message, error } = data
+		const companionLogLevel = companionLogLevelMap[level]
+		self.log(companionLogLevel, error ? `${message} - ${error.stack}` : message)
+	})
+
 	self.proclaimAPI.status.on('configValid', ({ data }) => {
 		self.log('debug', `Proclaim configIsValid status changed: ${data}`)
 		updateInstanceStatus(self)
@@ -61,4 +68,11 @@ function updateInstanceStatus(self: ModuleInstance): void {
 	}
 
 	self.updateStatus(InstanceStatus.Ok, 'Connected to Proclaim')
+}
+
+const companionLogLevelMap: Record<ProclaimLogLevel, LogLevel> = {
+	[ProclaimLogLevel.DEBUG]: 'debug',
+	[ProclaimLogLevel.ERROR]: 'error',
+	[ProclaimLogLevel.INFO]: 'info',
+	[ProclaimLogLevel.WARN]: 'warn',
 }
