@@ -63,7 +63,7 @@ export function AddEventListeners(self: ModuleInstance): void {
 	mapEventToVariable(self, 'itemId', 'item_id')
 	mapEventToVariable(self, 'itemTitle', 'item_title')
 	mapEventToVariable(self, 'itemSlideCount', 'slide_count')
-	mapEventToVariable(self, 'itemIndex', 'item_index')
+	mapEventToVariable(self, 'itemIndex', 'item_index', (index) => index + 1)
 	mapEventToVariable(self, 'itemKind', 'item_kind')
 }
 
@@ -74,14 +74,18 @@ export function AddEventListeners(self: ModuleInstance): void {
  * @param self - The module instance
  * @param eventName - The Proclaim status event name
  * @param variableName - The module variable name
+ * @param transform - Optional function to transform the event data before setting the variable
  */
-function mapEventToVariable(
+function mapEventToVariable<EventName extends keyof ProclaimStatusEvents, VariableName extends keyof VariablesSchema>(
 	self: ModuleInstance,
-	eventName: keyof ProclaimStatusEvents,
-	variableName: keyof VariablesSchema,
+	eventName: EventName,
+	variableName: VariableName,
+	transform?: (data: ProclaimStatusEvents[EventName]) => VariablesSchema[VariableName],
 ) {
 	self.proclaimAPI.status.on(eventName, ({ data }) => {
-		const val = { [variableName]: data } as Partial<VariablesSchema>
+		const val = {
+			[variableName]: transform ? transform(data as ProclaimStatusEvents[EventName]) : data,
+		} as Partial<VariablesSchema>
 		self.setVariableValues(val)
 	})
 }
