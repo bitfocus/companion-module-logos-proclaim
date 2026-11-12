@@ -11,9 +11,9 @@ export type FeedbacksSchema = {
 		type: 'boolean'
 		options: {
 			quickScreen: keyof typeof QuickScreenKind
-    }
-  }
-  
+		}
+	}
+
 	in_service_part: {
 		type: 'boolean'
 		options: {
@@ -50,30 +50,30 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			},
 		},
 
-    quick_screen: {
+		quick_screen: {
 			name: 'Quick Screen',
 			type: 'boolean',
 			description: 'Whether a particular Quick Screen is active',
 			defaultStyle: {
 				bgcolor: 0xffff00,
-        color: 0x000000,
+				color: 0x000000,
 			},
 			options: [
 				{
-          id: 'quickScreen',
+					id: 'quickScreen',
 					type: 'dropdown',
 					label: 'Quick Screen',
 					default: 'None',
 					choices: Object.keys(QuickScreenKind).map((key) => {
 						return { id: key, label: QuickScreenKind[key as keyof typeof QuickScreenKind] }
-          }),
+					}),
 				},
 			],
 			callback: (event) => {
-        const feedbackQuickScreenKind: QuickScreenKind = QuickScreenKind[event.options.quickScreen]
+				const feedbackQuickScreenKind: QuickScreenKind = QuickScreenKind[event.options.quickScreen]
 				return feedbackQuickScreenKind == self.proclaimAPI.status.quickScreenKind
-      }
-    }
+			},
+		},
 
 		in_service_part: {
 			name: 'In Service Part',
@@ -81,7 +81,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			description: 'Whether or not Proclaim is in a particular service part',
 			defaultStyle: {
 				bgcolor: 0x00ff00,
-        color: 0x000000,
+				color: 0x000000,
 			},
 			options: [
 				{
