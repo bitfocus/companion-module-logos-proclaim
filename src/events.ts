@@ -34,6 +34,7 @@ export function AddEventListeners(self: ModuleInstance): void {
 			presentation_date: data ? ticksToUnixTime(data.dateGiven) : 0,
 			presentation_start_time: data ? ticksToUnixTime(data.startTime) : 0,
 		})
+		self.checkFeedbacks('has_service_part')
 	})
 
 	mapEventToVariable(self, 'itemCount', 'item_count')
@@ -46,6 +47,8 @@ export function AddEventListeners(self: ModuleInstance): void {
 	mapEventToVariable(self, 'itemSlideCount', 'slide_count')
 	mapEventToVariable(self, 'slideIndex', 'slide_index', (index) => index + 1)
 	mapEventToVariable(self, 'quickScreenKind', 'quick_screen_kind', undefined, 'quick_screen')
+	mapEventToVariable(self, 'servicePart', 'service_part', undefined, 'in_service_part')
+	mapEventToVariable(self, 'quickScreenKind', 'quick_screen_kind')
 	mapEventToVariable(self, 'stageDirection', 'stage_direction')
 }
 
