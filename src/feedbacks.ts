@@ -1,10 +1,17 @@
-import { ServicePart } from '@hussra/logos-proclaim'
+import { QuickScreenKind, ServicePart } from '@hussra/logos-proclaim'
 import type ModuleInstance from './main.js'
 
 export type FeedbacksSchema = {
 	on_air: {
 		type: 'boolean'
 		options: Record<never, never>
+	}
+
+	quick_screen: {
+		type: 'boolean'
+		options: {
+			quickScreen: keyof typeof QuickScreenKind
+		}
 	}
 
 	in_service_part: {
@@ -40,6 +47,31 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			options: [],
 			callback: () => {
 				return self.proclaimAPI.status.onAir
+			},
+		},
+
+		quick_screen: {
+			name: 'Quick Screen',
+			type: 'boolean',
+			description: 'Whether a particular Quick Screen is active',
+			defaultStyle: {
+				bgcolor: 0xffff00,
+				color: 0x000000,
+			},
+			options: [
+				{
+					id: 'quickScreen',
+					type: 'dropdown',
+					label: 'Quick Screen',
+					default: 'None',
+					choices: Object.keys(QuickScreenKind).map((key) => {
+						return { id: key, label: QuickScreenKind[key as keyof typeof QuickScreenKind] }
+					}),
+				},
+			],
+			callback: (event) => {
+				const feedbackQuickScreenKind: QuickScreenKind = QuickScreenKind[event.options.quickScreen]
+				return feedbackQuickScreenKind == self.proclaimAPI.status.quickScreenKind
 			},
 		},
 
