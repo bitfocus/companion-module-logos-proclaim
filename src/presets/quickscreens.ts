@@ -13,14 +13,25 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 			{
 				down: [
 					{
-						actionId: 'show_blank_quick_screen',
+						actionId: 'toggle_blank_quick_screen',
 						options: {},
 					},
 				],
 				up: [],
 			},
 		],
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: 'quick_screen',
+				options: {
+					quickScreen: 'Blank',
+				},
+				style: {
+					bgcolor: 0xffff00,
+					color: 0x000000,
+				},
+			},
+		],
 	}
 
 	context.definitions['show_logo_quick_screen'] = {
@@ -34,14 +45,25 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 			{
 				down: [
 					{
-						actionId: 'show_logo_quick_screen',
+						actionId: 'toggle_logo_quick_screen',
 						options: {},
 					},
 				],
 				up: [],
 			},
 		],
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: 'quick_screen',
+				options: {
+					quickScreen: 'Logo',
+				},
+				style: {
+					bgcolor: 0xffff00,
+					color: 0x000000,
+				},
+			},
+		],
 	}
 
 	context.definitions['show_no_text_quick_screen'] = {
@@ -55,14 +77,25 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 			{
 				down: [
 					{
-						actionId: 'show_no_text_quick_screen',
+						actionId: 'toggle_no_text_quick_screen',
 						options: {},
 					},
 				],
 				up: [],
 			},
 		],
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: 'quick_screen',
+				options: {
+					quickScreen: 'NoText',
+				},
+				style: {
+					bgcolor: 0xffff00,
+					color: 0x000000,
+				},
+			},
+		],
 	}
 
 	context.definitions['show_custom_1_quick_screen'] = {
@@ -76,7 +109,7 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 			{
 				down: [
 					{
-						actionId: 'show_custom_quick_screen',
+						actionId: 'toggle_custom_quick_screen',
 						options: {
 							num: 1,
 						},
@@ -85,7 +118,18 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 				up: [],
 			},
 		],
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: 'quick_screen',
+				options: {
+					quickScreen: 'Custom',
+				},
+				style: {
+					bgcolor: 0xffff00,
+					color: 0x000000,
+				},
+			},
+		],
 	}
 
 	context.definitions['show_custom_2_quick_screen'] = {
@@ -99,7 +143,7 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 			{
 				down: [
 					{
-						actionId: 'show_custom_quick_screen',
+						actionId: 'toggle_custom_quick_screen',
 						options: {
 							num: 2,
 						},
@@ -108,7 +152,18 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 				up: [],
 			},
 		],
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: 'quick_screen',
+				options: {
+					quickScreen: 'Custom',
+				},
+				style: {
+					bgcolor: 0xffff00,
+					color: 0x000000,
+				},
+			},
+		],
 	}
 
 	context.definitions['show_text'] = {
