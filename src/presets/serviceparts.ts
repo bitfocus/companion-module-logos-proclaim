@@ -20,7 +20,29 @@ export function createServicePartPresets(context: PresetsBuilderContext): void {
 				up: [],
 			},
 		],
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: 'has_service_part',
+				options: {
+					servicePart: 'PreService',
+				},
+				isInverted: true,
+				style: {
+					bgcolor: 0x000000,
+					color: 0x333333,
+				},
+			},
+			{
+				feedbackId: 'in_service_part',
+				options: {
+					servicePart: 'PreService',
+				},
+				style: {
+					bgcolor: 0x00ff00,
+					color: 0x000000,
+				},
+			},
+		],
 	}
 
 	context.definitions['start_warm_up'] = {
@@ -41,7 +63,29 @@ export function createServicePartPresets(context: PresetsBuilderContext): void {
 				up: [],
 			},
 		],
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: 'has_service_part',
+				options: {
+					servicePart: 'Warmup',
+				},
+				isInverted: true,
+				style: {
+					bgcolor: 0x000000,
+					color: 0x333333,
+				},
+			},
+			{
+				feedbackId: 'in_service_part',
+				options: {
+					servicePart: 'Warmup',
+				},
+				style: {
+					bgcolor: 0x00ff00,
+					color: 0x000000,
+				},
+			},
+		],
 	}
 
 	context.definitions['start_service'] = {
@@ -62,7 +106,29 @@ export function createServicePartPresets(context: PresetsBuilderContext): void {
 				up: [],
 			},
 		],
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: 'has_service_part',
+				options: {
+					servicePart: 'Service',
+				},
+				isInverted: true,
+				style: {
+					bgcolor: 0x000000,
+					color: 0x333333,
+				},
+			},
+			{
+				feedbackId: 'in_service_part',
+				options: {
+					servicePart: 'Service',
+				},
+				style: {
+					bgcolor: 0x00ff00,
+					color: 0x000000,
+				},
+			},
+		],
 	}
 
 	context.definitions['start_post_service'] = {
@@ -83,7 +149,29 @@ export function createServicePartPresets(context: PresetsBuilderContext): void {
 				up: [],
 			},
 		],
-		feedbacks: [],
+		feedbacks: [
+			{
+				feedbackId: 'has_service_part',
+				options: {
+					servicePart: 'PostService',
+				},
+				isInverted: true,
+				style: {
+					bgcolor: 0x000000,
+					color: 0x333333,
+				},
+			},
+			{
+				feedbackId: 'in_service_part',
+				options: {
+					servicePart: 'PostService',
+				},
+				style: {
+					bgcolor: 0x00ff00,
+					color: 0x000000,
+				},
+			},
+		],
 	}
 
 	context.sections.push({
