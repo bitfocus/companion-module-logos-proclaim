@@ -1,8 +1,9 @@
-import { InstanceStatus, type LogLevel } from '@companion-module/base'
+import { InstanceStatus, type LogLevel, type StringKeys } from '@companion-module/base'
 import { LogLevel as ProclaimLogLevel, type ProclaimStatusEvents } from '@hussra/logos-proclaim'
 import ModuleInstance from './main.js'
 import { ticksToUnixTime } from './util.js'
 import type { VariablesSchema } from './variables.js'
+import type { FeedbacksSchema } from './feedbacks.js'
 
 /**
  * Add event listeners for Proclaim events, to update Companion module status,
@@ -17,35 +18,12 @@ export function AddEventListeners(self: ModuleInstance): void {
 		self.log(companionLogLevel, error ? `${message} - ${error.stack}` : message)
 	})
 
-	self.proclaimAPI.status.on('configValid', ({ data }) => {
-		self.log('debug', `Proclaim configIsValid status changed: ${data}`)
+	self.proclaimAPI.status.on(['configValid', 'connected', 'appCommandAPIAuthenticated'], () => {
 		updateInstanceStatus(self)
 	})
 
-	self.proclaimAPI.status.on('connected', ({ data }) => {
-		self.log('debug', `Proclaim connected status changed: ${data}`)
-		updateInstanceStatus(self)
-	})
-
-	self.proclaimAPI.status.on('appCommandAPIAuthenticated', ({ data }) => {
-		self.log('debug', `Proclaim authenticated status changed: ${data}`)
-		updateInstanceStatus(self)
-	})
-
-	self.proclaimAPI.status.on('onAir', ({ data }) => {
-		self.log('debug', `Proclaim onAir status changed: ${data}`)
-		self.setVariableValues({
-			on_air: data,
-		})
-		self.checkFeedbacks('on_air')
-	})
-
-	self.proclaimAPI.status.on('sessionId', ({ data }) => {
-		self.log('debug', `Proclaim sessionId status changed: ${data}`)
-		self.setVariableValues({
-			session_id: data,
-		})
-	})
+	mapEventToVariable(self, 'onAir', 'on_air', undefined, 'on_air')
+	mapEventToVariable(self, 'sessionId', 'session_id')
 
 	self.proclaimAPI.status.on('presentation', ({ data }) => {
 		self.setVariableValues({
@@ -79,18 +57,25 @@ export function AddEventListeners(self: ModuleInstance): void {
  * @param eventName - The Proclaim status event name
  * @param variableName - The module variable name
  * @param transform - Optional function to transform the event data before setting the variable
+ * @param feedback - Feedback to check
+ * @param feedbacks - Additional feedbacks to check
  */
 function mapEventToVariable<EventName extends keyof ProclaimStatusEvents, VariableName extends keyof VariablesSchema>(
 	self: ModuleInstance,
 	eventName: EventName,
 	variableName: VariableName,
 	transform?: (data: ProclaimStatusEvents[EventName]) => VariablesSchema[VariableName],
+	feedback?: StringKeys<FeedbacksSchema>,
+	...feedbacks: StringKeys<FeedbacksSchema>[]
 ) {
 	self.proclaimAPI.status.on(eventName, ({ data }) => {
 		const val = {
 			[variableName]: transform ? transform(data as ProclaimStatusEvents[EventName]) : data,
 		} as Partial<VariablesSchema>
 		self.setVariableValues(val)
+		if (feedback) {
+			self.checkFeedbacks(feedback, ...feedbacks)
+		}
 	})
 }
 
