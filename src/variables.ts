@@ -12,11 +12,11 @@ export type VariablesSchema = {
 	presentation_start_time: number
 	item_count: number
 	item_index: number
+	item_title: string
+	item_id: string
+	item_kind: ServiceItemKind | null
 	song_count: number
 	song_index: number
-	item_id: string
-	item_title: string
-	item_kind: ServiceItemKind | null
 	slide_count: number
 	slide_index: number
 	quick_screen_kind: QuickScreenKind | null
@@ -38,12 +38,12 @@ export const UpdateVariableDefinitions = function (self: ModuleInstance): void {
 		presentation_date: { name: 'Presentation Date - Unix Timestamp' },
 		presentation_start_time: { name: 'Presentation Start Time (On Air since) - Unix Timestamp' },
 		item_count: { name: 'Number of Service Items in Current Presentation' },
+		item_index: { name: 'Service Item Index' },
+		item_title: { name: 'Service Item Title' },
+		item_id: { name: 'Service Item ID' },
+		item_kind: { name: 'Service Item Type' },
 		song_count: { name: 'Number of Songs in Current Presentation' },
 		song_index: { name: 'Song Index' },
-		item_id: { name: 'Service Item ID' },
-		item_title: { name: 'Service Item Title' },
-		item_index: { name: 'Service Item Index' },
-		item_kind: { name: 'Service Item Type' },
 		slide_count: { name: 'Number of Slides in Current Service Item' },
 		slide_index: { name: 'Slide Index in Current Service Item' },
 		quick_screen_kind: { name: 'Quick Screen Type' },
@@ -62,12 +62,12 @@ export const InitializeVariables = function (self: ModuleInstance): void {
 		presentation_date: 0,
 		presentation_start_time: 0,
 		item_count: 0,
+		item_index: 0,
+		item_title: '',
+		item_id: '',
+		item_kind: null,
 		song_count: 0,
 		song_index: 0,
-		item_id: '',
-		item_title: '',
-		item_index: 0,
-		item_kind: null,
 		slide_count: 0,
 		slide_index: 0,
 		quick_screen_kind: null,
