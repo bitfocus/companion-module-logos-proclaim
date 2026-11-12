@@ -1,7 +1,7 @@
 import { type CompanionActionDefinitions } from '@companion-module/base'
 import type ModuleInstance from './main.js'
 import { SONG_PARTS, SIMPLE_ACTIONS, CUSTOM_QUICK_SCREEN_COUNT } from './refdata.js'
-import { AppCommand } from '@hussra/logos-proclaim'
+import { AppCommand, QuickScreenKind } from '@hussra/logos-proclaim'
 
 type SimpleActionId<Name extends string> = Name extends `${infer Word} ${infer Rest}`
 	? `${Lowercase<Word>}_${SimpleActionId<Rest>}`
@@ -38,6 +38,20 @@ type BaseActionsSchema = {
 		}
 	}
 	show_custom_quick_screen: {
+		options: {
+			num: number
+		}
+	}
+	toggle_blank_quick_screen: {
+		options: Record<never, never>
+	}
+	toggle_logo_quick_screen: {
+		options: Record<never, never>
+	}
+	toggle_no_text_quick_screen: {
+		options: Record<never, never>
+	}
+	toggle_custom_quick_screen: {
 		options: {
 			num: number
 		}
@@ -151,6 +165,42 @@ export const UpdateActions = function (self: ModuleInstance): void {
 			},
 		},
 
+		toggle_blank_quick_screen: {
+			name: 'Toggle Blank Quick Screen',
+			options: [],
+			callback: async () => {
+				if (QuickScreenKind.Blank == self.proclaimAPI.status.quickScreenKind) {
+					await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowLastSlide })
+				} else {
+					await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowBlankQuickScreen })
+				}
+			},
+		},
+
+		toggle_logo_quick_screen: {
+			name: 'Toggle Logo Quick Screen',
+			options: [],
+			callback: async () => {
+				if (QuickScreenKind.Logo == self.proclaimAPI.status.quickScreenKind) {
+					await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowLastSlide })
+				} else {
+					await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowLogoQuickScreen })
+				}
+			},
+		},
+
+		toggle_no_text_quick_screen: {
+			name: 'Toggle No Text Quick Screen',
+			options: [],
+			callback: async () => {
+				if (QuickScreenKind.NoText == self.proclaimAPI.status.quickScreenKind) {
+					await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowText })
+				} else {
+					await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowNoTextQuickScreen })
+				}
+			},
+		},
+
 		show_custom_quick_screen: {
 			name: 'Show Custom Quick Screen',
 			options: [
@@ -165,6 +215,27 @@ export const UpdateActions = function (self: ModuleInstance): void {
 			],
 			callback: async (event) => {
 				await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowCustomQuickScreen, index: event.options.num })
+			},
+		},
+
+		toggle_custom_quick_screen: {
+			name: 'Toggle Custom Quick Screen',
+			options: [
+				{
+					id: 'num',
+					type: 'number',
+					label: 'Custom Quick Screen Number',
+					default: 1,
+					min: 1,
+					max: CUSTOM_QUICK_SCREEN_COUNT,
+				},
+			],
+			callback: async (event) => {
+				if (QuickScreenKind.Custom == self.proclaimAPI.status.quickScreenKind) {
+					await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowLastSlide })
+				} else {
+					await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowCustomQuickScreen, index: event.options.num })
+				}
 			},
 		},
 	}
