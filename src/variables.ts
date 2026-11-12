@@ -1,4 +1,4 @@
-import type { QuickScreenKind, ServiceItemKind } from '@hussra/logos-proclaim'
+import type { QuickScreenKind, ServiceItemKind, ServicePart } from '@hussra/logos-proclaim'
 import type ModuleInstance from './main.js'
 
 export type VariablesSchema = {
@@ -19,6 +19,7 @@ export type VariablesSchema = {
 	song_index: number
 	slide_count: number
 	slide_index: number
+	service_part: ServicePart | null
 	quick_screen_kind: QuickScreenKind | null
 	stage_direction: string
 }
@@ -46,6 +47,7 @@ export const UpdateVariableDefinitions = function (self: ModuleInstance): void {
 		song_index: { name: 'Song Index' },
 		slide_count: { name: 'Number of Slides in Current Service Item' },
 		slide_index: { name: 'Slide Index in Current Service Item' },
+		service_part: { name: 'Service Part' },
 		quick_screen_kind: { name: 'Quick Screen Type' },
 		stage_direction: { name: 'Stage Direction' },
 	})
@@ -70,6 +72,7 @@ export const InitializeVariables = function (self: ModuleInstance): void {
 		song_index: 0,
 		slide_count: 0,
 		slide_index: 0,
+		service_part: null,
 		quick_screen_kind: null,
 		stage_direction: '',
 	})
