@@ -66,6 +66,9 @@ export function AddEventListeners(self: ModuleInstance): void {
 	mapEventToVariable(self, 'itemIndex', 'item_index', (index) => index + 1)
 	mapEventToVariable(self, 'itemKind', 'item_kind')
 	mapEventToVariable(self, 'slideIndex', 'slide_index', (index) => index + 1)
+	mapEventToVariable(self, 'songIndex', 'song_index', (index) => index + 1)
+	mapEventToVariable(self, 'quickScreenKind', 'quick_screen_kind')
+	mapEventToVariable(self, 'stageDirection', 'stage_direction')
 }
 
 /**
