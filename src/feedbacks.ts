@@ -13,6 +13,13 @@ export type FeedbacksSchema = {
 			servicePart: keyof typeof ServicePart
 		}
 	}
+
+	has_service_part: {
+		type: 'boolean'
+		options: {
+			servicePart: keyof typeof ServicePart
+		}
+	}
 }
 
 /**
@@ -60,6 +67,49 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				const currentServicePart = self.proclaimAPI.status.servicePart
 
 				return currentServicePart === servicePart
+			},
+		},
+
+		has_service_part: {
+			name: 'Has Service Part',
+			type: 'boolean',
+			description: 'Whether or not the current presentation contains a particular service part',
+			defaultStyle: {
+				bgcolor: 0x000000,
+				color: 0x333333,
+			},
+			options: [
+				{
+					id: 'servicePart',
+					type: 'dropdown',
+					label: 'Service Part',
+					default: ServicePart.Service,
+					choices: Object.keys(ServicePart).map((key) => {
+						return { id: key, label: ServicePart[key as keyof typeof ServicePart] }
+					}),
+				},
+			],
+			callback: (event) => {
+				if (!self.proclaimAPI.status.onAir) {
+					return true
+				}
+				const warmupStartIndex = self.proclaimAPI.status.presentation?.warmupStartIndex ?? -1
+				const serviceStartIndex = self.proclaimAPI.status.presentation?.serviceStartIndex ?? -1
+				const postServiceStartIndex = self.proclaimAPI.status.presentation?.postServiceStartIndex ?? -1
+				const itemCount = self.proclaimAPI.status.itemCount
+
+				const servicePart = ServicePart[event.options.servicePart]
+
+				switch (servicePart) {
+					case ServicePart.PreService:
+						return warmupStartIndex > 0
+					case ServicePart.Warmup:
+						return serviceStartIndex > warmupStartIndex
+					case ServicePart.Service:
+						return postServiceStartIndex > serviceStartIndex
+					case ServicePart.PostService:
+						return itemCount > postServiceStartIndex
+				}
 			},
 		},
 	})
