@@ -64,6 +64,13 @@ export type FeedbacksSchema = {
 			id: string
 		}
 	}
+
+	song_title: {
+		type: 'value'
+		options: {
+			num: number
+		}
+	}
 }
 
 /**
@@ -318,6 +325,32 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			],
 			callback: (event) => {
 				return event.options.id === self.proclaimAPI.status.itemId
+			},
+		},
+
+		song_title: {
+			type: 'value',
+			name: 'Song name',
+			description: 'Returns the name of the specified song',
+			options: [
+				{
+					id: 'num',
+					type: 'number',
+					label: 'Song Number',
+					default: 1,
+					min: 1,
+					max: 254,
+				},
+			],
+			callback: (event) => {
+				const num = event.options.num
+				if (!self.proclaimAPI.status.presentation || num < 1 || self.proclaimAPI.status.songCount < num) {
+					return ''
+				}
+				const songs = self.proclaimAPI.status.presentation.serviceItems.filter(
+					(item) => (item.kind as DisplayableServiceItemKind) === DisplayableServiceItemKind.SongLyrics,
+				)
+				return songs[num - 1].title
 			},
 		},
 	})
