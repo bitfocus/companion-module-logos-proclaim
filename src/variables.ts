@@ -20,6 +20,8 @@ export type VariablesSchema = {
 	slide_count: number
 	slide_index: number
 	service_part: ServicePart | null
+	grouping_title: string
+	grouping_id: string
 	quick_screen_kind: QuickScreenKind | null
 	stage_direction: string
 }
@@ -48,6 +50,8 @@ export const UpdateVariableDefinitions = function (self: ModuleInstance): void {
 		slide_count: { name: 'Number of Slides in Current Service Item' },
 		slide_index: { name: 'Slide Index in Current Service Item' },
 		service_part: { name: 'Service Part' },
+		grouping_title: { name: 'Group Title' },
+		grouping_id: { name: 'Group ID' },
 		quick_screen_kind: { name: 'Quick Screen Type' },
 		stage_direction: { name: 'Stage Direction' },
 	})
@@ -73,6 +77,8 @@ export const InitializeVariables = function (self: ModuleInstance): void {
 		slide_count: 0,
 		slide_index: 0,
 		service_part: null,
+		grouping_title: '',
+		grouping_id: '',
 		quick_screen_kind: null,
 		stage_direction: '',
 	})
