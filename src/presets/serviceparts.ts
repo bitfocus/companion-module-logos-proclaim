@@ -33,7 +33,7 @@ export function createServicePartPresets(context: PresetsBuilderContext): void {
 				},
 			},
 			{
-				feedbackId: 'in_service_part',
+				feedbackId: 'service_part',
 				options: {
 					servicePart: 'PreService',
 				},
@@ -76,7 +76,7 @@ export function createServicePartPresets(context: PresetsBuilderContext): void {
 				},
 			},
 			{
-				feedbackId: 'in_service_part',
+				feedbackId: 'service_part',
 				options: {
 					servicePart: 'Warmup',
 				},
@@ -119,7 +119,7 @@ export function createServicePartPresets(context: PresetsBuilderContext): void {
 				},
 			},
 			{
-				feedbackId: 'in_service_part',
+				feedbackId: 'service_part',
 				options: {
 					servicePart: 'Service',
 				},
@@ -162,7 +162,7 @@ export function createServicePartPresets(context: PresetsBuilderContext): void {
 				},
 			},
 			{
-				feedbackId: 'in_service_part',
+				feedbackId: 'service_part',
 				options: {
 					servicePart: 'PostService',
 				},
