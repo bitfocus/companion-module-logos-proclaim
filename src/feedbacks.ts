@@ -1,4 +1,4 @@
-import { QuickScreenKind, ServicePart } from '@hussra/logos-proclaim'
+import { DisplayableServiceItemKind, QuickScreenKind, ServiceItemKind, ServicePart } from '@hussra/logos-proclaim'
 import type ModuleInstance from './main.js'
 
 export type FeedbacksSchema = {
@@ -25,6 +25,13 @@ export type FeedbacksSchema = {
 		type: 'boolean'
 		options: {
 			servicePart: keyof typeof ServicePart
+		}
+	}
+
+	item_kind: {
+		type: 'boolean'
+		options: {
+			kind: keyof typeof ServiceItemKind
 		}
 	}
 }
@@ -144,6 +151,31 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					case ServicePart.PostService:
 						return itemCount > postServiceStartIndex
 				}
+			},
+		},
+
+		item_kind: {
+			name: 'Item kind',
+			type: 'boolean',
+			description: 'Change style when a particular kind of service item is active',
+			defaultStyle: {
+				bgcolor: 0x00ff00,
+				color: 0x000000,
+			},
+			options: [
+				{
+					id: 'kind',
+					type: 'dropdown',
+					label: 'Item Kind',
+					default: ServiceItemKind.SongLyrics,
+					choices: Object.keys(DisplayableServiceItemKind).map((key) => {
+						return { id: key, label: DisplayableServiceItemKind[key as keyof typeof DisplayableServiceItemKind] }
+					}),
+				},
+			],
+			callback: (event) => {
+				const kind = ServiceItemKind[event.options.kind]
+				return self.proclaimAPI.status.itemKind === kind
 			},
 		},
 	})
