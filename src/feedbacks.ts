@@ -393,7 +393,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 
 		item_title: {
 			type: 'value',
-			name: 'Item Title',
+			name: 'Item Name',
 			description: 'Returns the name of a particular service item',
 			options: [
 				{
