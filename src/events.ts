@@ -48,10 +48,14 @@ export function AddEventListeners(self: ModuleInstance): void {
 	mapEventToVariable(self, 'slideIndex', 'slide_index', (index) => index + 1)
 	mapEventToVariable(self, 'quickScreenKind', 'quick_screen_kind', undefined, 'quick_screen')
 	mapEventToVariable(self, 'servicePart', 'service_part', undefined, 'service_part')
-	mapEventToVariable(self, 'groupingTitle', 'grouping_title')
-	mapEventToVariable(self, 'groupingId', 'grouping_id')
+	mapEventToVariable(self, 'groupingTitle', 'grouping_title', undefined, 'grouping')
+	mapEventToVariable(self, 'groupingId', 'grouping_id', undefined, 'grouping')
 	mapEventToVariable(self, 'quickScreenKind', 'quick_screen_kind')
 	mapEventToVariable(self, 'stageDirection', 'stage_direction')
+
+	self.proclaimAPI.status.on('groupings', () => {
+		self.updateFeedbacks()
+	}) // Need to reload choices for 'grouping' feedback
 }
 
 /**

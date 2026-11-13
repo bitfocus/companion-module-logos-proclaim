@@ -34,6 +34,16 @@ export type FeedbacksSchema = {
 			kind: keyof typeof ServiceItemKind
 		}
 	}
+
+	grouping: {
+		type: 'boolean'
+		options: {
+			lbl: undefined
+			id: string
+			title: string
+			exact: boolean
+		}
+	}
 }
 
 /**
@@ -176,6 +186,62 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			callback: (event) => {
 				const kind = ServiceItemKind[event.options.kind]
 				return self.proclaimAPI.status.itemKind === kind
+			},
+		},
+
+		grouping: {
+			name: 'Item Group',
+			type: 'boolean',
+			description: 'Change style when an item within a particular group is active',
+			defaultStyle: {
+				bgcolor: 0xff00ff,
+				color: 0xffffff,
+			},
+			options: [
+				{
+					id: 'lbl',
+					type: 'static-text',
+					label: 'Group to match',
+					value:
+						'Pick an exact section from the drop-down, or enter a title to match (either exactly or within the section title)',
+				},
+				{
+					id: 'id',
+					type: 'dropdown',
+					label: 'Group ID',
+					default: '',
+					choices: [
+						{ id: '', label: '-- None --' },
+						...self.proclaimAPI.status.groupings.map((grouping) => {
+							return { id: grouping.id, label: grouping.title }
+						}),
+					],
+				},
+				{
+					id: 'title',
+					type: 'textinput',
+					label: 'Group Title',
+					default: '',
+				},
+				{
+					id: 'exact',
+					type: 'checkbox',
+					label: 'Exact title match?',
+					default: true,
+				},
+			],
+			callback: (event) => {
+				if (event.options.id !== '') {
+					return event.options.id === self.proclaimAPI.status.groupingId
+				} else {
+					if (event.options.exact) {
+						return event.options.title !== '' && event.options.title === self.proclaimAPI.status.groupingTitle
+					} else {
+						return (
+							event.options.title !== '' && self.proclaimAPI.status.groupingTitle.indexOf(event.options.title) !== -1
+						)
+					}
+				}
 			},
 		},
 	})
