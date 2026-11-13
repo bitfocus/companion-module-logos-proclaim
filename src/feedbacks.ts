@@ -65,6 +65,20 @@ export type FeedbacksSchema = {
 		}
 	}
 
+	song: {
+		type: 'boolean'
+		options: {
+			num: number
+		}
+	}
+
+	has_song: {
+		type: 'boolean'
+		options: {
+			num: number
+		}
+	}
+
 	song_title: {
 		type: 'value'
 		options: {
@@ -339,6 +353,52 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			],
 			callback: (event) => {
 				return event.options.id === self.proclaimAPI.status.itemId
+			},
+		},
+
+		song: {
+			type: 'boolean',
+			name: 'Song',
+			description: 'Change style when a particular song is active',
+			defaultStyle: {
+				bgcolor: 0xffff00,
+				color: 0x000000,
+			},
+			options: [
+				{
+					id: 'num',
+					type: 'number',
+					label: 'Song Number',
+					default: 1,
+					min: 1,
+					max: 254,
+				},
+			],
+			callback: (event) => {
+				return event.options.num === self.proclaimAPI.status.songIndex + 1
+			},
+		},
+
+		has_song: {
+			type: 'boolean',
+			name: 'Has Song',
+			description: 'Change style when the current presentation contains at least the specified number of songs',
+			defaultStyle: {
+				bgcolor: 0x000000,
+				color: 0x333333,
+			},
+			options: [
+				{
+					id: 'num',
+					type: 'number',
+					label: 'Song Number',
+					default: 1,
+					min: 1,
+					max: 254,
+				},
+			],
+			callback: (event) => {
+				return event.options.num <= self.proclaimAPI.status.songCount
 			},
 		},
 
