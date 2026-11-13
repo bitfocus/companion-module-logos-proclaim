@@ -393,13 +393,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hussra/logos-proclaim@npm:1.1.1":
-  version: 1.1.1
-  resolution: "@hussra/logos-proclaim@npm:1.1.1"
+"@hussra/logos-proclaim@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@hussra/logos-proclaim@npm:1.2.0"
   dependencies:
     emittery: "npm:^2.2.0"
     undici: "npm:^8.12.3"
-  checksum: 10c0/8a6e867b43dc14eb9dc90bd6b4467e8cb7ede8f4d7263bd732d82640aea0e4d7acba7cc91a56b3fe0a8bd038ef1d2409131f9d3744d71bfdff63c38119097987
+  checksum: 10c0/0752960dfef4b8c3e3489f00be2dd1ec9ac6c7918b85caea883eba5391fcbab2a5e1ad46feac3ea79482eea09ebb03950c4434257f2958e013c332f3b107f647
   languageName: node
   linkType: hard
 
@@ -1333,7 +1333,7 @@ __metadata:
   dependencies:
     "@companion-module/base": "npm:~2.1.3"
     "@companion-module/tools": "npm:^3.1.1"
-    "@hussra/logos-proclaim": "npm:1.1.1"
+    "@hussra/logos-proclaim": "npm:1.2.0"
     "@types/node": "npm:^26.6.4"
     eslint: "npm:^10.12.0"
     husky: "npm:^9.1.7"
