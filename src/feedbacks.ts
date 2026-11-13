@@ -39,7 +39,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		on_air: {
 			name: 'On Air',
 			type: 'boolean',
-			description: 'Whether or not Proclaim is On Air',
+			description: 'Change style when Proclaim is On Air',
 			defaultStyle: {
 				bgcolor: 0xff0000,
 				color: 0x000000,
@@ -53,7 +53,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		quick_screen: {
 			name: 'Quick Screen',
 			type: 'boolean',
-			description: 'Whether a particular Quick Screen is active',
+			description: 'Change style when a particular Quick Screen is active',
 			defaultStyle: {
 				bgcolor: 0xffff00,
 				color: 0x000000,
@@ -78,7 +78,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		service_part: {
 			name: 'Service Part',
 			type: 'boolean',
-			description: 'Whether or not Proclaim is in a particular service part',
+			description:
+				'Change style when Proclaim is in a particular service part (pre-service, warm-up, service, post-service)',
 			defaultStyle: {
 				bgcolor: 0x00ff00,
 				color: 0x000000,
@@ -105,7 +106,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		has_service_part: {
 			name: 'Has Service Part',
 			type: 'boolean',
-			description: 'Whether or not the current presentation contains a particular service part',
+			description:
+				'Change style when the current presentation contains a particular service part (pre-service, warm-up, service, post-service)',
 			defaultStyle: {
 				bgcolor: 0x000000,
 				color: 0x333333,
