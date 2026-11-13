@@ -14,7 +14,7 @@ export type FeedbacksSchema = {
 		}
 	}
 
-	in_service_part: {
+	service_part: {
 		type: 'boolean'
 		options: {
 			servicePart: keyof typeof ServicePart
@@ -75,8 +75,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			},
 		},
 
-		in_service_part: {
-			name: 'In Service Part',
+		service_part: {
+			name: 'Service Part',
 			type: 'boolean',
 			description: 'Whether or not Proclaim is in a particular service part',
 			defaultStyle: {
