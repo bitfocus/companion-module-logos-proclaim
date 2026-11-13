@@ -40,7 +40,7 @@ export function AddEventListeners(self: ModuleInstance): void {
 	mapEventToVariable(self, 'itemCount', 'item_count')
 	mapEventToVariable(self, 'itemIndex', 'item_index', (index) => index + 1)
 	mapEventToVariable(self, 'itemTitle', 'item_title')
-	mapEventToVariable(self, 'itemId', 'item_id')
+	mapEventToVariable(self, 'itemId', 'item_id', undefined, 'service_item')
 	mapEventToVariable(self, 'itemKind', 'item_kind', undefined, 'item_kind')
 	mapEventToVariable(self, 'songCount', 'song_count')
 	mapEventToVariable(self, 'songIndex', 'song_index', (index) => index + 1)
@@ -59,9 +59,9 @@ export function AddEventListeners(self: ModuleInstance): void {
 		media_state: self.proclaimAPI.status.mediaState,
 	})
 
-	self.proclaimAPI.status.on('groupings', () => {
+	self.proclaimAPI.status.on('presentation', () => {
 		self.updateFeedbacks()
-	}) // Need to reload choices for 'grouping' feedback
+	}) // Need to reload choices for 'grouping' and 'service_item' feedbacks
 }
 
 /**
