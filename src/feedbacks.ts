@@ -57,6 +57,13 @@ export type FeedbacksSchema = {
 			state: keyof typeof MediaState
 		}
 	}
+
+	service_item: {
+		type: 'boolean'
+		options: {
+			id: string
+		}
+	}
 }
 
 /**
@@ -280,10 +287,37 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				},
 			],
 			callback: (event) => {
-				console.log(event)
 				const state = MediaState[event.options.state]
 				return self.proclaimAPI.status.mediaState === state
-				return true
+			},
+		},
+
+		service_item: {
+			type: 'boolean',
+			name: 'Service Item',
+			description: 'Change style when a particular service item is active',
+			defaultStyle: {
+				bgcolor: 0x00ff00,
+				color: 0x000000,
+			},
+			options: [
+				{
+					id: 'id',
+					type: 'dropdown',
+					label: 'Item ID',
+					default: '',
+					choices: [
+						{ id: '', label: '-- None --' },
+						...(self.proclaimAPI.status.presentation?.serviceItems ?? [])
+							.filter((item) => Object.keys(DisplayableServiceItemKind).includes(item.kind))
+							.map((item) => {
+								return { id: item.id, label: item.title }
+							}),
+					],
+				},
+			],
+			callback: (event) => {
+				return event.options.id === self.proclaimAPI.status.itemId
 			},
 		},
 	})
