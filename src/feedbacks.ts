@@ -78,6 +78,13 @@ export type FeedbacksSchema = {
 			id: string
 		}
 	}
+
+	item_title: {
+		type: 'value'
+		options: {
+			id: string
+		}
+	}
 }
 
 /**
@@ -381,6 +388,33 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			],
 			callback: (event) => {
 				return self.proclaimAPI.status.groupings?.find((grouping) => grouping.id === event.options.id)?.title ?? ''
+			},
+		},
+
+		item_title: {
+			type: 'value',
+			name: 'Item Title',
+			description: 'Returns the name of a particular service item',
+			options: [
+				{
+					id: 'id',
+					type: 'dropdown',
+					label: 'Item ID',
+					default: '',
+					choices: [
+						{ id: '', label: '-- None --' },
+						...(self.proclaimAPI.status.presentation?.serviceItems ?? [])
+							.filter((item) => Object.keys(DisplayableServiceItemKind).includes(item.kind))
+							.map((item) => {
+								return { id: item.id, label: item.title }
+							}),
+					],
+				},
+			],
+			callback: (event) => {
+				return (
+					self.proclaimAPI.status.presentation?.serviceItems.find((item) => item.id === event.options.id)?.title ?? ''
+				)
 			},
 		},
 	})
