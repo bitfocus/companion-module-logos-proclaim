@@ -59,9 +59,8 @@ export function AddEventListeners(self: ModuleInstance): void {
 		media_state: self.proclaimAPI.status.mediaState,
 	})
 
-	self.proclaimAPI.status.on('presentation', () => {
-		self.updateFeedbacks()
-	}) // Need to reload choices for 'grouping' and 'service_item' feedbacks
+	// Reload feedbacks when presentation or groupings change
+	self.proclaimAPI.status.on(['presentation', 'groupings'], () => self.updateFeedbacks())
 }
 
 /**

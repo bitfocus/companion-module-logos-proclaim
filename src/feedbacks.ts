@@ -71,6 +71,13 @@ export type FeedbacksSchema = {
 			num: number
 		}
 	}
+
+	grouping_title: {
+		type: 'value'
+		options: {
+			id: string
+		}
+	}
 }
 
 /**
@@ -351,6 +358,29 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					(item) => (item.kind as DisplayableServiceItemKind) === DisplayableServiceItemKind.SongLyrics,
 				)
 				return songs[num - 1].title
+			},
+		},
+
+		grouping_title: {
+			type: 'value',
+			name: 'Group Name',
+			description: 'Returns the name of a particular group',
+			options: [
+				{
+					id: 'id',
+					type: 'dropdown',
+					label: 'Group ID',
+					default: '',
+					choices: [
+						{ id: '', label: '-- None --' },
+						...self.proclaimAPI.status.groupings.map((grouping) => {
+							return { id: grouping.id, label: grouping.title }
+						}),
+					],
+				},
+			],
+			callback: (event) => {
+				return self.proclaimAPI.status.groupings?.find((grouping) => grouping.id === event.options.id)?.title ?? ''
 			},
 		},
 	})
