@@ -1,4 +1,10 @@
-import { DisplayableServiceItemKind, QuickScreenKind, ServiceItemKind, ServicePart } from '@hussra/logos-proclaim'
+import {
+	DisplayableServiceItemKind,
+	MediaState,
+	QuickScreenKind,
+	ServiceItemKind,
+	ServicePart,
+} from '@hussra/logos-proclaim'
 import type ModuleInstance from './main.js'
 
 export type FeedbacksSchema = {
@@ -42,6 +48,13 @@ export type FeedbacksSchema = {
 			id: string
 			title: string
 			exact: boolean
+		}
+	}
+
+	media_state: {
+		type: 'boolean'
+		options: {
+			state: keyof typeof MediaState
 		}
 	}
 }
@@ -242,6 +255,35 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 						)
 					}
 				}
+			},
+		},
+
+		media_state: {
+			type: 'boolean',
+			name: 'Media State',
+			description: 'Change style when the Proclaim media state is the selected value',
+			defaultStyle: {
+				bgcolor: 0xffa500,
+				color: 0x000000,
+			},
+			options: [
+				{
+					id: 'state',
+					type: 'dropdown',
+					label: 'State',
+					default: MediaState.Paused,
+					choices: Object.keys(MediaState)
+						.filter((key) => key !== 'None')
+						.map((key) => {
+							return { id: key, label: MediaState[key as keyof typeof MediaState] }
+						}),
+				},
+			],
+			callback: (event) => {
+				console.log(event)
+				const state = MediaState[event.options.state]
+				return self.proclaimAPI.status.mediaState === state
+				return true
 			},
 		},
 	})

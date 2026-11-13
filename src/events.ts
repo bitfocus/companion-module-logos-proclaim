@@ -52,7 +52,7 @@ export function AddEventListeners(self: ModuleInstance): void {
 	mapEventToVariable(self, 'groupingId', 'grouping_id', undefined, 'grouping')
 	mapEventToVariable(self, 'quickScreenKind', 'quick_screen_kind')
 	mapEventToVariable(self, 'stageDirection', 'stage_direction')
-	mapEventToVariable(self, 'mediaState', 'media_state')
+	mapEventToVariable(self, 'mediaState', 'media_state', undefined, 'media_state')
 
 	// media_state needs to be initialised specially, alas
 	self.setVariableValues({
