@@ -1,7 +1,7 @@
 import { type CompanionActionDefinitions } from '@companion-module/base'
 import type ModuleInstance from './main.js'
 import { SONG_PARTS, SIMPLE_ACTIONS, CUSTOM_QUICK_SCREEN_COUNT } from './refdata.js'
-import { AppCommand, QuickScreenKind } from '@hussra/logos-proclaim'
+import { AppCommand, MediaState, QuickScreenKind } from '@hussra/logos-proclaim'
 
 type SimpleActionId<Name extends string> = Name extends `${infer Word} ${infer Rest}`
 	? `${Lowercase<Word>}_${SimpleActionId<Rest>}`
@@ -55,6 +55,9 @@ type BaseActionsSchema = {
 		options: {
 			num: number
 		}
+	}
+	toggle_video_playback: {
+		options: Record<never, never>
 	}
 }
 
@@ -235,6 +238,22 @@ export const UpdateActions = function (self: ModuleInstance): void {
 					await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowLastSlide })
 				} else {
 					await self.proclaimAPI.sendAppCommand({ command: AppCommand.ShowCustomQuickScreen, index: event.options.num })
+				}
+			},
+		},
+
+		toggle_video_playback: {
+			name: 'Toggle Video Playback',
+			options: [],
+			callback: async () => {
+				switch (self.proclaimAPI.status.mediaState) {
+					case MediaState.Paused:
+					case MediaState.Stopped:
+						await self.proclaimAPI.sendAppCommand({ command: AppCommand.VideoPlay })
+						break
+					case MediaState.Playing:
+						await self.proclaimAPI.sendAppCommand({ command: AppCommand.VideoPause })
+						break
 				}
 			},
 		},
