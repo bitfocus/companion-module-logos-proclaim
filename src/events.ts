@@ -40,7 +40,7 @@ export function AddEventListeners(self: ModuleInstance): void {
 	mapEventToVariable(self, 'itemCount', 'item_count')
 	mapEventToVariable(self, 'itemIndex', 'item_index', (index) => index + 1)
 	mapEventToVariable(self, 'itemTitle', 'item_title')
-	mapEventToVariable(self, 'itemId', 'item_id', undefined, 'service_item')
+	mapEventToVariable(self, 'itemId', 'item_id', undefined, 'item')
 	mapEventToVariable(self, 'itemKind', 'item_kind', undefined, 'item_kind')
 	mapEventToVariable(self, 'songCount', 'song_count', undefined, 'has_song')
 	mapEventToVariable(self, 'songIndex', 'song_index', (index) => index + 1, 'song')
