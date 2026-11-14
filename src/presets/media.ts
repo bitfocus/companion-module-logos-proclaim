@@ -1,3 +1,4 @@
+import { MediaState } from '@hussra/logos-proclaim'
 import { DEFAULT_PRESET_STYLE } from '../refdata.js'
 import type { PresetsBuilderContext } from './index.js'
 
@@ -42,6 +43,38 @@ export function createMediaPresets(context: PresetsBuilderContext): void {
 			},
 		],
 		feedbacks: [],
+	}
+
+	context.definitions['toggle_video_playback'] = {
+		type: 'simple',
+		name: 'Toggle Video Playback',
+		style: {
+			...DEFAULT_PRESET_STYLE,
+			text: 'Video\n$(logos-proclaim:media_state)',
+		},
+		steps: [
+			{
+				down: [
+					{
+						actionId: 'toggle_video_playback',
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+		feedbacks: [
+			{
+				feedbackId: 'media_state',
+				options: {
+					state: MediaState.Paused,
+				},
+				style: {
+					bgcolor: 0xffa500,
+					color: 0x000000,
+				},
+			},
+		],
 	}
 
 	context.definitions['video_play'] = {
@@ -164,7 +197,14 @@ export function createMediaPresets(context: PresetsBuilderContext): void {
 				id: 'video',
 				name: 'Video',
 				type: 'simple',
-				presets: ['video_play', 'video_pause', 'video_restart', 'video_rewind', 'video_fast_forward'],
+				presets: [
+					'toggle_video_playback',
+					'video_play',
+					'video_pause',
+					'video_restart',
+					'video_rewind',
+					'video_fast_forward',
+				],
 			},
 		],
 	})
