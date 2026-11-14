@@ -1,7 +1,7 @@
 import { type CompanionActionDefinitions } from '@companion-module/base'
 import type ModuleInstance from './main.js'
 import { SONG_PARTS, SIMPLE_ACTIONS, CUSTOM_QUICK_SCREEN_COUNT } from './refdata.js'
-import { AppCommand, MediaState, QuickScreenKind } from '@hussra/logos-proclaim'
+import { AppCommand, DisplayableServiceItemKind, MediaState, QuickScreenKind } from '@hussra/logos-proclaim'
 
 type SimpleActionId<Name extends string> = Name extends `${infer Word} ${infer Rest}`
 	? `${Lowercase<Word>}_${SimpleActionId<Rest>}`
@@ -19,6 +19,12 @@ type BaseActionsSchema = {
 	go_to_service_item: {
 		options: {
 			num: number
+		}
+	}
+	go_to_service_item_by_id: {
+		options: {
+			id: string
+			slide: number
 		}
 	}
 	go_to_slide: {
@@ -104,6 +110,41 @@ export const UpdateActions = function (self: ModuleInstance): void {
 			],
 			callback: async (event) => {
 				await self.proclaimAPI.sendAppCommand({ command: AppCommand.GoToServiceItem, index: event.options.num })
+			},
+		},
+
+		go_to_service_item_by_id: {
+			name: 'Go To Service Item by ID',
+			options: [
+				{
+					id: 'lbl',
+					type: 'static-text',
+					label: 'Note',
+					description: 'You will only be able to configure this feedback when Proclaim is on air',
+					value: '',
+				},
+				{
+					id: 'id',
+					type: 'dropdown',
+					label: 'Item ID',
+					default: '',
+					choices: (self.proclaimAPI.status.presentation?.serviceItems ?? [])
+						.filter((item) => Object.keys(DisplayableServiceItemKind).includes(item.kind))
+						.map((item) => {
+							return { id: item.id, label: item.title }
+						}),
+				},
+				{
+					id: 'slide',
+					type: 'number',
+					label: 'Slide Number',
+					default: 1,
+					min: 1,
+					max: 254,
+				},
+			],
+			callback: async (event) => {
+				await self.proclaimAPI.goToServiceItemAndSlide(event.options.id, event.options.slide - 1)
 			},
 		},
 

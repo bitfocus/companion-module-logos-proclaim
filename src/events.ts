@@ -63,7 +63,10 @@ export function AddEventListeners(self: ModuleInstance): void {
 	})
 
 	// Reload feedbacks when presentation or groupings change
-	self.proclaimAPI.status.on(['presentation', 'groupings'], () => self.updateFeedbacks())
+	self.proclaimAPI.status.on(['presentation', 'groupings'], () => {
+		self.updateFeedbacks()
+		self.updateActions()
+	})
 }
 
 /**
