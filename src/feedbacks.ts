@@ -44,7 +44,6 @@ export type FeedbacksSchema = {
 	grouping: {
 		type: 'boolean'
 		options: {
-			lbl: undefined
 			id: string
 			title: string
 			exact: boolean
@@ -58,9 +57,10 @@ export type FeedbacksSchema = {
 		}
 	}
 
-	service_item: {
+	item: {
 		type: 'boolean'
 		options: {
+			lbl: undefined
 			id: string
 		}
 	}
@@ -258,7 +258,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					type: 'static-text',
 					label: 'Group to match',
 					value:
-						'Pick an exact section from the drop-down, or enter a title to match (either exactly or within the section title)',
+						'Pick an exact section from the drop-down, or enter a title to match (either exactly or within the section title). You will only be able to pick from the drop-down when Proclaim is on air',
 				},
 				{
 					id: 'id',
@@ -327,7 +327,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			},
 		},
 
-		service_item: {
+		item: {
 			type: 'boolean',
 			name: 'Item Active',
 			description: 'Change style when a specific service item is active',
@@ -337,18 +337,22 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			},
 			options: [
 				{
+					id: 'lbl',
+					type: 'static-text',
+					label: 'Note',
+					description: 'You will only be able to configure this feedback when Proclaim is on air',
+					value: '',
+				},
+				{
 					id: 'id',
 					type: 'dropdown',
 					label: 'Item ID',
 					default: '',
-					choices: [
-						{ id: '', label: '-- None --' },
-						...(self.proclaimAPI.status.presentation?.serviceItems ?? [])
-							.filter((item) => Object.keys(DisplayableServiceItemKind).includes(item.kind))
-							.map((item) => {
-								return { id: item.id, label: item.title }
-							}),
-					],
+					choices: (self.proclaimAPI.status.presentation?.serviceItems ?? [])
+						.filter((item) => Object.keys(DisplayableServiceItemKind).includes(item.kind))
+						.map((item) => {
+							return { id: item.id, label: item.title }
+						}),
 				},
 			],
 			callback: (event) => {
@@ -434,16 +438,20 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			description: 'Returns the name of a specific item group',
 			options: [
 				{
+					id: 'lbl',
+					type: 'static-text',
+					label: 'Note',
+					description: 'You will only be able to configure this feedback when Proclaim is on air',
+					value: '',
+				},
+				{
 					id: 'id',
 					type: 'dropdown',
 					label: 'Group ID',
 					default: '',
-					choices: [
-						{ id: '', label: '-- None --' },
-						...self.proclaimAPI.status.groupings.map((grouping) => {
-							return { id: grouping.id, label: grouping.title }
-						}),
-					],
+					choices: self.proclaimAPI.status.groupings.map((grouping) => {
+						return { id: grouping.id, label: grouping.title }
+					}),
 				},
 			],
 			callback: (event) => {
@@ -457,18 +465,22 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			description: 'Returns the name of a specific service item',
 			options: [
 				{
+					id: 'lbl',
+					type: 'static-text',
+					label: 'Note',
+					description: 'You will only be able to configure this feedback when Proclaim is on air',
+					value: '',
+				},
+				{
 					id: 'id',
 					type: 'dropdown',
 					label: 'Item ID',
 					default: '',
-					choices: [
-						{ id: '', label: '-- None --' },
-						...(self.proclaimAPI.status.presentation?.serviceItems ?? [])
-							.filter((item) => Object.keys(DisplayableServiceItemKind).includes(item.kind))
-							.map((item) => {
-								return { id: item.id, label: item.title }
-							}),
-					],
+					choices: (self.proclaimAPI.status.presentation?.serviceItems ?? [])
+						.filter((item) => Object.keys(DisplayableServiceItemKind).includes(item.kind))
+						.map((item) => {
+							return { id: item.id, label: item.title }
+						}),
 				},
 			],
 			callback: (event) => {
