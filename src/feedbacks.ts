@@ -123,7 +123,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		},
 
 		quick_screen: {
-			name: 'Quick Screen',
+			name: 'Quick Screen Active',
 			type: 'boolean',
 			description: 'Change style when a particular Quick Screen is active',
 			defaultStyle: {
@@ -148,10 +148,10 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		},
 
 		service_part: {
-			name: 'Service Part',
+			name: 'Service Part Active',
 			type: 'boolean',
 			description:
-				'Change style when Proclaim is in a particular service part (pre-service, warm-up, service, post-service)',
+				'Change style when an item within a particular service part (pre-service, warm-up, service, post-service) is active',
 			defaultStyle: {
 				bgcolor: 0x00ff00,
 				color: 0x000000,
@@ -176,10 +176,10 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		},
 
 		has_service_part: {
-			name: 'Has Service Part',
+			name: 'Service Part Exists',
 			type: 'boolean',
 			description:
-				'Change style when the current presentation contains a particular service part (pre-service, warm-up, service, post-service)',
+				'Change style when the presentation contains a particular service part (pre-service, warm-up, service, post-service)',
 			defaultStyle: {
 				bgcolor: 0x000000,
 				color: 0x333333,
@@ -220,7 +220,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		},
 
 		item_kind: {
-			name: 'Item kind',
+			name: 'Type Active',
 			type: 'boolean',
 			description: 'Change style when a particular kind of service item is active',
 			defaultStyle: {
@@ -245,9 +245,9 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		},
 
 		grouping: {
-			name: 'Item Group',
+			name: 'Group Active',
 			type: 'boolean',
-			description: 'Change style when an item within a particular group is active',
+			description: 'Change style when an item within a particular item group is active',
 			defaultStyle: {
 				bgcolor: 0xff00ff,
 				color: 0xffffff,
@@ -303,7 +303,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		media_state: {
 			type: 'boolean',
 			name: 'Media State',
-			description: 'Change style when the Proclaim media state is the selected value',
+			description: 'Change style based on the Proclaim media state (running, paused, stopped)',
 			defaultStyle: {
 				bgcolor: 0xffa500,
 				color: 0x000000,
@@ -329,8 +329,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 
 		service_item: {
 			type: 'boolean',
-			name: 'Service Item',
-			description: 'Change style when a particular service item is active',
+			name: 'Service Item Active',
+			description: 'Change style when a specific service item is active',
 			defaultStyle: {
 				bgcolor: 0x00ff00,
 				color: 0x000000,
@@ -359,7 +359,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		song: {
 			type: 'boolean',
 			name: 'Song',
-			description: 'Change style when a particular song is active',
+			description: 'Change style when a specific song number is active',
 			defaultStyle: {
 				bgcolor: 0xffff00,
 				color: 0x000000,
@@ -381,8 +381,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 
 		has_song: {
 			type: 'boolean',
-			name: 'Has Song',
-			description: 'Change style when the current presentation contains at least the specified number of songs',
+			name: 'Song Exists',
+			description: 'Change style when the presentation contains at least the specified number of songs',
 			defaultStyle: {
 				bgcolor: 0x000000,
 				color: 0x333333,
@@ -404,8 +404,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 
 		song_title: {
 			type: 'value',
-			name: 'Song name',
-			description: 'Returns the name of the specified song',
+			name: 'Song Name',
+			description: 'Returns the name of the specified song number',
 			options: [
 				{
 					id: 'num',
@@ -431,7 +431,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		grouping_title: {
 			type: 'value',
 			name: 'Group Name',
-			description: 'Returns the name of a particular group',
+			description: 'Returns the name of a specific item group',
 			options: [
 				{
 					id: 'id',
@@ -454,7 +454,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 		item_title: {
 			type: 'value',
 			name: 'Item Name',
-			description: 'Returns the name of a particular service item',
+			description: 'Returns the name of a specific service item',
 			options: [
 				{
 					id: 'id',
