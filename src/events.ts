@@ -18,9 +18,12 @@ export function AddEventListeners(self: ModuleInstance): void {
 		self.log(companionLogLevel, error ? `${message} - ${error.stack}` : message)
 	})
 
-	self.proclaimAPI.status.on(['configValid', 'connected', 'appCommandAPIAuthenticated'], () => {
-		updateInstanceStatus(self)
-	})
+	self.proclaimAPI.status.on(
+		['configValid', 'connected', 'appCommandAPIAuthenticated', 'localWiFiAPIAuthenticated'],
+		() => {
+			updateInstanceStatus(self)
+		},
+	)
 
 	mapEventToVariable(self, 'onAir', 'on_air', undefined, 'on_air')
 	mapEventToVariable(self, 'sessionId', 'session_id')
@@ -110,7 +113,12 @@ function updateInstanceStatus(self: ModuleInstance): void {
 	}
 
 	if (self.proclaimAPI.authRequired && !self.proclaimAPI.status.appCommandAPIAuthenticated) {
-		self.updateStatus(InstanceStatus.AuthenticationFailure, 'Proclaim authentication unsuccessful')
+		self.updateStatus(InstanceStatus.AuthenticationFailure, 'Proclaim App Command API authentication unsuccessful')
+		return
+	}
+
+	if (self.proclaimAPI.status.onAir && !self.proclaimAPI.status.localWiFiAPIAuthenticated) {
+		self.updateStatus(InstanceStatus.AuthenticationFailure, 'Proclaim Local Remote API authentication unsuccessful')
 		return
 	}
 
