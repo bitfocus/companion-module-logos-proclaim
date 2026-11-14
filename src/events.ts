@@ -66,6 +66,7 @@ export function AddEventListeners(self: ModuleInstance): void {
 	self.proclaimAPI.status.on(['presentation', 'groupings'], () => {
 		self.updateFeedbacks()
 		self.updateActions()
+		self.updatePresets()
 	})
 }
 

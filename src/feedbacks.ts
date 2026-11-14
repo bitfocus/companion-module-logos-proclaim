@@ -60,7 +60,6 @@ export type FeedbacksSchema = {
 	item: {
 		type: 'boolean'
 		options: {
-			lbl: undefined
 			id: string
 		}
 	}
