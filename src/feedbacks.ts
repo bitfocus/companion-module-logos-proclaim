@@ -329,7 +329,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 
 		service_item: {
 			type: 'boolean',
-			name: 'Service Item Active',
+			name: 'Item Active',
 			description: 'Change style when a specific service item is active',
 			defaultStyle: {
 				bgcolor: 0x00ff00,
