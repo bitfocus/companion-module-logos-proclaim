@@ -6,6 +6,7 @@ import {
 	ServicePart,
 } from '@hussra/logos-proclaim'
 import type ModuleInstance from './main.js'
+import { truncate } from './util.js'
 
 export type FeedbacksSchema = {
 	on_air: {
@@ -82,6 +83,7 @@ export type FeedbacksSchema = {
 		type: 'value'
 		options: {
 			num: number
+			maxLength: number
 		}
 	}
 
@@ -418,6 +420,14 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					min: 1,
 					max: 254,
 				},
+				{
+					id: 'maxLength',
+					type: 'number',
+					label: 'Max length (or 0 to not truncate)',
+					default: 0,
+					min: 1,
+					max: 250,
+				},
 			],
 			callback: (event) => {
 				const num = event.options.num
@@ -427,7 +437,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				const songs = self.proclaimAPI.status.presentation.serviceItems.filter(
 					(item) => (item.kind as DisplayableServiceItemKind) === DisplayableServiceItemKind.SongLyrics,
 				)
-				return songs[num - 1].title
+				return truncate(songs[num - 1].title, event.options.maxLength)
 			},
 		},
 

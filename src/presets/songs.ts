@@ -70,6 +70,7 @@ export function createSongPresets(context: PresetsBuilderContext): void {
 						isExpression: true,
 						value: '$(local:number)',
 					},
+					maxLength: 25,
 				},
 			},
 		],
