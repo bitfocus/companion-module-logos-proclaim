@@ -98,6 +98,7 @@ export type FeedbacksSchema = {
 		type: 'value'
 		options: {
 			id: string
+			maxLength: number
 		}
 	}
 }
@@ -491,10 +492,19 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 							return { id: item.id, label: item.title }
 						}),
 				},
+				{
+					id: 'maxLength',
+					type: 'number',
+					label: 'Max length (or 0 to not truncate)',
+					default: 0,
+					min: 0,
+					max: 250,
+				},
 			],
 			callback: (event) => {
-				return (
-					self.proclaimAPI.status.presentation?.serviceItems.find((item) => item.id === event.options.id)?.title ?? ''
+				return truncate(
+					self.proclaimAPI.status.presentation?.serviceItems.find((item) => item.id === event.options.id)?.title ?? '',
+					event.options.maxLength,
 				)
 			},
 		},
