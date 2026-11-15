@@ -425,7 +425,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					type: 'number',
 					label: 'Max length (or 0 to not truncate)',
 					default: 0,
-					min: 1,
+					min: 0,
 					max: 250,
 				},
 			],
