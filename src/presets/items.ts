@@ -23,7 +23,10 @@ export function createItemPresets(context: PresetsBuilderContext): void {
 								isExpression: true,
 								value: '$(local:id)',
 							},
-							slide: 1,
+							slide: {
+								isExpression: true,
+								value: '$(local:slide)',
+							},
 						},
 					},
 				],
@@ -52,6 +55,11 @@ export function createItemPresets(context: PresetsBuilderContext): void {
 				startupValue: '',
 			},
 			{
+				variableType: 'simple',
+				variableName: 'slide',
+				startupValue: '1',
+			},
+			{
 				variableType: 'feedback',
 				variableName: 'name',
 				feedbackId: 'item_title',
@@ -75,29 +83,30 @@ export function createItemPresets(context: PresetsBuilderContext): void {
 	const serviceItems = allItems.slice(serviceStartIndex, postServiceStartIndex)
 	const postServiceItems = allItems.slice(postServiceStartIndex)
 
-	const sections = []
+	const groups: CompanionPresetGroup<ModuleSchema>[] = []
 	if (preServiceItems.length > 0) {
-		sections.push(makeSection('pre_service', 'Pre-Service', preServiceItems))
+		groups.push(makePresetGroup('pre_service', 'Pre-Service', preServiceItems))
 	}
 	if (warmupItems.length > 0) {
-		sections.push(makeSection('warm_up', 'Warm-Up', warmupItems))
+		groups.push(makePresetGroup('warm_up', 'Warm-Up', warmupItems))
 	}
 	if (serviceItems.length > 0) {
-		sections.push(makeSection('service', 'Service', serviceItems))
+		groups.push(makePresetGroup('service', 'Service', serviceItems))
 	}
 	if (postServiceItems.length > 0) {
-		sections.push(makeSection('post_service', 'Post-Service', postServiceItems))
+		groups.push(makePresetGroup('post_service', 'Post-Service', postServiceItems))
 	}
 
 	context.sections.push({
 		id: 'items',
 		name: 'Service Items',
-		description: 'You will only be able to see service item presets here when Proclaim is on air',
-		definitions: sections,
+		description:
+			'Jump to a specific service item. You will only be able to see service item presets here when Proclaim is on air',
+		definitions: groups,
 	})
 }
 
-function makeSection(id: string, name: string, items: ServiceItem[]): CompanionPresetGroup<ModuleSchema> {
+function makePresetGroup(id: string, name: string, items: ServiceItem[]): CompanionPresetGroup<ModuleSchema> {
 	return {
 		id: id,
 		name: name,
@@ -111,5 +120,8 @@ function makeSection(id: string, name: string, items: ServiceItem[]): CompanionP
 			.map((item) => {
 				return { value: item.id, name: item.title }
 			}),
+		commonVariableValues: {
+			slide: 1,
+		},
 	}
 }
