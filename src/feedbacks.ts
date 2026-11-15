@@ -361,7 +361,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 
 		song: {
 			type: 'boolean',
-			name: 'Song',
+			name: 'Song Active',
 			description: 'Change style when a specific song number is active',
 			defaultStyle: {
 				bgcolor: 0xffff00,
