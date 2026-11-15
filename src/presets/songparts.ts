@@ -1,6 +1,7 @@
 import { DEFAULT_PRESET_STYLE } from '../refdata.js'
 import type { PresetsBuilderContext } from './index.js'
 import { SONG_PARTS, VERSE_COUNT } from '../refdata.js'
+import { ServiceItemKind } from '@hussra/logos-proclaim'
 
 export function createSongPartPresets(context: PresetsBuilderContext): void {
 	for (const part of SONG_PARTS) {
@@ -32,7 +33,19 @@ export function createSongPartPresets(context: PresetsBuilderContext): void {
 							up: [],
 						},
 					],
-					feedbacks: [],
+					feedbacks: [
+						{
+							feedbackId: 'item_kind',
+							options: {
+								kind: ServiceItemKind[ServiceItemKind.SongLyrics],
+							},
+							isInverted: true,
+							style: {
+								color: 0x333333,
+								bgcolor: 0x000000,
+							},
+						},
+					],
 				}
 			}
 		} else {
@@ -58,7 +71,19 @@ export function createSongPartPresets(context: PresetsBuilderContext): void {
 						up: [],
 					},
 				],
-				feedbacks: [],
+				feedbacks: [
+					{
+						feedbackId: 'item_kind',
+						options: {
+							kind: ServiceItemKind[ServiceItemKind.SongLyrics],
+						},
+						isInverted: true,
+						style: {
+							color: 0x333333,
+							bgcolor: 0x000000,
+						},
+					},
+				],
 			}
 		}
 	}
