@@ -9,8 +9,10 @@ import { createMediaPresets } from './media.js'
 import { createQuickScreenPresets } from './quickscreens.js'
 import { createSongPartPresets } from './songparts.js'
 import { createSongPresets } from './songs.js'
+import { createItemPresets } from './items.js'
 
 export interface PresetsBuilderContext {
+	readonly self: ModuleInstance
 	readonly sections: CompanionPresetSection<ModuleSchema>[]
 	readonly definitions: CompanionPresetDefinitions<ModuleSchema>
 }
@@ -22,6 +24,7 @@ export interface PresetsBuilderContext {
  */
 export const UpdatePresets = function (self: ModuleInstance): void {
 	const context: PresetsBuilderContext = {
+		self: self,
 		sections: [],
 		definitions: {},
 	}
@@ -29,6 +32,7 @@ export const UpdatePresets = function (self: ModuleInstance): void {
 	createOnAirPresets(context)
 	createServicePartPresets(context)
 	createSlidePresets(context)
+	createItemPresets(context)
 	createSongPresets(context)
 	createSongPartPresets(context)
 	createMediaPresets(context)
