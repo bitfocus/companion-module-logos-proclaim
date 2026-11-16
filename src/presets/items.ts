@@ -5,7 +5,7 @@ import type { ModuleSchema } from '../main.js'
 import type { CompanionPresetGroup } from '@companion-module/base'
 
 export function createItemPresets(context: PresetsBuilderContext): void {
-	context.definitions['item'] = {
+	context.definitions['go_to_item'] = {
 		type: 'alternatives',
 		variants: [
 			{
@@ -203,7 +203,7 @@ export function createItemPresets(context: PresetsBuilderContext): void {
 
 	// Finally, add a preset section for all these service items
 	context.sections.push({
-		id: 'items',
+		id: 'go_to_item',
 		name: 'Service Items',
 		description:
 			'Jump to a specific service item. You will only be able to see service item presets here when Proclaim is on air',
@@ -223,7 +223,7 @@ function makePresetGroup(id: string, name: string, items: ServiceItem[]): Compan
 		id: id,
 		name: name,
 		type: 'template',
-		presetId: 'item',
+		presetId: 'go_to_item',
 
 		templateVariableName: 'id',
 		templateValues: items
