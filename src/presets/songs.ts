@@ -2,7 +2,7 @@ import { DEFAULT_PRESET_STYLE, SONG_COUNT } from '../refdata.js'
 import type { PresetsBuilderContext } from './index.js'
 
 export function createSongPresets(context: PresetsBuilderContext): void {
-	context.definitions['song'] = {
+	context.definitions['go_to_song'] = {
 		type: 'alternatives',
 		variants: [
 			{
@@ -201,10 +201,10 @@ export function createSongPresets(context: PresetsBuilderContext): void {
 		name: 'Songs',
 		definitions: [
 			{
-				id: `songs`,
-				name: `Songs`,
+				id: `go_to_song`,
+				name: `Go To Song`,
 				type: 'template',
-				presetId: 'song',
+				presetId: 'go_to_song',
 				templateVariableName: 'number',
 				templateValues: [
 					...new Array(SONG_COUNT).fill(0).map((_v, index) => {
