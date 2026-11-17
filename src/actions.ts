@@ -48,6 +48,12 @@ type BaseActionsSchema = {
 			id: string
 		}
 	}
+	go_to_grouping_by_title: {
+		options: {
+			title: string
+			exact: boolean
+		}
+	}
 	show_custom_quick_screen: {
 		options: {
 			num: number
@@ -238,6 +244,45 @@ export const UpdateActions = function (self: ModuleInstance): void {
 			],
 			callback: async (event) => {
 				const grouping = self.proclaimAPI.status.groupings?.find((grouping) => grouping.id === event.options.id)
+				if (!grouping) return
+
+				const items = self.proclaimAPI.status.presentation?.serviceItems
+					.slice(grouping.first + 1, grouping.last)
+					?.filter((item) => Object.keys(DisplayableServiceItemKind).includes(item.kind))
+				if (!items || items.length == 0) return
+
+				await self.proclaimAPI.goToServiceItemAndSlide(items[0].id)
+			},
+		},
+
+		go_to_grouping_by_title: {
+			name: 'Go To Group By Title',
+			options: [
+				{
+					id: 'lbl',
+					type: 'static-text',
+					label: 'Group to match',
+					value: 'Enter a title to match (either exactly or within the section title',
+				},
+				{
+					id: 'title',
+					type: 'textinput',
+					label: 'Group Title',
+					default: '',
+				},
+				{
+					id: 'exact',
+					type: 'checkbox',
+					label: 'Exact title match?',
+					default: true,
+				},
+			],
+			callback: async (event) => {
+				const grouping = self.proclaimAPI.status.groupings?.find((grouping) => {
+					return event.options.exact
+						? grouping.title === event.options.title
+						: grouping.title.indexOf(event.options.title) !== -1
+				})
 				if (!grouping) return
 
 				const items = self.proclaimAPI.status.presentation?.serviceItems
