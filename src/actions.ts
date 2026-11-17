@@ -43,6 +43,11 @@ type BaseActionsSchema = {
 			item_index: number
 		}
 	}
+	go_to_grouping_by_id: {
+		options: {
+			id: string
+		}
+	}
 	show_custom_quick_screen: {
 		options: {
 			num: number
@@ -206,6 +211,41 @@ export const UpdateActions = function (self: ModuleInstance): void {
 					command: SONG_PARTS[event.options.song_part].appCommand,
 					index: event.options.item_index,
 				})
+			},
+		},
+
+		go_to_grouping_by_id: {
+			name: 'Go To Group by ID',
+			options: [
+				{
+					id: 'lbl',
+					type: 'static-text',
+					label: 'Group to match',
+					value: 'You will only be able to pick from the drop-down when Proclaim is on air',
+				},
+				{
+					id: 'id',
+					type: 'dropdown',
+					label: 'Group ID',
+					default: '',
+					choices: [
+						{ id: '', label: '-- None --' },
+						...self.proclaimAPI.status.groupings.map((grouping) => {
+							return { id: grouping.id, label: grouping.title }
+						}),
+					],
+				},
+			],
+			callback: async (event) => {
+				const grouping = self.proclaimAPI.status.groupings?.find((grouping) => grouping.id === event.options.id)
+				if (!grouping) return
+
+				const items = self.proclaimAPI.status.presentation?.serviceItems
+					.slice(grouping.first + 1, grouping.last)
+					?.filter((item) => Object.keys(DisplayableServiceItemKind).includes(item.kind))
+				if (!items || items.length == 0) return
+
+				await self.proclaimAPI.goToServiceItemAndSlide(items[0].id)
 			},
 		},
 
