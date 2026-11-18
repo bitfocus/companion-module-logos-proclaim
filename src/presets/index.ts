@@ -11,6 +11,7 @@ import { createSongPartPresets } from './songparts.js'
 import { createSongPresets } from './songs.js'
 import { createItemPresets } from './items.js'
 import { createGroupPresets } from './groups.js'
+import { createStatusInfoPresets } from './statusInfo.js'
 
 export interface PresetsBuilderContext {
 	readonly self: ModuleInstance
@@ -39,6 +40,7 @@ export const UpdatePresets = function (self: ModuleInstance): void {
 	createSongPartPresets(context)
 	createMediaPresets(context)
 	createQuickScreenPresets(context)
+	createStatusInfoPresets(context)
 	createConnectionPresets(context)
 
 	self.setPresetDefinitions(context.sections, context.definitions)
