@@ -79,6 +79,11 @@ export type FeedbacksSchema = {
 		}
 	}
 
+	stage_direction: {
+		type: 'boolean'
+		options: Record<never, never>
+	}
+
 	song_title: {
 		type: 'value'
 		options: {
@@ -407,6 +412,20 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			],
 			callback: (feedback) => {
 				return feedback.options.num <= self.proclaimAPI.status.songCount
+			},
+		},
+
+		stage_direction: {
+			type: 'boolean',
+			name: 'Stage Direction Active',
+			description: 'Change style when there is a current stage direction',
+			defaultStyle: {
+				color: 0xffffff,
+				bgcolor: 0x990000,
+			},
+			options: [],
+			callback: () => {
+				return self.proclaimAPI.status.stageDirection !== ''
 			},
 		},
 
