@@ -5,10 +5,10 @@ import type { PresetsBuilderContext } from './index.js'
 export function createStatusInfoPresets(context: PresetsBuilderContext): void {
 	context.definitions['presentation_date'] = {
 		type: 'simple',
-		name: 'On Air',
+		name: 'Presentation Date',
 		style: {
 			...DEFAULT_PRESET_STYLE,
-			text: "$(Proclaim:presentation_date) ? dateFormat($(Proclaim:presentation_date),'dddd DD MMM YYYY') : 'Presentation Date'",
+			text: "$(logos-proclaim:presentation_date) ? dateFormat($(logos-proclaim:presentation_date),'dddd DD MMM YYYY') : 'Presentation Date'",
 			textExpression: true,
 			size: 'auto',
 		},
@@ -18,10 +18,10 @@ export function createStatusInfoPresets(context: PresetsBuilderContext): void {
 
 	context.definitions['presentation_title'] = {
 		type: 'simple',
-		name: 'On Air',
+		name: 'Presentation Title',
 		style: {
 			...DEFAULT_PRESET_STYLE,
-			text: "$(Proclaim:presentation_title) ? $(Proclaim:presentation_title) : 'Presentation Title'",
+			text: "$(logos-proclaim:presentation_title) ? $(logos-proclaim:presentation_title) : 'Presentation Title'",
 			textExpression: true,
 			size: 'auto',
 		},
@@ -29,12 +29,47 @@ export function createStatusInfoPresets(context: PresetsBuilderContext): void {
 		feedbacks: [],
 	}
 
+	context.definitions['item_title'] = {
+		type: 'simple',
+		name: 'Item Title',
+		style: {
+			...DEFAULT_PRESET_STYLE,
+			text: "$(logos-proclaim:item_title) ? $(logos-proclaim:item_title) : 'Item Title'",
+			textExpression: true,
+			size: 'auto',
+		},
+		steps: [],
+		feedbacks: [],
+	}
+
+	context.definitions['stage_direction'] = {
+		type: 'simple',
+		name: 'Stage Direction',
+		style: {
+			...DEFAULT_PRESET_STYLE,
+			text: "!$(logos-proclaim:stage_direction) && !$(logos-proclaim:on_air) ? 'Stage Direction' : $(logos-proclaim:stage_direction)",
+			textExpression: true,
+			size: 'auto',
+		},
+		steps: [],
+		feedbacks: [
+			{
+				feedbackId: 'stage_direction',
+				options: {},
+				style: {
+					bgcolor: 0x990000,
+					color: 0xffffff,
+				},
+			},
+		],
+	}
+
 	context.definitions['item_info'] = {
 		type: 'simple',
 		name: 'Item n of m',
 		style: {
 			...DEFAULT_PRESET_STYLE,
-			text: 'Item $(Proclaim:item_index) of $(Proclaim:item_count)',
+			text: 'Item $(logos-proclaim:item_index) of $(logos-proclaim:item_count)',
 			size: 'auto',
 		},
 		steps: [],
@@ -46,7 +81,7 @@ export function createStatusInfoPresets(context: PresetsBuilderContext): void {
 		name: 'Song n of m',
 		style: {
 			...DEFAULT_PRESET_STYLE,
-			text: 'Song $(Proclaim:song_index) of $(Proclaim:song_count)',
+			text: 'Song $(logos-proclaim:song_index) of $(logos-proclaim:song_count)',
 			size: 'auto',
 		},
 		steps: [],
@@ -70,7 +105,7 @@ export function createStatusInfoPresets(context: PresetsBuilderContext): void {
 		name: 'Slide n of m',
 		style: {
 			...DEFAULT_PRESET_STYLE,
-			text: 'Slide $(Proclaim:slide_index) of $(Proclaim:slide_count)',
+			text: 'Slide $(logos-proclaim:slide_index) of $(logos-proclaim:slide_count)',
 			size: 'auto',
 		},
 		steps: [],
@@ -80,6 +115,14 @@ export function createStatusInfoPresets(context: PresetsBuilderContext): void {
 	context.sections.push({
 		id: 'status_info',
 		name: 'Status Information',
-		definitions: ['presentation_date', 'presentation_title', 'item_info', 'song_info', 'slide_info'],
+		definitions: [
+			'presentation_date',
+			'presentation_title',
+			'item_title',
+			'stage_direction',
+			'item_info',
+			'song_info',
+			'slide_info',
+		],
 	})
 }
