@@ -91,6 +91,7 @@ export type FeedbacksSchema = {
 		type: 'value'
 		options: {
 			id: string
+			maxLength: number
 		}
 	}
 
@@ -143,8 +144,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					}),
 				},
 			],
-			callback: (event) => {
-				const feedbackQuickScreenKind: QuickScreenKind = QuickScreenKind[event.options.quickScreen]
+			callback: (feedback) => {
+				const feedbackQuickScreenKind: QuickScreenKind = QuickScreenKind[feedback.options.quickScreen]
 				return feedbackQuickScreenKind == self.proclaimAPI.status.quickScreenKind
 			},
 		},
@@ -169,8 +170,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					}),
 				},
 			],
-			callback: (event) => {
-				const servicePart = ServicePart[event.options.servicePart]
+			callback: (feedback) => {
+				const servicePart = ServicePart[feedback.options.servicePart]
 				const currentServicePart = self.proclaimAPI.status.servicePart
 
 				return currentServicePart === servicePart
@@ -197,7 +198,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					}),
 				},
 			],
-			callback: (event) => {
+			callback: (feedback) => {
 				if (!self.proclaimAPI.status.onAir) {
 					return true
 				}
@@ -206,7 +207,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				const postServiceStartIndex = self.proclaimAPI.status.presentation?.postServiceStartIndex ?? -1
 				const itemCount = self.proclaimAPI.status.itemCount
 
-				const servicePart = ServicePart[event.options.servicePart]
+				const servicePart = ServicePart[feedback.options.servicePart]
 
 				switch (servicePart) {
 					case ServicePart.PreService:
@@ -240,8 +241,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					}),
 				},
 			],
-			callback: (event) => {
-				const kind = ServiceItemKind[event.options.kind]
+			callback: (feedback) => {
+				const kind = ServiceItemKind[feedback.options.kind]
 				return self.proclaimAPI.status.itemKind === kind
 			},
 		},
@@ -287,15 +288,16 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					default: true,
 				},
 			],
-			callback: (event) => {
-				if (event.options.id !== '') {
-					return event.options.id === self.proclaimAPI.status.groupingId
+			callback: (feedback) => {
+				if (feedback.options.id !== '') {
+					return feedback.options.id === self.proclaimAPI.status.groupingId
 				} else {
-					if (event.options.exact) {
-						return event.options.title !== '' && event.options.title === self.proclaimAPI.status.groupingTitle
+					if (feedback.options.exact) {
+						return feedback.options.title !== '' && feedback.options.title === self.proclaimAPI.status.groupingTitle
 					} else {
 						return (
-							event.options.title !== '' && self.proclaimAPI.status.groupingTitle.indexOf(event.options.title) !== -1
+							feedback.options.title !== '' &&
+							self.proclaimAPI.status.groupingTitle.indexOf(feedback.options.title) !== -1
 						)
 					}
 				}
@@ -323,8 +325,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 						}),
 				},
 			],
-			callback: (event) => {
-				const state = MediaState[event.options.state]
+			callback: (feedback) => {
+				const state = MediaState[feedback.options.state]
 				return self.proclaimAPI.status.mediaState === state
 			},
 		},
@@ -357,8 +359,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 						}),
 				},
 			],
-			callback: (event) => {
-				return event.options.id === self.proclaimAPI.status.itemId
+			callback: (feedback) => {
+				return feedback.options.id === self.proclaimAPI.status.itemId
 			},
 		},
 
@@ -380,8 +382,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					max: 254,
 				},
 			],
-			callback: (event) => {
-				return event.options.num === self.proclaimAPI.status.songIndex + 1
+			callback: (feedback) => {
+				return feedback.options.num === self.proclaimAPI.status.songIndex + 1
 			},
 		},
 
@@ -403,8 +405,8 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					max: 254,
 				},
 			],
-			callback: (event) => {
-				return event.options.num <= self.proclaimAPI.status.songCount
+			callback: (feedback) => {
+				return feedback.options.num <= self.proclaimAPI.status.songCount
 			},
 		},
 
@@ -430,15 +432,16 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					max: 250,
 				},
 			],
-			callback: (event) => {
-				const num = event.options.num
+			callback: (feedback) => {
+				if (!self.proclaimAPI.status.presentation) return 'Proclaim off air'
+				const num = feedback.options.num
 				if (!self.proclaimAPI.status.presentation || num < 1 || self.proclaimAPI.status.songCount < num) {
 					return ''
 				}
 				const songs = self.proclaimAPI.status.presentation.serviceItems.filter(
 					(item) => (item.kind as DisplayableServiceItemKind) === DisplayableServiceItemKind.SongLyrics,
 				)
-				return truncate(songs[num - 1].title, event.options.maxLength)
+				return truncate(songs[num - 1].title, feedback.options.maxLength)
 			},
 		},
 
@@ -456,16 +459,26 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				},
 				{
 					id: 'id',
-					type: 'dropdown',
+					type: 'textinput',
 					label: 'Group ID',
 					default: '',
-					choices: self.proclaimAPI.status.groupings.map((grouping) => {
-						return { id: grouping.id, label: grouping.title }
-					}),
+				},
+				{
+					id: 'maxLength',
+					type: 'number',
+					label: 'Max length (or 0 to not truncate)',
+					default: 0,
+					min: 0,
+					max: 250,
 				},
 			],
-			callback: (event) => {
-				return self.proclaimAPI.status.groupings?.find((grouping) => grouping.id === event.options.id)?.title ?? ''
+			callback: (feedback) => {
+				if (!self.proclaimAPI.status.presentation) return 'Proclaim off air'
+				return truncate(
+					self.proclaimAPI.status.groupings?.find((grouping) => grouping.id === feedback.options.id)?.title ??
+						'Unable to find group',
+					feedback.options.maxLength,
+				)
 			},
 		},
 
@@ -483,14 +496,9 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				},
 				{
 					id: 'id',
-					type: 'dropdown',
+					type: 'textinput',
 					label: 'Item ID',
 					default: '',
-					choices: (self.proclaimAPI.status.presentation?.serviceItems ?? [])
-						.filter((item) => Object.keys(DisplayableServiceItemKind).includes(item.kind))
-						.map((item) => {
-							return { id: item.id, label: item.title }
-						}),
 				},
 				{
 					id: 'maxLength',
@@ -501,10 +509,12 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					max: 250,
 				},
 			],
-			callback: (event) => {
+			callback: (feedback) => {
+				if (!self.proclaimAPI.status.presentation) return 'Proclaim off air'
 				return truncate(
-					self.proclaimAPI.status.presentation?.serviceItems.find((item) => item.id === event.options.id)?.title ?? '',
-					event.options.maxLength,
+					self.proclaimAPI.status.presentation?.serviceItems.find((item) => item.id === feedback.options.id)?.title ??
+						'Unable to find item',
+					feedback.options.maxLength,
 				)
 			},
 		},

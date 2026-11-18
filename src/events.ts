@@ -37,7 +37,7 @@ export function AddEventListeners(self: ModuleInstance): void {
 			presentation_date: data ? ticksToUnixTime(data.dateGiven) : 0,
 			presentation_start_time: data ? ticksToUnixTime(data.startTime) : 0,
 		})
-		self.checkFeedbacks('has_service_part', 'song_title')
+		self.checkFeedbacks('has_service_part', 'song_title', 'item_title', 'grouping_title')
 	})
 
 	mapEventToVariable(self, 'itemCount', 'item_count')
