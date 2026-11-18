@@ -43,13 +43,9 @@ type BaseActionsSchema = {
 			item_index: number
 		}
 	}
-	go_to_grouping_by_id: {
+	go_to_grouping: {
 		options: {
 			id: string
-		}
-	}
-	go_to_grouping_by_title: {
-		options: {
 			title: string
 			exact: boolean
 		}
@@ -220,14 +216,15 @@ export const UpdateActions = function (self: ModuleInstance): void {
 			},
 		},
 
-		go_to_grouping_by_id: {
-			name: 'Go To Group by ID',
+		go_to_grouping: {
+			name: 'Go To Group',
 			options: [
 				{
 					id: 'lbl',
 					type: 'static-text',
 					label: 'Group to match',
-					value: 'You will only be able to pick from the drop-down when Proclaim is on air',
+					value:
+						'Pick an exact section from the drop-down, or enter a title to match (either exactly or within the section title). You will only be able to pick from the drop-down when Proclaim is on air',
 				},
 				{
 					id: 'id',
@@ -240,29 +237,6 @@ export const UpdateActions = function (self: ModuleInstance): void {
 							return { id: grouping.id, label: grouping.title }
 						}),
 					],
-				},
-			],
-			callback: async (event) => {
-				const grouping = self.proclaimAPI.status.groupings?.find((grouping) => grouping.id === event.options.id)
-				if (!grouping) return
-
-				const items = self.proclaimAPI.status.presentation?.serviceItems
-					.slice(grouping.first + 1, grouping.last)
-					?.filter((item) => Object.keys(DisplayableServiceItemKind).includes(item.kind))
-				if (!items || items.length == 0) return
-
-				await self.proclaimAPI.goToServiceItemAndSlide(items[0].id)
-			},
-		},
-
-		go_to_grouping_by_title: {
-			name: 'Go To Group By Title',
-			options: [
-				{
-					id: 'lbl',
-					type: 'static-text',
-					label: 'Group to match',
-					value: 'Enter a title to match (either exactly or within the section title',
 				},
 				{
 					id: 'title',
@@ -279,10 +253,15 @@ export const UpdateActions = function (self: ModuleInstance): void {
 			],
 			callback: async (event) => {
 				const grouping = self.proclaimAPI.status.groupings?.find((grouping) => {
-					return event.options.exact
-						? grouping.title === event.options.title
-						: grouping.title.indexOf(event.options.title) !== -1
+					if (event.options.id) {
+						return grouping.id === event.options.id
+					} else {
+						return event.options.exact
+							? grouping.title === event.options.title
+							: grouping.title.indexOf(event.options.title) !== -1
+					}
 				})
+
 				if (!grouping) return
 
 				const items = self.proclaimAPI.status.presentation?.serviceItems
