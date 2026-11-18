@@ -6,169 +6,70 @@ import type { CompanionPresetGroup } from '@companion-module/base'
 
 export function createItemPresets(context: PresetsBuilderContext): void {
 	context.definitions['go_to_item'] = {
-		type: 'alternatives',
-		variants: [
+		type: 'simple',
+		name: 'Go To Item',
+		style: {
+			...DEFAULT_PRESET_STYLE,
+			text: '$(local:name)',
+			size: '14',
+		},
+		steps: [
 			{
-				type: 'layered',
-				name: 'Go To Item',
-				elements: [
+				down: [
 					{
-						type: 'box',
-						id: 'background',
-						x: 0,
-						y: 0,
-						width: 100,
-						height: 100,
-						color: 0x000000,
-					},
-					{
-						type: 'text',
-						id: 'text',
-						x: 0,
-						y: 0,
-						width: 100,
-						height: 100,
-						text: '$(local:name)',
-						color: 0xffffff,
-						fontsize: 30,
-						fontsizeAllowShrink: true,
-					},
-				],
-				steps: [
-					{
-						down: [
-							{
-								actionId: 'go_to_service_item_by_id',
-								options: {
-									id: {
-										isExpression: true,
-										value: '$(local:id)',
-									},
-									slide: {
-										isExpression: true,
-										value: '$(local:slide)',
-									},
-								},
-							},
-						],
-						up: [],
-					},
-				],
-				feedbacks: [
-					{
-						feedbackId: 'item',
-						styleOverrides: [
-							{
-								elementId: 'background',
-								elementProperty: 'color',
-								override: 0x00ff00,
-							},
-							{
-								elementId: 'text',
-								elementProperty: 'color',
-								override: 0x000000,
-							},
-						],
+						actionId: 'go_to_service_item_by_id',
 						options: {
 							id: {
 								isExpression: true,
 								value: '$(local:id)',
 							},
-						},
-					},
-				],
-				localVariables: [
-					{
-						variableType: 'simple',
-						variableName: 'id',
-						startupValue: '',
-					},
-					{
-						variableType: 'simple',
-						variableName: 'slide',
-						startupValue: '1',
-					},
-					{
-						variableType: 'feedback',
-						variableName: 'name',
-						feedbackId: 'item_title',
-						options: {
-							id: {
+							slide: {
 								isExpression: true,
-								value: '$(local:id)',
+								value: '$(local:slide)',
 							},
-							maxLength: 30,
 						},
 					},
 				],
+				up: [],
+			},
+		],
+		feedbacks: [
+			{
+				feedbackId: 'item',
+				style: {
+					color: 0x000000,
+					bgcolor: 0x00ff00,
+				},
+				options: {
+					id: {
+						isExpression: true,
+						value: '$(local:id)',
+					},
+				},
+			},
+		],
+		localVariables: [
+			{
+				variableType: 'simple',
+				variableName: 'id',
+				startupValue: '',
 			},
 			{
-				type: 'simple',
-				name: 'Go To Item',
-				style: {
-					...DEFAULT_PRESET_STYLE,
-					text: '$(local:name)',
-					size: '14',
+				variableType: 'simple',
+				variableName: 'slide',
+				startupValue: '1',
+			},
+			{
+				variableType: 'feedback',
+				variableName: 'name',
+				feedbackId: 'item_title',
+				options: {
+					id: {
+						isExpression: true,
+						value: '$(local:id)',
+					},
+					maxLength: 30,
 				},
-				steps: [
-					{
-						down: [
-							{
-								actionId: 'go_to_service_item_by_id',
-								options: {
-									id: {
-										isExpression: true,
-										value: '$(local:id)',
-									},
-									slide: {
-										isExpression: true,
-										value: '$(local:slide)',
-									},
-								},
-							},
-						],
-						up: [],
-					},
-				],
-				feedbacks: [
-					{
-						feedbackId: 'item',
-						style: {
-							color: 0x000000,
-							bgcolor: 0x00ff00,
-						},
-						options: {
-							id: {
-								isExpression: true,
-								value: '$(local:id)',
-							},
-						},
-					},
-				],
-				localVariables: [
-					{
-						variableType: 'simple',
-						variableName: 'id',
-						startupValue: '',
-					},
-					{
-						variableType: 'simple',
-						variableName: 'slide',
-						startupValue: '1',
-					},
-					{
-						variableType: 'feedback',
-						variableName: 'name',
-						feedbackId: 'item_title',
-						options: {
-							id: {
-								isExpression: true,
-								value: '$(local:id)',
-							},
-							maxLength: 30,
-						},
-					},
-				],
 			},
 		],
 	}
