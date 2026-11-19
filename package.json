@@ -8,8 +8,9 @@
 		"format": "prettier -w .",
 		"package": "run build && companion-module-build",
 		"build": "rimraf dist && run build:main",
-		"build:main": "tsc -p tsconfig.build.json",
-		"dev": "tsc -p tsconfig.build.json --watch",
+		"build:main": "run generate:resources && tsc -p tsconfig.build.json",
+		"generate:resources": "node scripts/generate-resources.mjs",
+		"dev": "run generate:resources && tsc -p tsconfig.build.json --watch",
 		"lint:raw": "eslint",
 		"lint": "run lint:raw ."
 	},
