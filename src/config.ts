@@ -3,6 +3,7 @@ import { Regex, type SomeCompanionConfigField } from '@companion-module/base'
 export type ModuleConfig = {
 	ip: string
 	password?: string // Only when upgrading from a version that had the key in config - will be moved to secrets
+	basicPresets: boolean
 }
 
 export type ModuleSecrets = {
@@ -41,6 +42,21 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 			width: 6,
 			isVisibleExpression: "$(options:ip) !== '127.0.0.1'",
 			//required: true,
+		},
+		{
+			type: 'static-text',
+			id: 'presetsLabel',
+			label: 'Preset Style',
+			value:
+				'Version 2.x of this module introduces more colourful presets. Select below to revert to the old, white-on-black style from version 1.x',
+			width: 12,
+		},
+		{
+			type: 'checkbox',
+			id: 'basicPresets',
+			label: 'Use basic preset styles',
+			default: false,
+			width: 12,
 		},
 	]
 }
