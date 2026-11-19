@@ -32,9 +32,51 @@ export function createOnAirPresets(context: PresetsBuilderContext): void {
 		],
 	}
 
+	context.definitions['go_on_air'] = {
+		type: 'simple',
+		name: 'Go On Air',
+		style: {
+			...DEFAULT_PRESET_STYLE,
+			text: 'Go On Air',
+		},
+		steps: [
+			{
+				down: [
+					{
+						actionId: 'go_on_air',
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+		feedbacks: [],
+	}
+
+	context.definitions['go_off_air'] = {
+		type: 'simple',
+		name: 'Go Off Air',
+		style: {
+			...DEFAULT_PRESET_STYLE,
+			text: 'Go Off Air',
+		},
+		steps: [
+			{
+				down: [
+					{
+						actionId: 'go_off_air',
+						options: {},
+					},
+				],
+				up: [],
+			},
+		],
+		feedbacks: [],
+	}
+
 	context.sections.push({
 		id: 'on_air',
 		name: 'On Air',
-		definitions: ['on_air'],
+		definitions: ['on_air', 'go_on_air', 'go_off_air'],
 	})
 }
