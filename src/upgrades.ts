@@ -15,10 +15,12 @@ export const UpgradeScripts: CompanionStaticUpgradeScript<ModuleConfig, ModuleSe
 		context: CompanionUpgradeContext<ModuleConfig>,
 		_props: CompanionStaticUpgradeProps<ModuleConfig, ModuleSecrets>,
 	): CompanionStaticUpgradeResult<ModuleConfig, ModuleSecrets> {
+		// Version 1.2.x - Move password from config to secrets
 		return {
 			updatedConfig: {
 				ip: context.currentConfig.ip,
 				// Password will be removed - moving to secrets
+				basicPresets: false,
 			},
 			updatedSecrets: {
 				password: context.currentConfig.password?.toString() || '',
