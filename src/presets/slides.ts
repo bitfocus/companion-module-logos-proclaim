@@ -1,13 +1,18 @@
 import { DEFAULT_PRESET_STYLE } from '../refdata.js'
+import { doubleLeftArrow, doubleRightArrow, leftArrow, rightArrow } from '../resources.js'
 import type { PresetsBuilderContext } from './index.js'
 
 export function createSlidePresets(context: PresetsBuilderContext): void {
+	const basicPresets = context.self.config.basicPresets
+
 	context.definitions['previous_slide'] = {
 		type: 'simple',
 		name: 'Previous Slide',
 		style: {
 			...DEFAULT_PRESET_STYLE,
-			text: 'Prev Slide',
+			text: basicPresets ? 'Prev Slide' : '',
+			bgcolor: basicPresets ? 0x000000 : 0x009900,
+			png64: basicPresets ? '' : leftArrow,
 		},
 		steps: [
 			{
@@ -28,7 +33,9 @@ export function createSlidePresets(context: PresetsBuilderContext): void {
 		name: 'Next Slide',
 		style: {
 			...DEFAULT_PRESET_STYLE,
-			text: 'Next Slide',
+			text: basicPresets ? 'Next Slide' : '',
+			bgcolor: basicPresets ? 0x000000 : 0x009900,
+			png64: basicPresets ? '' : rightArrow,
 		},
 		steps: [
 			{
@@ -49,7 +56,9 @@ export function createSlidePresets(context: PresetsBuilderContext): void {
 		name: 'Previous Service Item',
 		style: {
 			...DEFAULT_PRESET_STYLE,
-			text: 'Prev Item',
+			text: basicPresets ? 'Prev Item' : '',
+			bgcolor: basicPresets ? 0x000000 : 0x006600,
+			png64: basicPresets ? '' : doubleLeftArrow,
 		},
 		steps: [
 			{
@@ -70,7 +79,9 @@ export function createSlidePresets(context: PresetsBuilderContext): void {
 		name: 'Next Service Item',
 		style: {
 			...DEFAULT_PRESET_STYLE,
-			text: 'Next Item',
+			text: basicPresets ? 'Next Item' : '',
+			bgcolor: basicPresets ? 0x000000 : 0x006600,
+			png64: basicPresets ? '' : doubleRightArrow,
 		},
 		steps: [
 			{
