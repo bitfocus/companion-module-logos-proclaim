@@ -100,6 +100,12 @@ export function createSlidePresets(context: PresetsBuilderContext): void {
 	context.sections.push({
 		id: 'slides',
 		name: 'Slides',
-		definitions: ['previous_slide', 'next_slide', 'previous_service_item', 'next_service_item'],
+		definitions: ['previous_slide', 'next_slide'],
+	})
+
+	context.sections.push({
+		id: 'service_items',
+		name: 'Service Items',
+		definitions: ['previous_service_item', 'next_service_item'],
 	})
 }
