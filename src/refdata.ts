@@ -158,9 +158,19 @@ export const SIMPLE_ACTIONS = [
 	},
 ] as const satisfies readonly SimpleAction[]
 
+// Colours for presets
+export const COLOURS = {
+	prevNext: {
+		slide: 0x009900,
+		item: 0x006600,
+	},
+	black: 0x000000,
+	white: 0xffffff,
+}
+
 // Default style for presets, as a starting point to provide a consistent look and feel
 export const DEFAULT_PRESET_STYLE = {
 	size: 18,
-	bgcolor: 0x000000,
-	color: 0xffffff,
+	bgcolor: COLOURS.black,
+	color: COLOURS.white,
 }
