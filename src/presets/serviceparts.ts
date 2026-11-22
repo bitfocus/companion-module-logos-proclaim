@@ -1,6 +1,6 @@
 import { type CompanionSomePresetDefinition } from '@companion-module/base'
 import { COLOURS, DEFAULT_PRESET_STYLE } from '../refdata.js'
-import type { PresetsBuilderContext } from './index.js'
+import { makeActiveElement, makeBackgroundElement, makeTextElement, type PresetsBuilderContext } from './index.js'
 import type { ModuleSchema } from '../main.js'
 import type { ServicePart } from '@hussra/logos-proclaim'
 
@@ -82,29 +82,7 @@ export function createServicePartPresets(context: PresetsBuilderContext): void {
 			return {
 				type: 'layered',
 				name: name,
-				elements: [
-					{
-						type: 'box',
-						id: 'background',
-						color: COLOURS.goTo.servicePart,
-					},
-					{
-						type: 'box',
-						id: 'active',
-						color: COLOURS.transparent,
-						borderWidth: 5,
-						borderColor: COLOURS.active,
-						borderPosition: 'inside',
-						enabled: false,
-					},
-					{
-						type: 'text',
-						text: buttonText,
-						id: 'text',
-						fontsize: 38,
-						fontsizeAllowShrink: true,
-					},
-				],
+				elements: [makeBackgroundElement(COLOURS.goTo.servicePart), makeActiveElement(), makeTextElement(buttonText)],
 				feedbacks: [
 					{
 						feedbackId: 'has_service_part',
