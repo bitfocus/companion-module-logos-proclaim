@@ -1,5 +1,6 @@
 // Reference data used in setting up actions and presets
 
+import { combineRgb } from '@companion-module/base'
 import { AppCommand, IndexedAppCommand, SimpleAppCommand } from '@hussra/logos-proclaim'
 
 // Song parts - used in the go_to_song_part action and in constructing its presets
@@ -164,8 +165,14 @@ export const COLOURS = {
 		slide: 0x009900,
 		item: 0x006600,
 	},
+	goTo: {
+		servicePart: 0x000099,
+	},
+	active: 0xffff00,
+	inactive: 0x333333,
 	black: 0x000000,
 	white: 0xffffff,
+	transparent: combineRgb(0, 0, 0, 0),
 }
 
 // Default style for presets, as a starting point to provide a consistent look and feel

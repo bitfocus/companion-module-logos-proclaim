@@ -1,5 +1,5 @@
-import type { CompanionSomePresetDefinition } from '@companion-module/base'
-import { DEFAULT_PRESET_STYLE } from '../refdata.js'
+import { type CompanionSomePresetDefinition } from '@companion-module/base'
+import { COLOURS, DEFAULT_PRESET_STYLE } from '../refdata.js'
 import type { PresetsBuilderContext } from './index.js'
 import type { ModuleSchema } from '../main.js'
 import type { ServicePart } from '@hussra/logos-proclaim'
@@ -35,47 +35,122 @@ export function createServicePartPresets(context: PresetsBuilderContext): void {
 		actionId: 'start_pre_service' | 'start_warm_up' | 'start_service' | 'start_post_service',
 		part: keyof typeof ServicePart,
 	): CompanionSomePresetDefinition<ModuleSchema> {
-		return {
-			type: 'simple',
-			name: name,
-			style: {
-				...DEFAULT_PRESET_STYLE,
-				text: buttonText,
-			},
-			steps: [
-				{
-					down: [
-						{
-							actionId: actionId,
-							options: {},
+		if (context.self.config.basicPresets) {
+			return {
+				type: 'simple',
+				name: name,
+				style: {
+					...DEFAULT_PRESET_STYLE,
+					text: buttonText,
+				},
+				steps: [
+					{
+						down: [
+							{
+								actionId: actionId,
+								options: {},
+							},
+						],
+						up: [],
+					},
+				],
+				feedbacks: [
+					{
+						feedbackId: 'has_service_part',
+						options: {
+							servicePart: part,
 						},
-					],
-					up: [],
-				},
-			],
-			feedbacks: [
-				{
-					feedbackId: 'has_service_part',
-					options: {
-						servicePart: part,
+						isInverted: true,
+						style: {
+							bgcolor: COLOURS.black,
+							color: COLOURS.inactive,
+						},
 					},
-					isInverted: true,
-					style: {
-						bgcolor: 0x000000,
-						color: 0x333333,
+					{
+						feedbackId: 'service_part',
+						options: {
+							servicePart: part,
+						},
+						style: {
+							bgcolor: COLOURS.active,
+							color: COLOURS.black,
+						},
 					},
-				},
-				{
-					feedbackId: 'service_part',
-					options: {
-						servicePart: part,
+				],
+			}
+		} else {
+			return {
+				type: 'layered',
+				name: name,
+				elements: [
+					{
+						type: 'box',
+						id: 'background',
+						color: COLOURS.goTo.servicePart,
 					},
-					style: {
-						bgcolor: 0x00ff00,
-						color: 0x000000,
+					{
+						type: 'box',
+						id: 'active',
+						color: COLOURS.transparent,
+						borderWidth: 5,
+						borderColor: COLOURS.active,
+						borderPosition: 'inside',
+						enabled: false,
 					},
-				},
-			],
+					{
+						type: 'text',
+						text: buttonText,
+						id: 'text',
+						fontsize: 38,
+						fontsizeAllowShrink: true,
+					},
+				],
+				feedbacks: [
+					{
+						feedbackId: 'has_service_part',
+						options: {
+							servicePart: part,
+						},
+						isInverted: true,
+						styleOverrides: [
+							{
+								elementId: 'text',
+								elementProperty: 'color',
+								override: COLOURS.inactive,
+							},
+							{
+								elementId: 'background',
+								elementProperty: 'color',
+								override: COLOURS.black,
+							},
+						],
+					},
+					{
+						feedbackId: 'service_part',
+						options: {
+							servicePart: part,
+						},
+						styleOverrides: [
+							{
+								elementId: 'active',
+								elementProperty: 'enabled',
+								override: true,
+							},
+						],
+					},
+				],
+				steps: [
+					{
+						down: [
+							{
+								actionId: actionId,
+								options: {},
+							},
+						],
+						up: [],
+					},
+				],
+			}
 		}
 	}
 }
