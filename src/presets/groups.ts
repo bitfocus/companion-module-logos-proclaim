@@ -1,75 +1,19 @@
-import { DEFAULT_PRESET_STYLE } from '../refdata.js'
-import type { PresetsBuilderContext } from './index.js'
+import type {
+	CompanionSomePresetDefinition,
+	CompanionButtonStepActions,
+	CompanionPresetLocalVariable,
+} from '@companion-module/base'
+import type { ModuleSchema } from '../main.js'
+import { COLOURS, DEFAULT_PRESET_STYLE } from '../refdata.js'
+import { makeActiveElement, makeBackgroundElement, makeTextElement, type PresetsBuilderContext } from './index.js'
+import type { FeedbacksSchema } from '../feedbacks.js'
 
 export function createGroupPresets(context: PresetsBuilderContext): void {
-	context.definitions['go_to_group'] = {
-		type: 'simple',
-		name: 'Go To group',
-		style: {
-			...DEFAULT_PRESET_STYLE,
-			text: '$(local:name)',
-			size: '14',
-		},
-		steps: [
-			{
-				down: [
-					{
-						actionId: 'go_to_grouping',
-						options: {
-							id: {
-								isExpression: true,
-								value: '$(local:id)',
-							},
-							title: '',
-							exact: true,
-						},
-					},
-				],
-				up: [],
-			},
-		],
-		feedbacks: [
-			{
-				feedbackId: 'grouping',
-				style: {
-					color: 0x000000,
-					bgcolor: 0x00ff00,
-				},
-				options: {
-					id: {
-						isExpression: true,
-						value: '$(local:id)',
-					},
-					title: '',
-					exact: true,
-				},
-			},
-		],
-		localVariables: [
-			{
-				variableType: 'simple',
-				variableName: 'id',
-				startupValue: '',
-			},
-			{
-				variableType: 'feedback',
-				variableName: 'name',
-				feedbackId: 'grouping_title',
-				options: {
-					id: {
-						isExpression: true,
-						value: '$(local:id)',
-					},
-					maxLength: 30,
-				},
-			},
-		],
-	}
+	// Create context definition
+	context.definitions['go_to_group'] = createGroupingPreset(context)
 
 	// Get all groupings
 	const allGroups = context.self.proclaimAPI.status.groupings
-
-	console.log(JSON.stringify(allGroups, null, 2))
 
 	// Finally, add a preset section for all these service items
 	context.sections.push({
@@ -91,4 +35,104 @@ export function createGroupPresets(context: PresetsBuilderContext): void {
 			},
 		],
 	})
+}
+
+function createGroupingPreset(context: PresetsBuilderContext): CompanionSomePresetDefinition<ModuleSchema> {
+	const name = 'Go To Group'
+	const steps: CompanionButtonStepActions<ModuleSchema>[] = [
+		{
+			down: [
+				{
+					actionId: 'go_to_grouping',
+					options: {
+						id: {
+							isExpression: true,
+							value: '$(local:id)',
+						},
+						title: '',
+						exact: true,
+					},
+				},
+			],
+			up: [],
+		},
+	]
+	const localVariables: CompanionPresetLocalVariable<FeedbacksSchema>[] = [
+		{
+			variableType: 'simple',
+			variableName: 'id',
+			startupValue: '',
+		},
+		{
+			variableType: 'feedback',
+			variableName: 'name',
+			feedbackId: 'grouping_title',
+			options: {
+				id: {
+					isExpression: true,
+					value: '$(local:id)',
+				},
+				maxLength: 30,
+			},
+		},
+	]
+
+	if (context.self.config.basicPresets) {
+		return {
+			type: 'simple',
+			name: name,
+			style: {
+				...DEFAULT_PRESET_STYLE,
+				text: '$(local:name)',
+				size: '14',
+			},
+			steps: steps,
+			feedbacks: [
+				{
+					feedbackId: 'grouping',
+					style: {
+						color: 0x000000,
+						bgcolor: 0x00ff00,
+					},
+					options: {
+						id: {
+							isExpression: true,
+							value: '$(local:id)',
+						},
+						title: '',
+						exact: true,
+					},
+				},
+			],
+			localVariables: localVariables,
+		}
+	} else {
+		return {
+			type: 'layered',
+			name: 'Go To Item',
+			elements: [makeBackgroundElement(COLOURS.goTo.grouping), makeActiveElement(), makeTextElement('$(local:name)')],
+			feedbacks: [
+				{
+					feedbackId: 'grouping',
+					styleOverrides: [
+						{
+							elementId: 'active',
+							elementProperty: 'enabled',
+							override: true,
+						},
+					],
+					options: {
+						id: {
+							isExpression: true,
+							value: '$(local:id)',
+						},
+						title: '',
+						exact: true,
+					},
+				},
+			],
+			steps: steps,
+			localVariables: localVariables,
+		}
+	}
 }
