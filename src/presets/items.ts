@@ -11,7 +11,7 @@ import type {
 import type { FeedbacksSchema } from '../feedbacks.js'
 
 export function createItemPresets(context: PresetsBuilderContext): void {
-	context.definitions['go_to_item'] = createItemPreset()
+	context.definitions['go_to_item'] = createItemPreset(context)
 
 	// Get all service items
 	const allItems = context.self.proclaimAPI.status.presentation?.serviceItems ?? []
@@ -49,107 +49,107 @@ export function createItemPresets(context: PresetsBuilderContext): void {
 			'Jump to a specific service item. You will only be able to see service item presets here when Proclaim is on air',
 		definitions: groups,
 	})
+}
 
-	function createItemPreset(): CompanionSomePresetDefinition<ModuleSchema> {
-		const name = 'Go To Item'
-		const steps: CompanionButtonStepActions<ModuleSchema>[] = [
-			{
-				down: [
-					{
-						actionId: 'go_to_service_item_by_id',
-						options: {
-							id: {
-								isExpression: true,
-								value: '$(local:id)',
-							},
-							slide: {
-								isExpression: true,
-								value: '$(local:slide)',
-							},
+function createItemPreset(context: PresetsBuilderContext): CompanionSomePresetDefinition<ModuleSchema> {
+	const name = 'Go To Item'
+	const steps: CompanionButtonStepActions<ModuleSchema>[] = [
+		{
+			down: [
+				{
+					actionId: 'go_to_service_item_by_id',
+					options: {
+						id: {
+							isExpression: true,
+							value: '$(local:id)',
+						},
+						slide: {
+							isExpression: true,
+							value: '$(local:slide)',
 						},
 					},
-				],
-				up: [],
-			},
-		]
-		const localVariables: CompanionPresetLocalVariable<FeedbacksSchema>[] = [
-			{
-				variableType: 'simple',
-				variableName: 'id',
-				startupValue: '',
-			},
-			{
-				variableType: 'simple',
-				variableName: 'slide',
-				startupValue: '1',
-			},
-			{
-				variableType: 'feedback',
-				variableName: 'name',
-				feedbackId: 'item_title',
-				options: {
-					id: {
-						isExpression: true,
-						value: '$(local:id)',
-					},
-					maxLength: 30,
 				},
+			],
+			up: [],
+		},
+	]
+	const localVariables: CompanionPresetLocalVariable<FeedbacksSchema>[] = [
+		{
+			variableType: 'simple',
+			variableName: 'id',
+			startupValue: '',
+		},
+		{
+			variableType: 'simple',
+			variableName: 'slide',
+			startupValue: '1',
+		},
+		{
+			variableType: 'feedback',
+			variableName: 'name',
+			feedbackId: 'item_title',
+			options: {
+				id: {
+					isExpression: true,
+					value: '$(local:id)',
+				},
+				maxLength: 30,
 			},
-		]
+		},
+	]
 
-		if (context.self.config.basicPresets) {
-			return {
-				type: 'simple',
-				name: name,
-				style: {
-					...DEFAULT_PRESET_STYLE,
-					text: '$(local:name)',
-					size: '14',
+	if (context.self.config.basicPresets) {
+		return {
+			type: 'simple',
+			name: name,
+			style: {
+				...DEFAULT_PRESET_STYLE,
+				text: '$(local:name)',
+				size: '14',
+			},
+			steps: steps,
+			feedbacks: [
+				{
+					feedbackId: 'item',
+					style: {
+						color: COLOURS.black,
+						bgcolor: COLOURS.active,
+					},
+					options: {
+						id: {
+							isExpression: true,
+							value: '$(local:id)',
+						},
+					},
 				},
-				steps: steps,
-				feedbacks: [
-					{
-						feedbackId: 'item',
-						style: {
-							color: COLOURS.black,
-							bgcolor: COLOURS.active,
+			],
+			localVariables: localVariables,
+		}
+	} else {
+		return {
+			type: 'layered',
+			name: 'Go To Item',
+			elements: [makeBackgroundElement(COLOURS.goTo.item), makeActiveElement(), makeTextElement('$(local:name)')],
+			feedbacks: [
+				{
+					feedbackId: 'item',
+					styleOverrides: [
+						{
+							elementId: 'active',
+							elementProperty: 'enabled',
+							override: true,
 						},
-						options: {
-							id: {
-								isExpression: true,
-								value: '$(local:id)',
-							},
-						},
-					},
-				],
-				localVariables: localVariables,
-			}
-		} else {
-			return {
-				type: 'layered',
-				name: 'Go To Item',
-				elements: [makeBackgroundElement(COLOURS.goTo.item), makeActiveElement(), makeTextElement('$(local:name)')],
-				feedbacks: [
-					{
-						feedbackId: 'item',
-						styleOverrides: [
-							{
-								elementId: 'active',
-								elementProperty: 'enabled',
-								override: true,
-							},
-						],
-						options: {
-							id: {
-								isExpression: true,
-								value: '$(local:id)',
-							},
+					],
+					options: {
+						id: {
+							isExpression: true,
+							value: '$(local:id)',
 						},
 					},
-				],
-				steps: steps,
-				localVariables: localVariables,
-			}
+				},
+			],
+			steps: steps,
+			localVariables: localVariables,
 		}
 	}
 }
