@@ -167,6 +167,7 @@ export const COLOURS = {
 	},
 	goTo: {
 		servicePart: 0x000099,
+		grouping: 0x0000ff,
 		item: 0x4040ff,
 	},
 	active: 0xffff00,
