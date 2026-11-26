@@ -169,6 +169,7 @@ export const COLOURS = {
 		servicePart: 0x000099,
 		grouping: 0x0000ff,
 		item: 0x4040ff,
+		song: 0x8080ff,
 	},
 	active: 0xffff00,
 	inactive: 0x333333,

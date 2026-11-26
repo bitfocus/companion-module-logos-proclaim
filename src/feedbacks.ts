@@ -411,6 +411,9 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				},
 			],
 			callback: (feedback) => {
+				if (!self.proclaimAPI.status.onAir) {
+					return true
+				}
 				return feedback.options.num <= self.proclaimAPI.status.songCount
 			},
 		},
