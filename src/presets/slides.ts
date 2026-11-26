@@ -98,16 +98,23 @@ export function createSlidePresets(context: PresetsBuilderContext): void {
 	}
 
 	context.sections.push({
-		id: 'slides',
-		name: 'Slides',
-		description: 'Jump to the previous or next slide',
-		definitions: ['previous_slide', 'next_slide'],
-	})
-
-	context.sections.push({
-		id: 'service_items',
-		name: 'Service Items',
-		description: 'Jump to the previous or next service item',
-		definitions: ['previous_service_item', 'next_service_item'],
+		id: 'navigation',
+		name: 'Navigation',
+		definitions: [
+			{
+				id: 'navigation-slides',
+				type: 'simple',
+				name: 'Slides',
+				description: 'Jump to the previous or next slide',
+				presets: ['previous_slide', 'next_slide'],
+			},
+			{
+				id: 'navigation-items',
+				type: 'simple',
+				name: 'Service Items',
+				description: 'Jump to the previous or next service item',
+				presets: ['previous_service_item', 'next_service_item'],
+			},
+		],
 	})
 }
