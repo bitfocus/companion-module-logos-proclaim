@@ -21,19 +21,22 @@ export function createGroupPresets(context: PresetsBuilderContext): void {
 		name: 'Service Item Groups',
 		description:
 			'Jump to the first item in a specific group. You will only be able to see group presets here when Proclaim is on air',
-		definitions: [
-			{
-				id: 'groupings',
-				name: 'Groupings',
-				type: 'template',
-				presetId: 'go_to_group',
+		definitions:
+			allGroups.length > 0
+				? [
+						{
+							id: 'groupings',
+							name: 'Groupings',
+							type: 'template',
+							presetId: 'go_to_group',
 
-				templateVariableName: 'id',
-				templateValues: allGroups.map((item) => {
-					return { value: item.id, name: item.title }
-				}),
-			},
-		],
+							templateVariableName: 'id',
+							templateValues: allGroups.map((item) => {
+								return { value: item.id, name: item.title }
+							}),
+						},
+					]
+				: [],
 	})
 }
 
