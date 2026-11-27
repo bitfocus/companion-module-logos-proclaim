@@ -1,212 +1,68 @@
-import { DEFAULT_PRESET_STYLE } from '../refdata.js'
-import type { PresetsBuilderContext } from './index.js'
+import type { CompanionSomePresetDefinition, SomePresetActionEntry } from '@companion-module/base'
+import type { ModuleSchema } from '../main.js'
+import { COLOURS, DEFAULT_PRESET_STYLE } from '../refdata.js'
+import { makeActiveElement, makeBackgroundElement, makeTextElement, type PresetsBuilderContext } from './index.js'
+import { QuickScreenKind } from '@hussra/logos-proclaim'
 
 export function createQuickScreenPresets(context: PresetsBuilderContext): void {
-	context.definitions['show_blank_quick_screen'] = {
-		type: 'simple',
-		name: 'Show Blank Quick Screen',
-		style: {
-			...DEFAULT_PRESET_STYLE,
-			text: 'Blank',
+	context.definitions['show_blank_quick_screen'] = makeQuickScreenPreset(
+		context,
+		'Show Blank Quick Screen',
+		'Blank',
+		{
+			actionId: 'toggle_blank_quick_screen',
+			options: {},
 		},
-		steps: [
-			{
-				down: [
-					{
-						actionId: 'toggle_blank_quick_screen',
-						options: {},
-					},
-				],
-				up: [],
-			},
-		],
-		feedbacks: [
-			{
-				feedbackId: 'quick_screen',
-				options: {
-					quickScreen: 'Blank',
-				},
-				style: {
-					bgcolor: 0xffff00,
-					color: 0x000000,
-				},
-			},
-		],
-	}
+		'Blank',
+	)
 
-	context.definitions['show_logo_quick_screen'] = {
-		type: 'simple',
-		name: 'Show Logo Quick Screen',
-		style: {
-			...DEFAULT_PRESET_STYLE,
-			text: 'Logo',
+	context.definitions['show_logo_quick_screen'] = makeQuickScreenPreset(
+		context,
+		'Show Logo Quick Screen',
+		'Logo',
+		{
+			actionId: 'toggle_logo_quick_screen',
+			options: {},
 		},
-		steps: [
-			{
-				down: [
-					{
-						actionId: 'toggle_logo_quick_screen',
-						options: {},
-					},
-				],
-				up: [],
-			},
-		],
-		feedbacks: [
-			{
-				feedbackId: 'quick_screen',
-				options: {
-					quickScreen: 'Logo',
-				},
-				style: {
-					bgcolor: 0xffff00,
-					color: 0x000000,
-				},
-			},
-		],
-	}
+		'Logo',
+	)
 
-	context.definitions['show_no_text_quick_screen'] = {
-		type: 'simple',
-		name: 'Show No Text Quick Screen',
-		style: {
-			...DEFAULT_PRESET_STYLE,
-			text: 'No Text',
+	context.definitions['show_no_text_quick_screen'] = makeQuickScreenPreset(
+		context,
+		'Show No Text Quick Screen',
+		'No Text',
+		{
+			actionId: 'toggle_no_text_quick_screen',
+			options: {},
 		},
-		steps: [
-			{
-				down: [
-					{
-						actionId: 'toggle_no_text_quick_screen',
-						options: {},
-					},
-				],
-				up: [],
-			},
-		],
-		feedbacks: [
-			{
-				feedbackId: 'quick_screen',
-				options: {
-					quickScreen: 'NoText',
-				},
-				style: {
-					bgcolor: 0xffff00,
-					color: 0x000000,
-				},
-			},
-		],
-	}
+		'NoText',
+	)
 
-	context.definitions['show_custom_1_quick_screen'] = {
-		type: 'simple',
-		name: 'Show Custom Quick Screen 1',
-		style: {
-			...DEFAULT_PRESET_STYLE,
-			text: 'Custom 1',
+	context.definitions['show_custom_1_quick_screen'] = makeQuickScreenPreset(
+		context,
+		'Show Custom Quick Screen 1',
+		'Custom 1',
+		{
+			actionId: 'toggle_custom_quick_screen',
+			options: {
+				num: 1,
+			},
 		},
-		steps: [
-			{
-				down: [
-					{
-						actionId: 'toggle_custom_quick_screen',
-						options: {
-							num: 1,
-						},
-					},
-				],
-				up: [],
-			},
-		],
-		feedbacks: [
-			{
-				feedbackId: 'quick_screen',
-				options: {
-					quickScreen: 'Custom',
-				},
-				style: {
-					bgcolor: 0xffff00,
-					color: 0x000000,
-				},
-			},
-		],
-	}
+		'Custom',
+	)
 
-	context.definitions['show_custom_2_quick_screen'] = {
-		type: 'simple',
-		name: 'Show Custom Quick Screen 2',
-		style: {
-			...DEFAULT_PRESET_STYLE,
-			text: 'Custom 2',
+	context.definitions['show_custom_2_quick_screen'] = makeQuickScreenPreset(
+		context,
+		'Show Custom Quick Screen 2',
+		'Custom 2',
+		{
+			actionId: 'toggle_custom_quick_screen',
+			options: {
+				num: 2,
+			},
 		},
-		steps: [
-			{
-				down: [
-					{
-						actionId: 'toggle_custom_quick_screen',
-						options: {
-							num: 2,
-						},
-					},
-				],
-				up: [],
-			},
-		],
-		feedbacks: [
-			{
-				feedbackId: 'quick_screen',
-				options: {
-					quickScreen: 'Custom',
-				},
-				style: {
-					bgcolor: 0xffff00,
-					color: 0x000000,
-				},
-			},
-		],
-	}
-
-	context.definitions['show_text'] = {
-		type: 'simple',
-		name: 'Show Text',
-		style: {
-			...DEFAULT_PRESET_STYLE,
-			text: 'Show Text',
-		},
-		steps: [
-			{
-				down: [
-					{
-						actionId: 'show_text',
-						options: {},
-					},
-				],
-				up: [],
-			},
-		],
-		feedbacks: [],
-	}
-
-	context.definitions['show_last_slide'] = {
-		type: 'simple',
-		name: 'Show Last Slide',
-		style: {
-			...DEFAULT_PRESET_STYLE,
-			text: 'Last Shown',
-		},
-		steps: [
-			{
-				down: [
-					{
-						actionId: 'show_last_slide',
-						options: {},
-					},
-				],
-				up: [],
-			},
-		],
-		feedbacks: [],
-	}
+		'Custom',
+	)
 
 	context.definitions['show_floating_hearts_quick_screen'] = {
 		type: 'simple',
@@ -214,6 +70,7 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 		style: {
 			...DEFAULT_PRESET_STYLE,
 			text: 'Floating Hearts',
+			bgcolor: context.self.config.basicPresets ? COLOURS.black : COLOURS.quickScreen.floating,
 		},
 		steps: [
 			{
@@ -235,6 +92,7 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 		style: {
 			...DEFAULT_PRESET_STYLE,
 			text: 'Floating Amens',
+			bgcolor: context.self.config.basicPresets ? COLOURS.black : COLOURS.quickScreen.floating,
 		},
 		steps: [
 			{
@@ -256,6 +114,7 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 		style: {
 			...DEFAULT_PRESET_STYLE,
 			text: 'Amen',
+			bgcolor: context.self.config.basicPresets ? COLOURS.black : COLOURS.quickScreen.floating,
 		},
 		steps: [
 			{
@@ -278,6 +137,7 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 			...DEFAULT_PRESET_STYLE,
 			text: 'Hallelujah',
 			size: 'auto',
+			bgcolor: context.self.config.basicPresets ? COLOURS.black : COLOURS.quickScreen.floating,
 		},
 		steps: [
 			{
@@ -300,6 +160,7 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 			...DEFAULT_PRESET_STYLE,
 			text: 'Praise The Lord',
 			size: 'auto',
+			bgcolor: context.self.config.basicPresets ? COLOURS.black : COLOURS.quickScreen.floating,
 		},
 		steps: [
 			{
@@ -321,6 +182,7 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 		style: {
 			...DEFAULT_PRESET_STYLE,
 			text: 'He Is Risen',
+			bgcolor: context.self.config.basicPresets ? COLOURS.black : COLOURS.quickScreen.floating,
 		},
 		steps: [
 			{
@@ -343,6 +205,7 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 			...DEFAULT_PRESET_STYLE,
 			text: 'He Is Risen Indeed',
 			size: 'auto',
+			bgcolor: context.self.config.basicPresets ? COLOURS.black : COLOURS.quickScreen.floating,
 		},
 		steps: [
 			{
@@ -372,8 +235,6 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 					'show_no_text_quick_screen',
 					'show_custom_1_quick_screen',
 					'show_custom_2_quick_screen',
-					'show_text',
-					'show_last_slide',
 				],
 			},
 			{
@@ -392,4 +253,68 @@ export function createQuickScreenPresets(context: PresetsBuilderContext): void {
 			},
 		],
 	})
+}
+
+function makeQuickScreenPreset(
+	context: PresetsBuilderContext,
+	name: string,
+	text: string,
+	action: SomePresetActionEntry<ModuleSchema>,
+	feedback: keyof typeof QuickScreenKind,
+): CompanionSomePresetDefinition<ModuleSchema> {
+	if (context.self.config.basicPresets) {
+		return {
+			type: 'simple',
+			name: name,
+			style: {
+				...DEFAULT_PRESET_STYLE,
+				text: text,
+			},
+			steps: [
+				{
+					down: [action],
+					up: [],
+				},
+			],
+			feedbacks: [
+				{
+					feedbackId: 'quick_screen',
+					options: {
+						quickScreen: feedback,
+					},
+					style: {
+						bgcolor: 0xffff00,
+						color: 0x000000,
+					},
+				},
+			],
+		}
+	} else {
+		return {
+			type: 'layered',
+			name: name,
+			elements: [makeBackgroundElement(COLOURS.quickScreen.fullScreen), makeActiveElement(), makeTextElement(text)],
+			steps: [
+				{
+					down: [action],
+					up: [],
+				},
+			],
+			feedbacks: [
+				{
+					feedbackId: 'quick_screen',
+					options: {
+						quickScreen: feedback,
+					},
+					styleOverrides: [
+						{
+							elementId: 'active',
+							elementProperty: 'enabled',
+							override: true,
+						},
+					],
+				},
+			],
+		}
+	}
 }

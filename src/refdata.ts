@@ -171,6 +171,10 @@ export const COLOURS = {
 		item: 0x4040ff,
 		song: 0x8080ff,
 	},
+	quickScreen: {
+		fullScreen: 0x994c00,
+		floating: 0xcc6500,
+	},
 	active: 0xffff00,
 	inactive: 0x333333,
 	black: 0x000000,
