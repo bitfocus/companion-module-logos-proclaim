@@ -1,90 +1,20 @@
-import { DEFAULT_PRESET_STYLE } from '../refdata.js'
+import { COLOURS, DEFAULT_PRESET_STYLE, type SongPart } from '../refdata.js'
 import type { PresetsBuilderContext } from './index.js'
 import { SONG_PARTS, VERSE_COUNT } from '../refdata.js'
 import { ServiceItemKind } from '@hussra/logos-proclaim'
+import type { CompanionSomePresetDefinition } from '@companion-module/base'
+import type { ModuleSchema } from '../main.js'
 
 export function createSongPartPresets(context: PresetsBuilderContext): void {
 	for (const part of SONG_PARTS) {
-		const partId = part.id
-		const label = part.label
-		const displayLabel = part.displayLabel || part.label
-
-		if (label == 'Verse') {
+		if (part.label == 'Verse') {
 			for (let v = 1; v <= VERSE_COUNT; v++) {
-				const presetId = `song_part_${label.toLowerCase()}_${v}`
-				context.definitions[presetId] = {
-					type: 'simple',
-					name: `${label} ${v}`,
-					style: {
-						...DEFAULT_PRESET_STYLE,
-						text: `${displayLabel}\\n${v}`,
-					},
-					steps: [
-						{
-							down: [
-								{
-									actionId: 'go_to_song_part',
-									options: {
-										song_part: partId,
-										item_index: v,
-									},
-								},
-							],
-							up: [],
-						},
-					],
-					feedbacks: [
-						{
-							feedbackId: 'item_kind',
-							options: {
-								kind: ServiceItemKind[ServiceItemKind.SongLyrics],
-							},
-							isInverted: true,
-							style: {
-								color: 0x333333,
-								bgcolor: 0x000000,
-							},
-						},
-					],
-				}
+				const presetId = `song_part_${part.label.toLowerCase()}_${v}`
+				context.definitions[presetId] = makeSongPartPreset(context, part, v)
 			}
 		} else {
-			const presetId = `song_part_${label.toLowerCase()}`
-			context.definitions[presetId] = {
-				type: 'simple',
-				name: label,
-				style: {
-					...DEFAULT_PRESET_STYLE,
-					text: displayLabel,
-				},
-				steps: [
-					{
-						down: [
-							{
-								actionId: 'go_to_song_part',
-								options: {
-									song_part: partId,
-									item_index: 1,
-								},
-							},
-						],
-						up: [],
-					},
-				],
-				feedbacks: [
-					{
-						feedbackId: 'item_kind',
-						options: {
-							kind: ServiceItemKind[ServiceItemKind.SongLyrics],
-						},
-						isInverted: true,
-						style: {
-							color: 0x333333,
-							bgcolor: 0x000000,
-						},
-					},
-				],
-			}
+			const presetId = `song_part_${part.label.toLowerCase()}`
+			context.definitions[presetId] = makeSongPartPreset(context, part, 1)
 		}
 	}
 
@@ -110,4 +40,51 @@ export function createSongPartPresets(context: PresetsBuilderContext): void {
 			},
 		],
 	})
+}
+
+function makeSongPartPreset(
+	context: PresetsBuilderContext,
+	part: SongPart,
+	v: number,
+): CompanionSomePresetDefinition<ModuleSchema> {
+	const partId = part.id
+	const label = part.label
+	const colours = part.colours
+	const text = part.label == 'Verse' ? `${part.displayLabel || part.label}\n${v}` : `${part.displayLabel || part.label}`
+	return {
+		type: 'simple',
+		name: `${label} ${v}`,
+		style: {
+			...DEFAULT_PRESET_STYLE,
+			text: text,
+			bgcolor: context.self.config.basicPresets ? COLOURS.black : colours[(v - 1) % colours.length],
+		},
+		steps: [
+			{
+				down: [
+					{
+						actionId: 'go_to_song_part',
+						options: {
+							song_part: partId,
+							item_index: v,
+						},
+					},
+				],
+				up: [],
+			},
+		],
+		feedbacks: [
+			{
+				feedbackId: 'item_kind',
+				options: {
+					kind: ServiceItemKind[ServiceItemKind.SongLyrics],
+				},
+				isInverted: true,
+				style: {
+					color: COLOURS.inactive,
+					bgcolor: COLOURS.black,
+				},
+			},
+		],
+	}
 }
