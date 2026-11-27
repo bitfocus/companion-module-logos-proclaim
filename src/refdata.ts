@@ -199,6 +199,7 @@ export const COLOURS = {
 	inactive: 0x333333,
 	black: 0x000000,
 	white: 0xffffff,
+	statusInfo: 0x484848,
 	transparent: combineRgb(0, 0, 0, 0),
 }
 
