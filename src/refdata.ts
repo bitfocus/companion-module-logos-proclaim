@@ -4,14 +4,34 @@ import { combineRgb } from '@companion-module/base'
 import { AppCommand, IndexedAppCommand, SimpleAppCommand } from '@hussra/logos-proclaim'
 
 // Song parts - used in the go_to_song_part action and in constructing its presets
-export const SONG_PARTS: { id: number; label: string; appCommand: IndexedAppCommand; displayLabel?: string }[] = [
-	{ id: 0, label: 'Verse', appCommand: AppCommand.ShowSongLyricsVerseByIndex },
-	{ id: 1, label: 'Chorus', appCommand: AppCommand.ShowSongLyricsChorusByIndex },
-	{ id: 2, label: 'Bridge', appCommand: AppCommand.ShowSongLyricsBridgeByIndex },
-	{ id: 3, label: 'Prechorus', appCommand: AppCommand.ShowSongLyricsPreChorusByIndex, displayLabel: 'Pre\nchorus' },
-	{ id: 4, label: 'Interlude', appCommand: AppCommand.ShowSongLyricsInterludeByIndex, displayLabel: 'Inter-lude' },
-	{ id: 5, label: 'Tag', appCommand: AppCommand.ShowSongLyricsTagByIndex },
-	{ id: 6, label: 'Ending', appCommand: AppCommand.ShowSongLyricsEndingByIndex },
+export type SongPart = {
+	id: number
+	label: string
+	appCommand: IndexedAppCommand
+	colours: number[]
+	displayLabel?: string
+}
+
+export const SONG_PARTS: SongPart[] = [
+	{ id: 0, label: 'Verse', appCommand: AppCommand.ShowSongLyricsVerseByIndex, colours: [0x660000, 0x880000, 0xaa0000] },
+	{
+		id: 3,
+		label: 'Prechorus',
+		appCommand: AppCommand.ShowSongLyricsPreChorusByIndex,
+		colours: [0x666600],
+		displayLabel: 'Pre-chorus',
+	},
+	{ id: 1, label: 'Chorus', appCommand: AppCommand.ShowSongLyricsChorusByIndex, colours: [0x888800] },
+	{ id: 2, label: 'Bridge', appCommand: AppCommand.ShowSongLyricsBridgeByIndex, colours: [0x440044] },
+	{
+		id: 4,
+		label: 'Interlude',
+		appCommand: AppCommand.ShowSongLyricsInterludeByIndex,
+		colours: [0x660066],
+		displayLabel: 'Inter-lude',
+	},
+	{ id: 5, label: 'Tag', appCommand: AppCommand.ShowSongLyricsTagByIndex, colours: [0x880088] },
+	{ id: 6, label: 'Ending', appCommand: AppCommand.ShowSongLyricsEndingByIndex, colours: [0xaa00aa] },
 ]
 
 // How many songs to generate presets for
