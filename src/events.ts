@@ -1,5 +1,5 @@
 import { InstanceStatus, type LogLevel, type StringKeys } from '@companion-module/base'
-import { LogLevel as ProclaimLogLevel, type ProclaimStatusEvents } from '@hussra/logos-proclaim'
+import { MediaState, LogLevel as ProclaimLogLevel, type ProclaimStatusEvents } from '@hussra/logos-proclaim'
 import ModuleInstance from './main.js'
 import { ticksToUnixTime } from './util.js'
 import type { VariablesSchema } from './variables.js'
@@ -55,7 +55,13 @@ export function AddEventListeners(self: ModuleInstance): void {
 	mapEventToVariable(self, 'groupingId', 'grouping_id', undefined, 'grouping')
 	mapEventToVariable(self, 'quickScreenKind', 'quick_screen_kind')
 	mapEventToVariable(self, 'stageDirection', 'stage_direction', undefined, 'stage_direction')
-	mapEventToVariable(self, 'mediaState', 'media_state', undefined, 'media_state')
+	mapEventToVariable(
+		self,
+		'mediaState',
+		'media_state',
+		(mediaState) => (mediaState == MediaState.None ? 'None' : mediaState),
+		'media_state',
+	)
 
 	// media_state needs to be initialised specially, alas
 	self.setVariableValues({
