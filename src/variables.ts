@@ -1,4 +1,4 @@
-import { MediaState, type QuickScreenKind, type ServiceItemKind, type ServicePart } from '@hussra/logos-proclaim'
+import { type QuickScreenKind, type ServiceItemKind, type ServicePart } from '@hussra/logos-proclaim'
 import type ModuleInstance from './main.js'
 
 export type VariablesSchema = {
@@ -24,7 +24,7 @@ export type VariablesSchema = {
 	grouping_id: string
 	quick_screen_kind: QuickScreenKind | null
 	stage_direction: string
-	media_state: MediaState | null
+	media_state: string
 }
 
 /**
@@ -83,6 +83,6 @@ export const InitializeVariables = function (self: ModuleInstance): void {
 		grouping_id: '',
 		quick_screen_kind: null,
 		stage_direction: '',
-		media_state: null,
+		media_state: '',
 	})
 }

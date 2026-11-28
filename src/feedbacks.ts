@@ -323,11 +323,9 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 					type: 'dropdown',
 					label: 'State',
 					default: MediaState.Paused,
-					choices: Object.keys(MediaState)
-						.filter((key) => key !== 'None')
-						.map((key) => {
-							return { id: key, label: MediaState[key as keyof typeof MediaState] }
-						}),
+					choices: Object.keys(MediaState).map((key) => {
+						return { id: key, label: MediaState[key as keyof typeof MediaState] || 'None' }
+					}),
 				},
 			],
 			callback: (feedback) => {
